@@ -1,0 +1,733 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Admin Portal - SchemeX AI
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+<style>
+    .admin-dashboard {
+        padding: var(--spacing-xl) 0;
+    }
+    .admin-nav {
+        display: flex;
+        gap: var(--spacing-sm);
+        border-bottom: 2px solid var(--gray-200);
+        margin-bottom: var(--spacing-xl);
+        padding-bottom: var(--spacing-xs);
+        overflow-x: auto;
+    }
+    .admin-nav-btn {
+        padding: var(--spacing-sm) var(--spacing-lg);
+        background: transparent;
+        border: none;
+        border-bottom: 3px solid transparent;
+        font-weight: 600;
+        color: var(--gray-500);
+        cursor: pointer;
+        font-size: 1.05rem;
+        transition: all var(--transition-fast);
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-xs);
+        white-space: nowrap;
+    }
+    .admin-nav-btn:hover {
+        color: var(--gray-800);
+    }
+    .admin-nav-btn.active {
+        color: var(--primary-green);
+        border-color: var(--primary-green);
+    }
+    .admin-table-container {
+        background: var(--white);
+        border-radius: var(--radius-xl);
+        border: 1px solid var(--gray-200);
+        box-shadow: var(--shadow-md);
+        overflow-x: auto;
+        margin-top: var(--spacing-md);
+    }
+    .admin-table {
+        width: 100%;
+        border-collapse: collapse;
+        text-align: left;
+        font-size: 0.95rem;
+    }
+    .admin-table th {
+        background: var(--gray-50);
+        padding: var(--spacing-md);
+        font-weight: 600;
+        color: var(--gray-700);
+        border-bottom: 2px solid var(--gray-200);
+    }
+    .admin-table td {
+        padding: var(--spacing-md);
+        color: var(--gray-600);
+        border-bottom: 1px solid var(--gray-100);
+        vertical-align: middle;
+    }
+    .admin-table tr:hover {
+        background: var(--gray-50);
+    }
+    .badge {
+        padding: var(--spacing-xs) var(--spacing-sm);
+        border-radius: var(--radius-full);
+        font-size: 0.8rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+    }
+    .badge-pending {
+        background: var(--warning-bg);
+        color: var(--warning);
+    }
+    .badge-under-review {
+        background: var(--info-bg);
+        color: var(--info);
+    }
+    .badge-approved {
+        background: var(--success-bg);
+        color: var(--primary-green);
+    }
+    .badge-rejected {
+        background: var(--error-bg);
+        color: var(--error);
+    }
+    .badge-verified {
+        background: var(--success-bg);
+        color: var(--primary-green);
+    }
+    .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(15, 23, 42, 0.4);
+        backdrop-filter: blur(4px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity var(--transition-normal);
+    }
+    .modal-overlay.active {
+        opacity: 1;
+        pointer-events: auto;
+    }
+    .modal-card {
+        background: var(--white);
+        border-radius: var(--radius-xl);
+        width: 90%;
+        max-width: 600px;
+        padding: var(--spacing-xl);
+        box-shadow: var(--shadow-2xl);
+        border: 1px solid var(--gray-200);
+        transform: translateY(20px);
+        transition: transform var(--transition-normal);
+    }
+    .modal-overlay.active .modal-card {
+        transform: translateY(0);
+    }
+    .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: var(--spacing-lg);
+        padding-bottom: var(--spacing-sm);
+        border-bottom: 1px solid var(--gray-100);
+    }
+    .modal-header h3 {
+        font-size: 1.25rem;
+        color: var(--gray-900);
+        margin: 0;
+    }
+    .modal-close {
+        background: transparent;
+        border: none;
+        font-size: 1.5rem;
+        color: var(--gray-400);
+        cursor: pointer;
+        transition: color var(--transition-fast);
+        line-height: 1;
+    }
+    .modal-close:hover {
+        color: var(--gray-600);
+    }
+    .modal-body {
+        margin-bottom: var(--spacing-lg);
+    }
+    .form-group {
+        margin-bottom: var(--spacing-md);
+    }
+    .form-label {
+        display: block;
+        font-weight: 600;
+        color: var(--gray-700);
+        margin-bottom: var(--spacing-xs);
+    }
+    .form-select, .form-input, .form-textarea {
+        width: 100%;
+        padding: var(--spacing-sm) var(--spacing-md);
+        border: 2px solid var(--gray-200);
+        border-radius: var(--radius-md);
+        outline: none;
+        font-family: inherit;
+        font-size: 0.95rem;
+        transition: border-color var(--transition-fast);
+    }
+    .form-select:focus, .form-input:focus, .form-textarea:focus {
+        border-color: var(--primary-green);
+    }
+    .detail-row {
+        display: flex;
+        justify-content: space-between;
+        padding: var(--spacing-sm) 0;
+        border-bottom: 1px solid var(--gray-100);
+    }
+    .detail-label {
+        color: var(--gray-500);
+        font-weight: 500;
+    }
+    .detail-value {
+        color: var(--gray-800);
+        font-weight: 600;
+        text-align: right;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<script>
+    // Forcefully remove citizen links from navbar immediately on render (cache-proof fallback)
+    (function() {
+        const navLinks = document.querySelector('.nav-links');
+        if (navLinks) {
+            navLinks.innerHTML = '<li><a href="/admin-dashboard/" class="active">Admin Dashboard</a></li>';
+        }
+        const mobileMenu = document.getElementById('mobileMenu');
+        if (mobileMenu) {
+            mobileMenu.innerHTML = `
+                <a href="/admin-dashboard/" class="active">Admin Dashboard</a>
+                <a href="#" id="navLogoutBtnMobile" class="login-btn auth-only mobile-logout-btn">Logout</a>
+            `;
+        }
+        const dropdownMenu = document.getElementById('userDropdownMenu');
+        if (dropdownMenu) {
+            dropdownMenu.innerHTML = `
+                <a href="/admin-dashboard/">Admin Dashboard</a>
+                <hr>
+                <a href="#" id="navLogoutBtn" class="dropdown-danger">Logout</a>
+            `;
+        }
+    })();
+</script>
+<div class="admin-dashboard">
+    <div class="container">
+        <!-- Dashboard Header -->
+        <div class="welcome-section slide-up">
+            <div class="welcome-content">
+                <h1>Admin Control Panel</h1>
+                <p>Verify user profiles, review submitted documents, and update applications status</p>
+            </div>
+            <div class="welcome-actions">
+                <button class="btn btn-outline" onclick="loadAllData()">
+                    <i class="fa-solid fa-rotate"></i>
+                    Refresh Data
+                </button>
+            </div>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+            <div class="stat-card slide-up delay-1">
+                <div class="stat-icon">
+                    <i class="fa-solid fa-users"></i>
+                </div>
+                <div class="stat-content">
+                    <div class="stat-number" id="statUsers">0</div>
+                    <div class="stat-label">Total Users</div>
+                </div>
+            </div>
+
+            <div class="stat-card slide-up delay-2">
+                <div class="stat-icon">
+                    <i class="fa-solid fa-file-invoice"></i>
+                </div>
+                <div class="stat-content">
+                    <div class="stat-number" id="statPendingApps">0</div>
+                    <div class="stat-label">Pending Apps</div>
+                </div>
+            </div>
+
+            <div class="stat-card slide-up delay-3">
+                <div class="stat-icon">
+                    <i class="fa-solid fa-file-shield"></i>
+                </div>
+                <div class="stat-content">
+                    <div class="stat-number" id="statPendingDocs">0</div>
+                    <div class="stat-label">Pending Docs</div>
+                </div>
+            </div>
+
+            <div class="stat-card slide-up delay-4">
+                <div class="stat-icon">
+                    <i class="fa-solid fa-bookmark"></i>
+                </div>
+                <div class="stat-content">
+                    <div class="stat-number" id="statSchemes">0</div>
+                    <div class="stat-label">Total Schemes</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Admin Navigation -->
+        <div class="admin-nav slide-up delay-2">
+            <button class="admin-nav-btn active" data-tab="applications" onclick="switchTab('applications')">
+                <i class="fa-solid fa-file-invoice"></i> Applications
+            </button>
+            <button class="admin-nav-btn" data-tab="documents" onclick="switchTab('documents')">
+                <i class="fa-solid fa-file-shield"></i> Documents
+            </button>
+            <button class="admin-nav-btn" data-tab="users" onclick="switchTab('users')">
+                <i class="fa-solid fa-users"></i> Registered Citizens
+            </button>
+        </div>
+
+        <!-- Table Content -->
+        <div class="admin-table-container slide-up delay-3" id="tableContainer">
+            <!-- Loading indicator -->
+            <div style="padding: var(--spacing-xl); text-align: center;">
+                <div class="spinner" style="margin: 0 auto var(--spacing-md) auto;"></div>
+                <p>Loading dashboard data...</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal: Review Application -->
+<div class="modal-overlay" id="appModal">
+    <div class="modal-card">
+        <div class="modal-header">
+            <h3>Review Application</h3>
+            <button class="modal-close" onclick="closeModal('appModal')">&times;</button>
+        </div>
+        <form id="appReviewForm">
+            <input type="hidden" id="reviewAppId">
+            <div class="modal-body">
+                <div class="detail-row">
+                    <span class="detail-label">Application Number</span>
+                    <span class="detail-value" id="reviewAppNumber">-</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Citizen Username</span>
+                    <span class="detail-value" id="reviewAppCitizen">-</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Welfare Scheme</span>
+                    <span class="detail-value" id="reviewAppScheme">-</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Submitted Date</span>
+                    <span class="detail-value" id="reviewAppDate">-</span>
+                </div>
+                <div class="form-group" style="margin-top: var(--spacing-md);">
+                    <label for="reviewAppStatus" class="form-label">Update Status</label>
+                    <select id="reviewAppStatus" class="form-select" required>
+                        <option value="pending">Pending</option>
+                        <option value="under_review">Under Review</option>
+                        <option value="approved">Approved</option>
+                        <option value="rejected">Rejected</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="reviewAppRemarks" class="form-label">Remarks / Comments</label>
+                    <textarea id="reviewAppRemarks" class="form-textarea" rows="3" placeholder="Explain reason for approval or rejection..."></textarea>
+                </div>
+            </div>
+            <div style="display: flex; gap: var(--spacing-md); justify-content: flex-end;">
+                <button type="button" class="btn btn-outline" onclick="closeModal('appModal')">Cancel</button>
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Modal: View Citizen Details -->
+<div class="modal-overlay" id="userModal">
+    <div class="modal-card">
+        <div class="modal-header">
+            <h3>Citizen Profile Details</h3>
+            <button class="modal-close" onclick="closeModal('userModal')">&times;</button>
+        </div>
+        <div class="modal-body" id="userDetailsBody" style="max-height: 400px; overflow-y: auto;">
+            <!-- Loaded dynamically -->
+        </div>
+        <div style="display: flex; justify-content: flex-end; margin-top: var(--spacing-md);">
+            <button class="btn btn-outline" onclick="closeModal('userModal')">Close</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Fallback in case main.js is cached in the browser
+    if (window.API && !window.API.patch) {
+        window.API.patch = async function(url, data) {
+            return this.request(url, {
+                method: 'PATCH',
+                body: JSON.stringify(data)
+            });
+        };
+    }
+
+    let currentTab = 'applications';
+    let rawApplications = [];
+    let rawDocuments = [];
+    let rawUsers = [];
+
+    document.addEventListener('DOMContentLoaded', () => {
+        // Enforce user is admin role, else redirect
+        const userStr = localStorage.getItem('user');
+        if (!userStr) {
+            window.location.href = '/login/?next=/admin-dashboard/';
+            return;
+        }
+        const user = JSON.parse(userStr);
+        if (user.role !== 'admin') {
+            window.location.href = '/dashboard/';
+            return;
+        }
+
+        // Set username in welcome header
+        const headerH1 = document.querySelector('.welcome-content h1');
+        headerH1.innerHTML = `Welcome back, Admin!`;
+
+        loadAllData();
+
+        // Handle Application Review form submit
+        document.getElementById('appReviewForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const appId = document.getElementById('reviewAppId').value;
+            const status = document.getElementById('reviewAppStatus').value;
+            const remarks = document.getElementById('reviewAppRemarks').value;
+
+            try {
+                const res = await API.patch(`/api/applications/${appId}/status/`, { status, remarks });
+                showToast('Application status updated!', 'success');
+                closeModal('appModal');
+                loadAllData();
+            } catch (err) {
+                console.error(err);
+                showToast('Failed to update status', 'error');
+            }
+        });
+    });
+
+    async function loadAllData() {
+        const container = document.getElementById('tableContainer');
+        container.innerHTML = `
+            <div style="padding: var(--spacing-xl); text-align: center;">
+                <div class="spinner" style="margin: 0 auto var(--spacing-md) auto;"></div>
+                <p>Fetching latest data...</p>
+            </div>
+        `;
+
+        try {
+            // Load stats & datasets concurrently
+            const [appsData, docsData, usersData, schemesData] = await Promise.all([
+                API.get('/api/applications/'),
+                API.get('/api/documents/?all=1'),
+                API.get('/api/profile/admin/users/'),
+                API.get('/api/schemes/')
+            ]);
+
+            rawApplications = appsData.results || appsData || [];
+            rawDocuments = docsData.documents || [];
+            rawUsers = usersData || [];
+            const totalSchemes = schemesData.count || schemesData.length || 0;
+
+            // Set statistics numbers
+            document.getElementById('statUsers').textContent = rawUsers.filter(u => u.role !== 'admin').length;
+            document.getElementById('statPendingApps').textContent = rawApplications.filter(a => a.status === 'pending' || a.status === 'under_review').length;
+            document.getElementById('statPendingDocs').textContent = rawDocuments.filter(d => d.verification_status === 'pending').length;
+            document.getElementById('statSchemes').textContent = totalSchemes;
+
+            renderActiveTab();
+        } catch (err) {
+            console.error('Failed to load admin dashboard data:', err);
+            container.innerHTML = `
+                <div class="empty-state" style="padding: var(--spacing-xl);">
+                    <i class="fa-solid fa-triangle-exclamation" style="color: var(--error); font-size: 2.5rem;"></i>
+                    <h3>Error loading dashboard</h3>
+                    <p>${err.message || 'Check your database connection or authentication'}</p>
+                    <button class="btn btn-outline" onclick="loadAllData()">Retry</button>
+                </div>
+            `;
+        }
+    }
+
+    function switchTab(tabName) {
+        currentTab = tabName;
+        document.querySelectorAll('.admin-nav-btn').forEach(btn => {
+            btn.classList.remove('active');
+            if (btn.dataset.tab === tabName) btn.classList.add('active');
+        });
+        renderActiveTab();
+    }
+
+    function renderActiveTab() {
+        const container = document.getElementById('tableContainer');
+        if (currentTab === 'applications') {
+            renderApplications(container);
+        } else if (currentTab === 'documents') {
+            renderDocuments(container);
+        } else if (currentTab === 'users') {
+            renderUsers(container);
+        }
+    }
+
+    function renderApplications(container) {
+        if (rawApplications.length === 0) {
+            container.innerHTML = `
+                <div class="empty-state" style="padding: var(--spacing-xl);">
+                    <i class="fa-solid fa-file-circle-exclamation"></i>
+                    <h3>No applications submitted</h3>
+                    <p>When citizens apply for schemes, they will appear here.</p>
+                </div>
+            `;
+            return;
+        }
+
+        container.innerHTML = `
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>App Number</th>
+                        <th>Citizen</th>
+                        <th>Scheme</th>
+                        <th>Submission Date</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${rawApplications.map(app => `
+                        <tr>
+                            <td style="font-weight: 700;">${app.application_number}</td>
+                            <td>${app.applicant_username}</td>
+                            <td>${app.scheme_name}</td>
+                            <td>${new Date(app.submitted_date).toLocaleDateString()}</td>
+                            <td>
+                                <span class="badge badge-${app.status.replace('_', '-')}">
+                                    <i class="fa-solid ${getStatusIcon(app.status)}"></i>
+                                    ${app.status.replace('_', ' ')}
+                                </span>
+                            </td>
+                            <td>
+                                <button class="btn btn-primary btn-sm" onclick="openReviewAppModal('${app.id}')">
+                                    Review
+                                </button>
+                            </td>
+                        </tr>
+                    `).join('')}
+                </tbody>
+            </table>
+        `;
+    }
+
+    function getStatusIcon(status) {
+        if (status === 'approved' || status === 'verified') return 'fa-circle-check';
+        if (status === 'rejected') return 'fa-circle-xmark';
+        if (status === 'under_review') return 'fa-magnifying-glass';
+        return 'fa-circle-dot';
+    }
+
+    function openReviewAppModal(appId) {
+        const app = rawApplications.find(a => String(a.id) === String(appId));
+        if (!app) return;
+
+        document.getElementById('reviewAppId').value = app.id;
+        document.getElementById('reviewAppNumber').textContent = app.application_number;
+        document.getElementById('reviewAppCitizen').textContent = app.applicant_username;
+        document.getElementById('reviewAppScheme').textContent = app.scheme_name;
+        document.getElementById('reviewAppDate').textContent = new Date(app.submitted_date).toLocaleString();
+        document.getElementById('reviewAppStatus').value = app.status;
+        document.getElementById('reviewAppRemarks').value = app.remarks || '';
+
+        openModal('appModal');
+    }
+
+    function renderDocuments(container) {
+        if (rawDocuments.length === 0) {
+            container.innerHTML = `
+                <div class="empty-state" style="padding: var(--spacing-xl);">
+                    <i class="fa-solid fa-folder-open"></i>
+                    <h3>No documents uploaded</h3>
+                    <p>Uploaded citizen support documents will appear here.</p>
+                </div>
+            `;
+            return;
+        }
+
+        container.innerHTML = `
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>Doc Type</th>
+                        <th>Uploaded By</th>
+                        <th>File Link</th>
+                        <th>Upload Date</th>
+                        <th>Verification Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${rawDocuments.map(doc => `
+                        <tr>
+                            <td style="font-weight: 600;">${doc.document_type_display}</td>
+                            <td>${doc.uploaded_by_username}</td>
+                            <td>
+                                <a href="${doc.file_url}" target="_blank" class="btn btn-outline btn-sm">
+                                    <i class="fa-solid fa-eye"></i> View File
+                                </a>
+                            </td>
+                            <td>${new Date(doc.upload_date).toLocaleDateString()}</td>
+                            <td>
+                                <span class="badge badge-${doc.verification_status}">
+                                    <i class="fa-solid ${getStatusIcon(doc.verification_status)}"></i>
+                                    ${doc.verification_status}
+                                </span>
+                            </td>
+                            <td>
+                                ${doc.verification_status === 'pending' ? `
+                                    <div style="display: flex; gap: var(--spacing-xs);">
+                                        <button class="btn btn-primary btn-sm" style="background: var(--primary-green); border-color: var(--primary-green);" onclick="verifyDoc('${doc.id}', 'verified')">
+                                            Verify
+                                        </button>
+                                        <button class="btn btn-outline btn-sm" style="color: var(--error); border-color: var(--error);" onclick="verifyDoc('${doc.id}', 'rejected')">
+                                            Reject
+                                        </button>
+                                    </div>
+                                ` : `
+                                    <span style="color: var(--gray-400); font-size: 0.85rem;">Completed</span>
+                                `}
+                            </td>
+                        </tr>
+                    `).join('')}
+                </tbody>
+            </table>
+        `;
+    }
+
+    async function verifyDoc(docId, status) {
+        try {
+            await API.patch(`/api/documents/${docId}/verify/`, { verification_status: status });
+            showToast(`Document marked as ${status}!`, 'success');
+            loadAllData();
+        } catch (err) {
+            console.error(err);
+            showToast('Failed to verify document', 'error');
+        }
+    }
+
+    function renderUsers(container) {
+        const citizens = rawUsers.filter(u => u.role !== 'admin');
+        if (citizens.length === 0) {
+            container.innerHTML = `
+                <div class="empty-state" style="padding: var(--spacing-xl);">
+                    <i class="fa-solid fa-users-slash"></i>
+                    <h3>No citizens registered</h3>
+                    <p>Registered user accounts will show up here.</p>
+                </div>
+            `;
+            return;
+        }
+
+        container.innerHTML = `
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>State Residence</th>
+                        <th>Annual Income</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${citizens.map(u => `
+                        <tr>
+                            <td style="font-weight: 700;">${u.username}</td>
+                            <td>${u.email}</td>
+                            <td>${u.phone_number || '-'}</td>
+                            <td>${u.profile.state ? u.profile.state.toUpperCase() : 'Not set'}</td>
+                            <td>${u.profile.annual_income ? `Rs. ${parseInt(u.profile.annual_income).toLocaleString()}` : 'Not set'}</td>
+                            <td>
+                                <button class="btn btn-outline btn-sm" onclick="openUserProfileModal('${u.id}')">
+                                    View Full Profile
+                                </button>
+                            </td>
+                        </tr>
+                    `).join('')}
+                </tbody>
+            </table>
+        `;
+    }
+
+    function openUserProfileModal(userId) {
+        const user = rawUsers.find(u => String(u.id) === String(userId));
+        if (!user) return;
+
+        const p = user.profile;
+        const body = document.getElementById('userDetailsBody');
+
+        body.innerHTML = `
+            <h4 style="margin-bottom: var(--spacing-sm); border-bottom: 2px solid var(--gray-100); padding-bottom: 4px; color: var(--primary-green);">Demographics</h4>
+            <div class="detail-row"><span class="detail-label">Full Name</span><span class="detail-value">${p.full_name || '-'}</span></div>
+            <div class="detail-row"><span class="detail-label">Gender</span><span class="detail-value">${p.gender || 'Not specified'}</span></div>
+            <div class="detail-row"><span class="detail-label">Date of Birth</span><span class="detail-value">${p.date_of_birth || '-'}</span></div>
+            <div class="detail-row"><span class="detail-label">Category / Caste</span><span class="detail-value">${p.category || 'Not specified'}</span></div>
+            <div class="detail-row"><span class="detail-label">Marital Status</span><span class="detail-value">${p.marital_status || '-'}</span></div>
+
+            <h4 style="margin: var(--spacing-md) 0 var(--spacing-sm) 0; border-bottom: 2px solid var(--gray-100); padding-bottom: 4px; color: var(--primary-green);">Address & Location</h4>
+            <div class="detail-row"><span class="detail-label">Full Address</span><span class="detail-value">${p.address || '-'}</span></div>
+            <div class="detail-row"><span class="detail-label">Village/City</span><span class="detail-value">${p.village || '-'}</span></div>
+            <div class="detail-row"><span class="detail-label">District</span><span class="detail-value">${p.district || '-'}</span></div>
+            <div class="detail-row"><span class="detail-label">State</span><span class="detail-value">${p.state ? p.state.toUpperCase() : '-'}</span></div>
+            <div class="detail-row"><span class="detail-label">Pincode</span><span class="detail-value">${p.pincode || '-'}</span></div>
+
+            <h4 style="margin: var(--spacing-md) 0 var(--spacing-sm) 0; border-bottom: 2px solid var(--gray-100); padding-bottom: 4px; color: var(--primary-green);">Economic Info</h4>
+            <div class="detail-row"><span class="detail-label">Annual Income</span><span class="detail-value">${p.annual_income ? `Rs. ${parseInt(p.annual_income).toLocaleString()}` : '0'}</span></div>
+            <div class="detail-row"><span class="detail-label">Occupation</span><span class="detail-value">${p.occupation || '-'}</span></div>
+            <div class="detail-row"><span class="detail-label">BPL Card Holder</span><span class="detail-value">${p.bpl_status ? p.bpl_status.toUpperCase() : 'NO'}</span></div>
+            <div class="detail-row"><span class="detail-label">Owns Land</span><span class="detail-value">${p.owns_land ? p.owns_land.toUpperCase() : 'NO'}</span></div>
+            <div class="detail-row"><span class="detail-label">Land Area</span><span class="detail-value">${p.land_area || '0'} acres</span></div>
+
+            <h4 style="margin: var(--spacing-md) 0 var(--spacing-sm) 0; border-bottom: 2px solid var(--gray-100); padding-bottom: 4px; color: var(--primary-green);">Bank Details</h4>
+            <div class="detail-row"><span class="detail-label">Bank Name</span><span class="detail-value">${p.bank_name || '-'}</span></div>
+            <div class="detail-row"><span class="detail-label">Account Number</span><span class="detail-value">${p.account_number || '-'}</span></div>
+            <div class="detail-row"><span class="detail-label">IFSC Code</span><span class="detail-value">${p.ifsc_code || '-'}</span></div>
+            <div class="detail-row"><span class="detail-label">Account Type</span><span class="detail-value">${p.account_type || '-'}</span></div>
+        `;
+
+        openModal('userModal');
+    }
+
+    function openModal(modalId) {
+        document.getElementById(modalId).classList.add('active');
+    }
+
+    function closeModal(modalId) {
+        document.getElementById(modalId).classList.remove('active');
+    }
+</script>
+{% endblock %}

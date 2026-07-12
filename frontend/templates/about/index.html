@@ -1,0 +1,244 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+About Us - SchemeX AI
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/about.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="about-page">
+    <!-- Hero Section -->
+    <section class="about-hero">
+        <div class="container">
+            <div class="hero-content slide-up">
+                <h1>About SchemeX AI</h1>
+                <p>Empowering rural citizens with AI-driven access to government welfare schemes and services in their native language.</p>
+                <div class="hero-buttons">
+                    <a href="{% url 'register' %}" class="btn btn-primary btn-lg">
+                        Get Started
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                    <a href="{% url 'contact' %}" class="btn btn-outline btn-lg">
+                        Contact Us
+                        <i class="fa-solid fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission Section -->
+    <section class="mission-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Our Mission</h2>
+                <p>Bridging the digital divide for rural India</p>
+            </div>
+            <div class="mission-content">
+                <div class="mission-text slide-up delay-1">
+                    <p>SchemeX AI is dedicated to making government services accessible to every citizen, regardless of their language, literacy level, or digital proficiency. We believe that technology should empower, not exclude.</p>
+                    <p>Our AI-powered platform breaks down barriers by providing voice-first, multilingual assistance that helps rural citizens discover, understand, and apply for government welfare schemes with ease.</p>
+                </div>
+                <div class="mission-stats slide-up delay-2">
+                    <div class="stat-item">
+                        <div class="stat-number">Live</div>
+                        <div class="stat-label">Scheme catalog</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">Voice</div>
+                        <div class="stat-label">Language assistance</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">Secure</div>
+                        <div class="stat-label">Protected user workflows</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Values Section -->
+    <section class="values-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Our Values</h2>
+                <p>The principles that guide everything we do</p>
+            </div>
+            <div class="values-grid">
+                <div class="value-card slide-up delay-1">
+                    <div class="value-icon">
+                        <i class="fa-solid fa-universal-access"></i>
+                    </div>
+                    <h3>Accessibility First</h3>
+                    <p>Designed for first-time smartphone users and elderly citizens with simple interfaces and voice support.</p>
+                </div>
+                <div class="value-card slide-up delay-2">
+                    <div class="value-icon">
+                        <i class="fa-solid fa-language"></i>
+                    </div>
+                    <h3>Multilingual</h3>
+                    <p>Available in 12+ Indian languages to ensure no citizen is left behind due to language barriers.</p>
+                </div>
+                <div class="value-card slide-up delay-3">
+                    <div class="value-icon">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <h3>Trust & Security</h3>
+                    <p>Your data is protected with enterprise-grade security and privacy-first design principles.</p>
+                </div>
+                <div class="value-card slide-up delay-4">
+                    <div class="value-icon">
+                        <i class="fa-solid fa-lightbulb"></i>
+                    </div>
+                    <h3>Innovation</h3>
+                    <p>Leveraging AI and voice technology to solve real-world problems for rural communities.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="team-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>What The Platform Supports</h2>
+                <p>Core product areas built into SchemeX AI</p>
+            </div>
+            <div class="team-grid">
+                <div class="team-card slide-up delay-1">
+                    <div class="team-avatar">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                    <div class="team-info">
+                        <h3>Scheme Discovery</h3>
+                        <p class="team-role">Search and filtering</p>
+                        <p class="team-bio">Citizens can browse schemes, inspect details, and move into eligibility checks or applications.</p>
+                    </div>
+                </div>
+                <div class="team-card slide-up delay-2">
+                    <div class="team-avatar">
+                        <i class="fa-solid fa-user-check"></i>
+                    </div>
+                    <div class="team-info">
+                        <h3>Eligibility Matching</h3>
+                        <p class="team-role">Profile-aware results</p>
+                        <p class="team-bio">Eligibility is calculated from active scheme rules and user answers instead of static recommendations.</p>
+                    </div>
+                </div>
+                <div class="team-card slide-up delay-3">
+                    <div class="team-avatar">
+                        <i class="fa-solid fa-file-arrow-up"></i>
+                    </div>
+                    <div class="team-info">
+                        <h3>Document Workflow</h3>
+                        <p class="team-role">Application-based checklist</p>
+                        <p class="team-bio">Required document tasks are generated from the user's real applications and selected schemes.</p>
+                    </div>
+                </div>
+                <div class="team-card slide-up delay-4">
+                    <div class="team-avatar">
+                        <i class="fa-solid fa-robot"></i>
+                    </div>
+                    <div class="team-info">
+                        <h3>AI Assistance</h3>
+                        <p class="team-role">Guided support</p>
+                        <p class="team-bio">The assistant helps explain schemes, application steps, and document requirements in simple language.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Story Section -->
+    <section class="story-section">
+        <div class="container">
+            <div class="story-content">
+                <div class="story-text slide-up delay-1">
+                    <h2>Why SchemeX Exists</h2>
+                    <p>Government welfare information can be hard to navigate when scheme rules, documents, and application steps are spread across different places.</p>
+                    <p>SchemeX AI brings discovery, eligibility checks, applications, documents, dashboard tracking, and assistant support into one responsive experience.</p>
+                    <p>The interface is designed to be clear on phones, comfortable for first-time users, and honest when data is not available yet.</p>
+                </div>
+                <div class="story-image slide-up delay-2">
+                    <div class="story-visual">
+                        <div class="visual-element">
+                            <i class="fa-solid fa-seedling"></i>
+                        </div>
+                        <div class="visual-element">
+                            <i class="fa-solid fa-users"></i>
+                        </div>
+                        <div class="visual-element">
+                            <i class="fa-solid fa-hand-holding-heart"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Trust Section -->
+    <section class="partners-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Trust Principles</h2>
+                <p>How the product should behave for users</p>
+            </div>
+            <div class="partners-grid">
+                <div class="partner-card slide-up delay-1">
+                    <div class="partner-logo">
+                        <i class="fa-solid fa-database"></i>
+                    </div>
+                    <h3>Data Driven</h3>
+                    <p>Pages should render from backend APIs and show clear empty states when data is missing.</p>
+                </div>
+                <div class="partner-card slide-up delay-2">
+                    <div class="partner-logo">
+                        <i class="fa-solid fa-lock"></i>
+                    </div>
+                    <h3>Protected Access</h3>
+                    <p>Profile, application, dashboard, and document workflows stay tied to the signed-in user.</p>
+                </div>
+                <div class="partner-card slide-up delay-3">
+                    <div class="partner-logo">
+                        <i class="fa-solid fa-universal-access"></i>
+                    </div>
+                    <h3>Accessible Design</h3>
+                    <p>Readable contrast, large tap targets, and keyboard focus states support everyday use.</p>
+                </div>
+                <div class="partner-card slide-up delay-4">
+                    <div class="partner-logo">
+                        <i class="fa-solid fa-mobile-screen"></i>
+                    </div>
+                    <h3>Responsive Layout</h3>
+                    <p>The experience adapts across phone, tablet, and desktop screen sizes.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content slide-up">
+                <h2>Join Our Mission</h2>
+                <p>Help us bridge the digital divide and empower rural citizens across India</p>
+                <div class="cta-buttons">
+                    <a href="{% url 'register' %}" class="btn btn-primary btn-lg">
+                        Start Using SchemeX
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                    <a href="{% url 'contact' %}" class="btn btn-secondary btn-lg">
+                        Contact Us
+                        <i class="fa-solid fa-handshake"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/about.js' %}"></script>
+{% endblock %}

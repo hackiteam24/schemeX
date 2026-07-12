@@ -1,0 +1,146 @@
+[
+    {
+        "id": "ts-001",
+        "name": "Rythu Bharosa",
+        "state": "telangana",
+        "category": "agriculture",
+        "eligibility": "Resident farmers in Telangana are eligible under the government's farmer support scheme. The scheme is for farmers covered by the official agriculture records and related verification rules.",
+        "benefits": "Eligible farmers receive financial support for agriculture inputs through direct benefit transfer. The Telangana government has recently described the scheme as providing Rs. 6,000 per acre per season, or Rs. 12,000 per acre per year.",
+        "how_to_apply": "Apply through the official Rythu Bharosa portal and agriculture department process with Aadhaar, bank account, and land records. Farmer details are verified through official land and beneficiary databases."
+    },
+    {
+        "id": "ts-002",
+        "name": "Rythu Bima",
+        "state": "telangana",
+        "category": "agriculture",
+        "eligibility": "Farmers in Telangana aged 18 to 59 years are eligible for enrollment. The scheme uses official farmer records for verification.",
+        "benefits": "The scheme provides Rs. 5 lakh life insurance coverage to the nominee if the enrolled farmer dies for any reason. The premium is paid by the government.",
+        "how_to_apply": "Apply through the agriculture department or official Rythu Bharosa/Rythu Bima system using Aadhaar and farmer land records. Nominee and farmer details are registered in the official database."
+    },
+    {
+        "id": "ts-003",
+        "name": "Aasara pensions",
+        "state": "telangana",
+        "category": "pensions",
+        "eligibility": "Poor senior citizens, widows, people with disabilities, people living with HIV/AIDS, beedi workers, toddy tappers, weavers, and other vulnerable groups are eligible under official rules. Category-specific age and disability conditions apply.",
+        "benefits": "The scheme provides monthly pension support to eligible beneficiaries. Official Telangana sources state pensions for several groups and enhanced amounts for some categories, including disability pensions.",
+        "how_to_apply": "Apply through the official Aasara pension process at the local revenue or welfare office with Aadhaar, income proof, age proof, disability certificate if needed, and bank account details."
+    },
+    {
+        "id": "ts-004",
+        "name": "Kalyana Lakshmi Pathakam",
+        "state": "telangana",
+        "category": "social_welfare",
+        "eligibility": "Unmarried brides from Telangana families are eligible if they are at least 18 years old at the time of marriage. Parental income must be within the scheme limit and category rules must be met.",
+        "benefits": "The scheme gives a one-time financial assistance of Rs. 1,00,116 for marriage expenses. It is meant to reduce financial stress for eligible families.",
+        "how_to_apply": "Apply through the Telangana ePASS portal with Aadhaar, age proof, income certificate, caste certificate if applicable, marriage proof, and bank account details."
+    },
+    {
+        "id": "ts-005",
+        "name": "Shaadi Mubarak",
+        "state": "telangana",
+        "category": "social_welfare",
+        "eligibility": "Unmarried Muslim brides from Telangana families are eligible if they are at least 18 years old at the time of marriage. Family income must satisfy the scheme rules.",
+        "benefits": "The scheme provides a one-time marriage assistance payment of Rs. 1,00,116. The amount is transferred to the eligible family as marriage support.",
+        "how_to_apply": "Apply through the Telangana ePASS portal with Aadhaar, age proof, income certificate, marriage proof, and bank account details. Local welfare offices and official portals are used for verification."
+    },
+    {
+        "id": "ts-006",
+        "name": "Maha Lakshmi",
+        "state": "telangana",
+        "category": "women_child",
+        "eligibility": "Women heads of families in Telangana are eligible under the official state programme. The scheme is targeted to resident women who meet government verification rules.",
+        "benefits": "Eligible women receive Rs. 2,500 financial assistance. The scheme also provides subsidised gas cylinders at Rs. 500 and free TSRTC bus travel across Telangana.",
+        "how_to_apply": "Apply through the official Telangana government process and local service points with Aadhaar, residence proof, and bank account details. Verification is done through state welfare records."
+    },
+    {
+        "id": "ts-007",
+        "name": "Cheyutha Scheme",
+        "state": "telangana",
+        "category": "health",
+        "eligibility": "Economically backward families in Telangana are eligible under the Rajiv Arogyasri-linked health scheme. Beneficiary families must satisfy the official eligibility and empanelment rules.",
+        "benefits": "The scheme provides free medical and healthcare treatment up to Rs. 10 lakh per family. Coverage includes treatment in empanelled hospitals and approved medical packages.",
+        "how_to_apply": "Apply through the official Rajiv Arogyasri/Cheyutha process at the designated health service system or empanelled hospital. Aadhaar, ration card or family identity proof, and medical records are required."
+    },
+    {
+        "id": "ts-008",
+        "name": "Kanti Velugu",
+        "state": "telangana",
+        "category": "health",
+        "eligibility": "All citizens of Telangana are eligible for the state eye screening programme. People needing follow-up care are covered under the official medical process.",
+        "benefits": "The scheme provides free eye screening, free spectacles where required, and free surgery or treatment for eligible cases. It is a universal eye care programme.",
+        "how_to_apply": "Attend the government eye screening camps or health centre process announced by the state. Follow-up treatment is arranged through the official health department system."
+    },
+    {
+        "id": "ts-009",
+        "name": "2 Bed Room Housing Programme",
+        "state": "telangana",
+        "category": "housing",
+        "eligibility": "Houseless poor families in Telangana are eligible under the official housing programme. Beneficiary selection follows state housing and verification rules.",
+        "benefits": "Eligible families receive a 2-bedroom house with hall, kitchen, and two toilets. The programme is meant to provide free housing support to poor households.",
+        "how_to_apply": "Apply through the official housing department or local government office with Aadhaar, income proof, residence proof, and family details. Beneficiary selection is done through state housing records."
+    },
+    {
+        "id": "ts-010",
+        "name": "Indiramma Indlu",
+        "state": "telangana",
+        "category": "housing",
+        "eligibility": "Poor households in Telangana without proper housing are eligible under the state housing support programme. Final eligibility depends on the official selection rules.",
+        "benefits": "The scheme provides housing support to eligible poor families. Beneficiaries receive government-supported house construction assistance under the state housing programme.",
+        "how_to_apply": "Apply through the official housing department process or local government service point with Aadhaar, income proof, and residence details. Applications are verified by the state before sanction."
+    },
+    {
+        "id": "ts-011",
+        "name": "Saakshar Bharat program",
+        "state": "telangana",
+        "category": "education",
+        "eligibility": "Illiterate people aged 15 to 50 years in eligible village areas can join. The scheme is meant for adults who need basic literacy training.",
+        "benefits": "The programme provides literacy training and allows learners to appear for NIOS literacy examination. It helps participants become literate and receive certification.",
+        "how_to_apply": "Apply through the village coordinator for Saakshar Bharat at the local village level. Basic identity details are required for enrolment."
+    },
+    {
+        "id": "ts-012",
+        "name": "SoFTNET",
+        "state": "telangana",
+        "category": "education",
+        "eligibility": "Students, learners, and citizens needing educational and training support in Telangana can use the service. Access depends on the availability of the broadcast and learning platform.",
+        "benefits": "The programme provides educational and training channels through T-SAT for distance learning, agriculture extension, rural development, tele-medicine, and e-governance content. It supports learning through satellite-based communication.",
+        "how_to_apply": "Access the service through the official SoFTNET and T-SAT channels and institutional links. No separate beneficiary form is stated for general viewing access."
+    },
+    {
+        "id": "ts-013",
+        "name": "T-Fiber",
+        "state": "telangana",
+        "category": "education",
+        "eligibility": "Households, government institutions, and private institutions in Telangana can use the service where the network is available. Connection is subject to the official rollout area.",
+        "benefits": "The programme provides high-speed broadband connectivity and digital infrastructure across Telangana. It supports delivery of government and public services.",
+        "how_to_apply": "Apply through the official T-Fiber service process or local connectivity channel in covered areas. Required documents depend on the user type and connection request."
+    },
+    {
+        "id": "ts-014",
+        "name": "TASK",
+        "state": "telangana",
+        "category": "employment",
+        "eligibility": "College students and graduates in Telangana are eligible through registered institutions and the official skilling system. Participation depends on college registration and programme enrollment.",
+        "benefits": "The programme provides industry-grade skill development and employability support. It has trained large numbers of youth through college-linked skilling initiatives.",
+        "how_to_apply": "Apply through the college or official TASK registration process. Students usually need college details and basic identity documents."
+    },
+    {
+        "id": "ts-015",
+        "name": "Land distribution to Dalits",
+        "state": "telangana",
+        "category": "social_welfare",
+        "eligibility": "Landless SC women in Telangana are eligible under the official land distribution scheme. Beneficiary selection follows state social welfare rules.",
+        "benefits": "The scheme provides up to 3 acres of agricultural land along with support for irrigation, land development, and agricultural inputs. It is designed to support sustainable livelihood.",
+        "how_to_apply": "Apply through the social welfare or revenue department process with caste proof, income proof, landlessness proof, and Aadhaar. Selection is done by the government."
+    },
+    {
+        "id": "ts-016",
+        "name": "Rice distribution",
+        "state": "telangana",
+        "category": "social_welfare",
+        "eligibility": "Eligible ration card families in Telangana can receive subsidised rice under the public distribution system. Family eligibility is based on official food security rules.",
+        "benefits": "The scheme supplies rice at Re. 1 per kg, with 6 kg per person per month mentioned in official district material. It provides a major food subsidy to eligible families.",
+        "how_to_apply": "Apply or update details through the civil supplies department and ration card system. Aadhaar and family ration card details are required."
+    }
+]

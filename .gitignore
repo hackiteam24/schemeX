@@ -1,0 +1,22 @@
+# Environment / secrets
+.env
+*.env
+!.env.example
+
+# Python
+venv/
+__pycache__/
+*.pyc
+
+# Django
+backend/db.sqlite3
+backend/staticfiles/
+backend/media/
+
+# Node (if ever added)
+node_modules/
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/

@@ -1,0 +1,216 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>
+        {% block title %}
+        SchemeX AI
+        {% endblock %}
+    </title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700&family=Hind:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+    <!-- Global CSS -->
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+
+    <link rel="stylesheet" href="{% static 'css/footer.css' %}">
+
+    <link rel="stylesheet" href="{% static 'css/animations.css' %}">
+
+    <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
+    <link rel="stylesheet" href="{% static 'css/modern-glass-theme.css' %}">
+
+    {% block extra_css %}
+
+    {% endblock %}
+
+</head>
+
+<body>
+
+    <!-- ===================== -->
+    <!-- Navigation -->
+    <!-- ===================== -->
+
+    <header>
+
+        <nav class="navbar">
+
+            <div class="logo">
+
+                <a href="{% url 'home' %}">
+
+                    <img src="{% static 'images/logo/logo.png' %}" alt="SchemeX AI">
+
+                    <span>SchemeX AI</span>
+
+                </a>
+
+            </div>
+
+            <ul class="nav-links">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'schemes' %}">Schemes</a></li>
+                <li class="nav-auth-only"><a href="{% url 'eligibility' %}">Eligibility</a></li>
+                <li class="nav-auth-only"><a href="{% url 'application_form' %}">Apply</a></li>
+                <li class="nav-auth-only"><a href="{% url 'documents' %}">Documents</a></li>
+                <li class="nav-auth-only"><a href="{% url 'dashboard' %}">Dashboard</a></li>
+                <li class="nav-auth-only"><a href="{% url 'profile' %}">My Profile</a></li>
+                <li class="nav-auth-only"><a href="{% url 'chatbot' %}"><i class="fa-solid fa-robot"></i> AI
+                        Assistant</a></li>
+            </ul>
+
+            <div class="nav-right">
+
+                <select id="language">
+
+                    <option value="en">English</option>
+
+                    <option value="ta">தமிழ்</option>
+
+                    <option value="hi">हिन्दी</option>
+
+                    <option value="te">తెలుగు</option>
+
+                    <option value="kn">ಕನ್ನಡ</option>
+
+                    <option value="ml">മലയாളം</option>
+
+                </select>
+
+                <a href="{% url 'login' %}" id="navLoginBtn" class="login-btn guest-only">Login</a>
+                <a href="{% url 'register' %}" id="navRegisterBtn" class="register-btn guest-only">Register</a>
+
+                <div class="user-dropdown auth-only" id="userDropdown">
+                    <button class="dropdown-toggle" id="userDropdownToggle">
+                        <i class="fa-solid fa-user-circle"></i>
+                        <span class="user-name" id="navbarUserName">Account</span>
+                        <i class="fa-solid fa-chevron-down dropdown-chevron"></i>
+                    </button>
+                    <div class="dropdown-menu" id="userDropdownMenu">
+                        <a href="{% url 'dashboard' %}">Dashboard</a>
+                        <a href="{% url 'profile' %}">My Profile</a>
+                        <hr>
+                        <a href="#" id="navLogoutBtn" class="dropdown-danger">Logout</a>
+                    </div>
+                </div>
+                <button id="menu-btn">
+
+                    <i class="fa-solid fa-bars"></i>
+
+                </button>
+
+            </div>
+
+        </nav>
+
+    </header>
+
+    <!-- Mobile Navigation -->
+
+    <div id="mobileMenu" class="mobile-menu">
+        <a href="{% url 'home' %}">Home</a>
+        <a href="{% url 'schemes' %}">Schemes</a>
+        <a href="{% url 'eligibility' %}" class="nav-auth-only">Eligibility</a>
+        <a href="{% url 'application_form' %}" class="nav-auth-only">Apply</a>
+        <a href="{% url 'documents' %}" class="nav-auth-only">Documents</a>
+        <a href="{% url 'dashboard' %}" class="nav-auth-only">Dashboard</a>
+        <a href="{% url 'profile' %}" class="nav-auth-only">My Profile</a>
+        <a href="{% url 'chatbot' %}" class="nav-auth-only">AI Assistant</a>
+        <a href="{% url 'login' %}" id="navLoginBtnMobile" class="login-btn guest-only">Login</a>
+        <a href="{% url 'register' %}" id="navRegisterBtnMobile"
+            class="login-btn guest-only mobile-register-btn">Register</a>
+        <a href="#" id="navLogoutBtnMobile" class="login-btn auth-only mobile-logout-btn">Logout</a>
+    </div>
+
+    <!-- ===================== -->
+    <!-- Page Content -->
+    <!-- ===================== -->
+
+    <main>
+
+        {% block content %}
+
+        {% endblock %}
+
+    </main>
+
+    <!-- Floating Voice Assistant -->
+    <button id="voiceAssistant" class="voice-btn">
+        <i class="fa-solid fa-microphone"></i>
+    </button>
+
+    <!-- Footer -->
+    {% if request.resolver_match.url_name == 'home' %}
+    <footer>
+        <div class="footer-container">
+            <div class="footer-about">
+                <h2>SchemeX AI</h2>
+                <p>
+                    Making Government Services Accessible Through Artificial Intelligence and Voice Technology.
+                </p>
+            </div>
+
+            <div class="footer-links">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="{% url 'home' %}">Home</a></li>
+                    <li><a href="{% url 'schemes' %}">Schemes</a></li>
+                    <li><a href="{% url 'eligibility' %}">Eligibility</a></li>
+                    <li><a href="{% url 'contact' %}">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-contact">
+                <h3>Contact</h3>
+                <p>Email : support@schemex.ai</p>
+                <p>Phone : +91 XXXXX XXXXX</p>
+                <p>India</p>
+            </div>
+        </div>
+
+        <div class="copyright">
+            <p>
+                © 2026 SchemeX AI.
+                All Rights Reserved.
+            </p>
+        </div>
+    </footer>
+    {% endif %}
+
+    <!-- JavaScript -->
+
+    <script src="{% static 'js/main.js' %}"></script>
+
+    <script src="{% static 'js/navbar.js' %}"></script>
+
+    <script src="{% static 'js/voice.js' %}"></script>
+
+    {% block extra_js %}
+
+    {% endblock %}
+
+</body>
+
+</html>

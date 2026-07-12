@@ -1,0 +1,414 @@
+/* ==================== */
+/* Eligibility Checker Styles */
+/* ==================== */
+
+.eligibility-page {
+    padding: var(--spacing-3xl) 0;
+}
+
+.page-header {
+    text-align: center;
+    margin-bottom: var(--spacing-3xl);
+}
+
+.page-header h1 {
+    font-size: 2.75rem;
+    color: var(--primary-green);
+    margin-bottom: var(--spacing-sm);
+    letter-spacing: -0.015em;
+}
+
+.page-header p {
+    color: var(--gray-600);
+    font-size: 1.15rem;
+}
+
+/* Progress Stepper */
+.progress-container {
+    max-width: 750px;
+    margin: 0 auto var(--spacing-3xl);
+    background: var(--white);
+    padding: var(--spacing-xl) var(--spacing-2xl);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--gray-100);
+}
+
+.progress-bar {
+    display: none;
+    height: 6px;
+    background: var(--gray-200);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+    margin-bottom: var(--spacing-xl);
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary-green), var(--primary-light));
+    border-radius: var(--radius-full);
+    transition: width var(--transition-slow);
+}
+
+.progress-steps {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+}
+
+.progress-steps::before {
+    content: '';
+    position: absolute;
+    top: 18px;
+    left: var(--spacing-2xl);
+    right: var(--spacing-2xl);
+    height: 2px;
+    background: var(--gray-200);
+    z-index: 0;
+}
+
+.step {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    flex: 1;
+}
+
+.step-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background: var(--white);
+    color: var(--gray-500);
+    border: 2px solid var(--gray-300);
+    border-radius: 50%;
+    font-weight: 700;
+    font-size: 0.95rem;
+    margin-bottom: var(--spacing-sm);
+    transition: all var(--transition-normal);
+}
+
+.step.active .step-number {
+    background: var(--primary-green);
+    border-color: var(--primary-green);
+    color: var(--white);
+    box-shadow: 0 0 0 4px rgba(27, 107, 58, 0.15);
+}
+
+.step.completed .step-number {
+    background: var(--primary-dark);
+    border-color: var(--primary-dark);
+    color: var(--white);
+}
+
+.step-label {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--gray-600);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: color var(--transition-fast);
+}
+
+.step.active .step-label {
+    color: var(--primary-green);
+}
+
+.step.completed .step-label {
+    color: var(--primary-dark);
+}
+
+/* Form Wizard */
+.eligibility-form {
+    max-width: 750px;
+    margin: 0 auto;
+    background: var(--white);
+    border-radius: var(--radius-2xl);
+    padding: var(--spacing-2xl);
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--gray-100);
+}
+
+.form-step {
+    display: none;
+}
+
+.form-step.active {
+    display: block;
+    animation: fadeIn var(--transition-normal);
+}
+
+.step-header {
+    text-align: center;
+    margin-bottom: var(--spacing-2xl);
+    padding-bottom: var(--spacing-lg);
+    border-bottom: 1px solid var(--gray-100);
+}
+
+.step-header h2 {
+    font-size: 1.85rem;
+    margin-bottom: var(--spacing-xs);
+    color: var(--gray-900);
+}
+
+.step-header p {
+    color: var(--gray-600);
+    font-size: 1rem;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-xl);
+    margin-bottom: var(--spacing-2xl);
+}
+
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+    padding-top: var(--spacing-lg);
+    border-top: 1px solid var(--gray-100);
+}
+
+.form-actions .btn {
+    min-width: 140px;
+}
+
+/* Results Section */
+.eligibility-results {
+    max-width: 950px;
+    margin: var(--spacing-3xl) auto 0;
+    animation: slideUp var(--transition-slow);
+}
+
+.results-header {
+    text-align: center;
+    margin-bottom: var(--spacing-2xl);
+}
+
+.results-header h2 {
+    font-size: 2.25rem;
+    color: var(--primary-green);
+    margin-bottom: var(--spacing-sm);
+}
+
+.results-header p {
+    color: var(--gray-600);
+    font-size: 1.15rem;
+}
+
+.results-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-xl);
+    margin-bottom: var(--spacing-2xl);
+}
+
+.result-card {
+    background: var(--white);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-xl);
+    border: 1px solid var(--gray-100);
+    box-shadow: var(--shadow-md);
+    transition: all var(--transition-normal);
+    display: flex;
+    flex-direction: column;
+}
+
+.result-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+}
+
+.result-card.eligible { border-top: 4px solid var(--primary-green); }
+.result-card.not-eligible { border-top: 4px solid #ef4444; }
+.result-card.partial { border-top: 4px solid var(--saffron); }
+
+.result-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: var(--spacing-lg);
+    border-bottom: 1px solid var(--gray-50);
+    padding-bottom: var(--spacing-sm);
+}
+
+.result-title {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--gray-900);
+    margin-bottom: var(--spacing-xs);
+    line-height: 1.3;
+}
+
+.result-subtitle {
+    color: var(--gray-500);
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.eligibility-badge {
+    padding: var(--spacing-xs) var(--spacing-md);
+    border-radius: var(--radius-full);
+    font-size: 0.8rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.eligibility-badge.eligible {
+    background: rgba(27, 107, 58, 0.08);
+    color: var(--primary-green);
+}
+
+.eligibility-badge.not-eligible {
+    background: rgba(239, 68, 68, 0.08);
+    color: #ef4444;
+}
+
+.eligibility-badge.partial {
+    background: rgba(244, 162, 97, 0.08);
+    color: var(--saffron);
+}
+
+.confidence-score {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-lg);
+    color: var(--gray-700);
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.confidence-score i {
+    color: var(--primary-green);
+}
+
+.result-reasons {
+    margin-bottom: var(--spacing-xl);
+    flex-grow: 1;
+}
+
+.result-reasons h4 {
+    font-size: 0.95rem;
+    color: var(--gray-800);
+    margin-bottom: var(--spacing-sm);
+    font-weight: 700;
+}
+
+.result-reasons ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.result-reasons li {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    color: var(--gray-600);
+    font-size: 0.9rem;
+    margin-bottom: var(--spacing-xs);
+}
+
+.result-reasons li i {
+    color: var(--primary-green);
+    font-size: 0.8rem;
+}
+
+.result-actions {
+    display: flex;
+    gap: var(--spacing-md);
+    border-top: 1px solid var(--gray-50);
+    padding-top: var(--spacing-md);
+}
+
+.result-actions .btn {
+    flex: 1;
+}
+
+.results-actions {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-lg);
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-md);
+    }
+    
+    .results-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .progress-steps {
+        flex-wrap: wrap;
+        gap: var(--spacing-md);
+        justify-content: center;
+    }
+    
+    .progress-steps::before {
+        display: none;
+    }
+    
+    .step {
+        flex: none;
+        width: calc(50% - var(--spacing-md));
+    }
+    
+    .form-actions {
+        flex-direction: column-reverse;
+    }
+    
+    .form-actions .btn {
+        width: 100%;
+    }
+    
+    .results-actions {
+        flex-direction: column;
+        padding: 0 var(--spacing-md);
+    }
+    
+    .results-actions .btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 640px) {
+    .eligibility-page {
+        padding: var(--spacing-2xl) 0;
+    }
+    
+    .page-header h1 {
+        font-size: 2.25rem;
+    }
+    
+    .step-header h2 {
+        font-size: 1.5rem;
+    }
+    
+    .eligibility-form {
+        padding: var(--spacing-xl);
+    }
+    
+    .step {
+        width: 100%;
+    }
+}

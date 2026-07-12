@@ -1,0 +1,371 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Scheme Details - SchemeX AI
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/schemes.css' %}">
+<style>
+    .scheme-detail-container {
+        padding: var(--spacing-2xl) 0;
+    }
+    .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--spacing-xs);
+        color: var(--gray-600);
+        text-decoration: none;
+        font-weight: 500;
+        margin-bottom: var(--spacing-lg);
+        transition: color var(--transition-fast);
+    }
+    .back-link:hover {
+        color: var(--primary-green);
+    }
+    .detail-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: var(--spacing-xl);
+    }
+    @media (max-width: 992px) {
+        .detail-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+    .detail-card {
+        background: var(--white);
+        border-radius: var(--radius-xl);
+        padding: var(--spacing-xl);
+        box-shadow: var(--shadow-md);
+        margin-bottom: var(--spacing-xl);
+        border: 1px solid var(--gray-200);
+    }
+    .detail-header {
+        margin-bottom: var(--spacing-xl);
+    }
+    .detail-header h1 {
+        font-size: 2.25rem;
+        color: var(--gray-900);
+        margin-bottom: var(--spacing-sm);
+        line-height: 1.2;
+    }
+    .detail-badges {
+        display: flex;
+        gap: var(--spacing-sm);
+        flex-wrap: wrap;
+        margin-bottom: var(--spacing-md);
+    }
+    .detail-badge {
+        padding: var(--spacing-xs) var(--spacing-md);
+        border-radius: var(--radius-full);
+        font-size: 0.875rem;
+        font-weight: 600;
+    }
+    .badge-category {
+        background: var(--success-bg);
+        color: var(--primary-green);
+    }
+    .badge-state {
+        background: var(--info-bg);
+        color: var(--info);
+    }
+    .detail-subtitle {
+        font-size: 1.125rem;
+        color: var(--gray-600);
+        font-weight: 500;
+    }
+    .detail-section-title {
+        font-size: 1.35rem;
+        color: var(--gray-800);
+        margin-bottom: var(--spacing-md);
+        padding-bottom: var(--spacing-xs);
+        border-bottom: 2px solid var(--gray-100);
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-xs);
+    }
+    .detail-section-title i {
+        color: var(--primary-green);
+    }
+    .detail-text {
+        color: var(--gray-700);
+        line-height: 1.6;
+        font-size: 1rem;
+        white-space: pre-line;
+    }
+    .action-card {
+        position: sticky;
+        top: 100px;
+    }
+    .action-btn-group {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-md);
+        margin-top: var(--spacing-lg);
+    }
+    .action-btn-group .btn {
+        width: 100%;
+        justify-content: center;
+        padding: var(--spacing-md);
+        font-size: 1.05rem;
+    }
+    .parameters-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    .parameter-item {
+        display: flex;
+        justify-content: space-between;
+        padding: var(--spacing-md) 0;
+        border-bottom: 1px solid var(--gray-100);
+        font-size: 0.95rem;
+    }
+    .parameter-item:last-child {
+        border-bottom: none;
+    }
+    .parameter-label {
+        color: var(--gray-500);
+        font-weight: 500;
+    }
+    .parameter-value {
+        color: var(--gray-800);
+        font-weight: 600;
+        text-align: right;
+    }
+    .document-list {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: var(--spacing-sm);
+        margin-top: var(--spacing-md);
+    }
+    .document-item {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-sm);
+        padding: var(--spacing-md);
+        background: var(--gray-50);
+        border-radius: var(--radius-md);
+        border: 1px solid var(--gray-200);
+    }
+    .document-item i {
+        color: var(--primary-green);
+        font-size: 1.25rem;
+    }
+    .document-name {
+        color: var(--gray-800);
+        font-weight: 500;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="scheme-detail-container">
+    <div class="container">
+        <!-- Back Link -->
+        <a href="{% url 'schemes' %}" class="back-link">
+            <i class="fa-solid fa-arrow-left"></i> Back to Schemes
+        </a>
+
+        <!-- Detail Header -->
+        <div id="detailHeader" class="detail-header slide-up">
+            <div class="detail-badges">
+                <span class="detail-badge badge-category" id="schemeCategoryBadge">Category</span>
+                <span class="detail-badge badge-state" id="schemeStateBadge">State</span>
+            </div>
+            <h1 id="schemeName">Loading Scheme Details...</h1>
+            <p class="detail-subtitle" id="schemeDepartment">Department Name</p>
+        </div>
+
+        <!-- Detail Grid -->
+        <div class="detail-grid">
+            <!-- Left: Scheme Information -->
+            <div class="slide-up delay-1">
+                <!-- Description -->
+                <div class="detail-card">
+                    <h2 class="detail-section-title">
+                        <i class="fa-solid fa-file-text"></i>
+                        Description
+                    </h2>
+                    <p class="detail-text" id="schemeDescription">Loading...</p>
+                </div>
+
+                <!-- Benefits -->
+                <div class="detail-card">
+                    <h2 class="detail-section-title">
+                        <i class="fa-solid fa-hand-holding-dollar"></i>
+                        Benefits
+                    </h2>
+                    <p class="detail-text" id="schemeBenefits">Loading...</p>
+                </div>
+
+                <!-- Eligibility -->
+                <div class="detail-card">
+                    <h2 class="detail-section-title">
+                        <i class="fa-solid fa-clipboard-check"></i>
+                        Eligibility Criteria
+                    </h2>
+                    <p class="detail-text" id="schemeEligibility">Loading...</p>
+                </div>
+
+                <!-- Required Documents -->
+                <div class="detail-card">
+                    <h2 class="detail-section-title">
+                        <i class="fa-solid fa-folder-open"></i>
+                        Required Documents
+                    </h2>
+                    <div class="document-list" id="documentsList">
+                        <!-- Loaded dynamically -->
+                    </div>
+                </div>
+
+                <!-- How to Apply -->
+                <div class="detail-card">
+                    <h2 class="detail-section-title">
+                        <i class="fa-solid fa-circle-info"></i>
+                        How to Apply
+                    </h2>
+                    <p class="detail-text" id="schemeHowToApply">Loading...</p>
+                </div>
+            </div>
+
+            <!-- Right: Apply and Parameters -->
+            <div class="slide-up delay-2">
+                <div class="action-card">
+                    <!-- Quick Actions -->
+                    <div class="detail-card">
+                        <h2 class="detail-section-title">
+                            <i class="fa-solid fa-bolt"></i>
+                            Quick Actions
+                        </h2>
+                        <div class="action-btn-group">
+                            <a href="#" id="applyInternalBtn" class="btn btn-primary">
+                                <i class="fa-solid fa-paper-plane"></i> Apply via SchemeX
+                            </a>
+                            <button id="ttsBtn" class="btn btn-outline">
+                                <i class="fa-solid fa-headphones"></i> Listen Details
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Eligibility Parameters -->
+                    <div class="detail-card">
+                        <h2 class="detail-section-title">
+                            <i class="fa-solid fa-sliders"></i>
+                            Eligibility Profile
+                        </h2>
+                        <ul class="parameters-list">
+                            <li class="parameter-item">
+                                <span class="parameter-label">State Limit</span>
+                                <span class="parameter-value" id="paramState">All States</span>
+                            </li>
+                            <li class="parameter-item">
+                                <span class="parameter-label">Age Limit</span>
+                                <span class="parameter-value" id="paramAge">No restriction</span>
+                            </li>
+                            <li class="parameter-item">
+                                <span class="parameter-label">Gender Restriction</span>
+                                <span class="parameter-value" id="paramGender">All Genders</span>
+                            </li>
+                            <li class="parameter-item">
+                                <span class="parameter-label">Max Family Income</span>
+                                <span class="parameter-value" id="paramIncome">No restriction</span>
+                            </li>
+                            <li class="parameter-item">
+                                <span class="parameter-label">BPL Card Holder</span>
+                                <span class="parameter-value" id="paramBpl">No restriction</span>
+                            </li>
+                            <li class="parameter-item">
+                                <span class="parameter-label">Eligible Caste</span>
+                                <span class="parameter-value" id="paramCaste">All Categories</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', async () => {
+        // Extract scheme ID from pathname
+        const schemeId = window.location.pathname.split('/').filter(Boolean).pop();
+        if (!schemeId) return;
+
+        try {
+            const scheme = await API.get(`/api/schemes/${schemeId}/`);
+            if (!scheme) throw new Error('Scheme not found');
+
+            // Set content
+            document.title = `${scheme.name} - SchemeX AI`;
+            document.getElementById('schemeName').textContent = scheme.name;
+            document.getElementById('schemeDepartment').textContent = scheme.department || 'Government of India';
+            document.getElementById('schemeCategoryBadge').textContent = (scheme.category || 'Welfare').toUpperCase();
+            
+            // Format state name
+            const stateDisplay = scheme.state === 'all' ? 'CENTRAL' : (scheme.state || 'ALL').toUpperCase();
+            document.getElementById('schemeStateBadge').textContent = stateDisplay;
+
+            document.getElementById('schemeDescription').textContent = scheme.description || 'No description available.';
+            document.getElementById('schemeBenefits').textContent = scheme.benefits || 'Check documentation for details.';
+            document.getElementById('schemeEligibility').textContent = scheme.eligibility_criteria || 'No specific criteria set.';
+            document.getElementById('schemeHowToApply').textContent = scheme.how_to_apply || 'Follow official guidelines.';
+
+            // Documents
+            const docList = document.getElementById('documentsList');
+            const docs = scheme.required_documents_list || [];
+            if (docs.length === 0) {
+                docList.innerHTML = `<div class="empty-state" style="padding: 10px; text-align: left;"><p style="margin: 0; color: var(--gray-500);">No specific documents list configured.</p></div>`;
+            } else {
+                docList.innerHTML = docs.map(doc => `
+                    <div class="document-item">
+                        <i class="fa-solid fa-file-shield"></i>
+                        <span class="document-name">${doc}</span>
+                    </div>
+                `).join('');
+            }
+
+            // Quick Actions Links
+            document.getElementById('applyInternalBtn').href = `/application/?scheme=${scheme.id}`;
+
+            // Eligibility Profile Parameters
+            document.getElementById('paramState').textContent = scheme.state === 'all' ? 'All India (Central)' : scheme.state.toUpperCase();
+            
+            let ageText = 'No restriction';
+            if (scheme.min_age !== null && scheme.max_age !== null) {
+                ageText = `${scheme.min_age} - ${scheme.max_age} years`;
+            } else if (scheme.min_age !== null) {
+                ageText = `>= ${scheme.min_age} years`;
+            } else if (scheme.max_age !== null) {
+                ageText = `<= ${scheme.max_age} years`;
+            }
+            document.getElementById('paramAge').textContent = ageText;
+
+            document.getElementById('paramGender').textContent = scheme.gender_limit ? scheme.gender_limit.toUpperCase() : 'ALL GENDERS';
+            document.getElementById('paramIncome').textContent = scheme.max_income !== null ? `Rs. ${parseInt(scheme.max_income).toLocaleString()}` : 'No limit';
+            document.getElementById('paramBpl').textContent = scheme.bpl_required ? 'BPL Required' : 'No restriction';
+            document.getElementById('paramCaste').textContent = scheme.caste_categories ? scheme.caste_categories.toUpperCase() : 'All Categories';
+
+            // TTS Button
+            const ttsBtn = document.getElementById('ttsBtn');
+            ttsBtn.addEventListener('click', () => {
+                if (SpeechService.speak(`${scheme.name}. Benefits: ${scheme.benefits}`)) {
+                    showToast('Playing scheme details', 'info');
+                } else {
+                    showToast('Text-to-speech not supported', 'error');
+                }
+            });
+
+        } catch (err) {
+            console.error('Failed to load scheme detail:', err);
+            showToast('Failed to load scheme details', 'error');
+            document.getElementById('schemeName').textContent = 'Scheme Not Found';
+        }
+    });
+</script>
+{% endblock %}

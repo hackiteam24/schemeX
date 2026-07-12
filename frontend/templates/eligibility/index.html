@@ -1,0 +1,289 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Eligibility Checker - SchemeX AI
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/eligibility.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="eligibility-page">
+    <div class="container">
+        <!-- Page Header -->
+        
+
+        <!-- Progress Bar -->
+        <div class="progress-container slide-up delay-1">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill" style="width: 25%;"></div>
+            </div>
+            <div class="progress-steps">
+                <div class="step active" data-step="1">
+                    <span class="step-number">1</span>
+                    <span class="step-label">Personal</span>
+                </div>
+                <div class="step" data-step="2">
+                    <span class="step-number">2</span>
+                    <span class="step-label">Location</span>
+                </div>
+                <div class="step" data-step="3">
+                    <span class="step-number">3</span>
+                    <span class="step-label">Economic</span>
+                </div>
+                <div class="step" data-step="4">
+                    <span class="step-number">4</span>
+                    <span class="step-label">Occupation</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Form Wizard -->
+        <div class="eligibility-form slide-up delay-2">
+            <form id="eligibilityForm">
+                <!-- Step 1: Personal Information -->
+                <div class="form-step active" data-step="1">
+                    <div class="step-header">
+                        <h2>Personal Information</h2>
+                        <p>Tell us about yourself to find matching schemes</p>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="age" class="form-label">Age *</label>
+                            <input type="number" id="age" name="age" class="form-input" placeholder="Enter your age" required min="18" max="100">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="gender" class="form-label">Gender *</label>
+                            <select id="gender" name="gender" class="form-select" required>
+                                <option value="">Select Gender</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="category" class="form-label">Category</label>
+                            <select id="category" name="category" class="form-select">
+                                <option value="">Select Category</option>
+                                <option value="general">General</option>
+                                <option value="obc">OBC</option>
+                                <option value="sc">SC</option>
+                                <option value="st">ST</option>
+                                <option value="ews">EWS</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="maritalStatus" class="form-label">Marital Status</label>
+                            <select id="maritalStatus" name="maritalStatus" class="form-select">
+                                <option value="">Select Status</option>
+                                <option value="single">Single</option>
+                                <option value="married">Married</option>
+                                <option value="widowed">Widowed</option>
+                                <option value="divorced">Divorced</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-outline" disabled>Previous</button>
+                        <button type="button" class="btn btn-primary" onclick="nextStep(2)">
+                            Next
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 2: Location -->
+                <div class="form-step" data-step="2">
+                    <div class="step-header">
+                        <h2>Location Details</h2>
+                        <p>Your location helps us find state-specific schemes</p>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="state" class="form-label">State *</label>
+                            <select id="state" name="state" class="form-select" required>
+                                <option value="">Select State</option>
+                                <option value="up">Uttar Pradesh</option>
+                                <option value="mp">Madhya Pradesh</option>
+                                <option value="bihar">Bihar</option>
+                                <option value="rajasthan">Rajasthan</option>
+                                <option value="maharashtra">Maharashtra</option>
+                                <option value="tamilnadu">Tamil Nadu</option>
+                                <option value="karnataka">Karnataka</option>
+                                <option value="andhra">Andhra Pradesh</option>
+                                <option value="telangana">Telangana</option>
+                                <option value="kerala">Kerala</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="district" class="form-label">District *</label>
+                            <input type="text" id="district" name="district" class="form-input" placeholder="Enter district" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="ruralUrban" class="form-label">Area Type *</label>
+                            <select id="ruralUrban" name="ruralUrban" class="form-select" required>
+                                <option value="">Select Area Type</option>
+                                <option value="rural">Rural</option>
+                                <option value="urban">Urban</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="pincode" class="form-label">Pincode</label>
+                            <input type="text" id="pincode" name="pincode" class="form-input" placeholder="Enter pincode" maxlength="6">
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-outline" onclick="previousStep(1)">Previous</button>
+                        <button type="button" class="btn btn-primary" onclick="nextStep(3)">
+                            Next
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 3: Economic Profile -->
+                <div class="form-step" data-step="3">
+                    <div class="step-header">
+                        <h2>Economic Profile</h2>
+                        <p>Income details help determine eligibility for financial assistance schemes</p>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="annualIncome" class="form-label">Annual Family Income (₹) *</label>
+                            <input type="number" id="annualIncome" name="annualIncome" class="form-input" placeholder="Enter annual income" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="incomeSource" class="form-label">Primary Income Source</label>
+                            <select id="incomeSource" name="incomeSource" class="form-select">
+                                <option value="">Select Source</option>
+                                <option value="agriculture">Agriculture</option>
+                                <option value="business">Business</option>
+                                <option value="salary">Salary</option>
+                                <option value="labor">Daily Wage Labor</option>
+                                <option value="pension">Pension</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="bplStatus" class="form-label">BPL Status</label>
+                            <select id="bplStatus" name="bplStatus" class="form-select">
+                                <option value="">Select Status</option>
+                                <option value="yes">Yes - BPL Card Holder</option>
+                                <option value="no">No - Not BPL</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="bankAccount" class="form-label">Bank Account</label>
+                            <select id="bankAccount" name="bankAccount" class="form-select">
+                                <option value="">Select Option</option>
+                                <option value="yes">Yes, I have a bank account</option>
+                                <option value="no">No, I don't have a bank account</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-outline" onclick="previousStep(2)">Previous</button>
+                        <button type="button" class="btn btn-primary" onclick="nextStep(4)">
+                            Next
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 4: Occupation & Land -->
+                <div class="form-step" data-step="4">
+                    <div class="step-header">
+                        <h2>Occupation & Land Details</h2>
+                        <p>Additional information for agricultural and employment schemes</p>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="occupation" class="form-label">Occupation *</label>
+                            <input type="text" id="occupation" name="occupation" class="form-input" placeholder="Enter occupation" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="ownsLand" class="form-label">Do you own agricultural land?</label>
+                            <select id="ownsLand" name="ownsLand" class="form-select" onchange="toggleLandFields()">
+                                <option value="">Select Option</option>
+                                <option value="yes">Yes</option>
+                                <option value="no">No</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group land-field" style="display: none;">
+                            <label for="landArea" class="form-label">Land Area (in acres)</label>
+                            <input type="number" id="landArea" name="landArea" class="form-input" placeholder="Enter land area" step="0.01">
+                        </div>
+
+                        <div class="form-group land-field" style="display: none;">
+                            <label for="landType" class="form-label">Land Type</label>
+                            <select id="landType" name="landType" class="form-select">
+                                <option value="">Select Type</option>
+                                <option value="irrigated">Irrigated</option>
+                                <option value="rainfed">Rainfed</option>
+                                <option value="mixed">Mixed</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-outline" onclick="previousStep(3)">Previous</button>
+                        <button type="submit" class="btn btn-primary" id="submitBtn">
+                            <span class="btn-text">Check Eligibility</span>
+                            <span class="btn-loader" style="display: none;">
+                                <div class="spinner spinner-sm"></div>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- Results Section (Hidden by default) -->
+        <div class="eligibility-results" id="resultsSection" style="display: none;">
+            <div class="results-header">
+                <h2>Eligibility Results</h2>
+                <p>Based on your profile, here are the schemes you may be eligible for</p>
+            </div>
+
+            <div class="results-grid" id="resultsGrid">
+                <!-- Results will be loaded dynamically -->
+            </div>
+
+            <div class="results-actions">
+                <button class="btn btn-outline" onclick="resetForm()">
+                    <i class="fa-solid fa-rotate-left"></i>
+                    Start Over
+                </button>
+                <button class="btn btn-primary" onclick="downloadReport()">
+                    <i class="fa-solid fa-download"></i>
+                    Download Report
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/eligibility.js' %}"></script>
+{% endblock %}

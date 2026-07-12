@@ -1,0 +1,138 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+AI Assistant - SchemeX AI
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/chat.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="chat-page">
+    <div class="container">
+        <div class="chat-container">
+            <!-- Chat Sidebar -->
+            <div class="chat-sidebar">
+                <div class="sidebar-header">
+                    <h2>AI Assistant</h2>
+                    <button class="new-chat-btn" onclick="startNewChat()">
+                        <i class="fa-solid fa-plus"></i>
+                        New Chat
+                    </button>
+                </div>
+
+                <div class="chat-history" id="chatHistory">
+                    <div class="history-item active">
+                        <div class="history-icon">
+                            <i class="fa-solid fa-message"></i>
+                        </div>
+                        <div class="history-content">
+                            <h4>Current Chat</h4>
+                            <p>How can I help you today?</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sidebar-footer">
+                    <div class="suggested-prompts">
+                        <h4>Suggested Questions</h4>
+                        <button class="prompt-btn" onclick="askSuggested('What schemes am I eligible for?')">
+                            What schemes am I eligible for?
+                        </button>
+                        <button class="prompt-btn" onclick="askSuggested('How do I apply for a scheme?')">
+                            How do I apply for a scheme?
+                        </button>
+                        <button class="prompt-btn" onclick="askSuggested('What documents do I need?')">
+                            What documents do I need?
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat Main -->
+            <div class="chat-main">
+                <div class="chat-header">
+                    <div class="chat-header-info">
+                        <div class="ai-avatar">
+                            <i class="fa-solid fa-robot"></i>
+                        </div>
+                        <div>
+                            <h3>SchemeX AI</h3>
+                            <p class="status online">
+                                <span></span>
+                                Online - Ready to help
+                            </p>
+                        </div>
+                    </div>
+                    <div class="chat-header-actions">
+                        <button class="icon-btn" onclick="clearChat()" title="Clear Chat">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                        <button class="icon-btn" onclick="toggleVoice()" title="Voice Mode">
+                            <i class="fa-solid fa-microphone"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="chat-messages" id="chatMessages">
+                    <!-- Welcome Message -->
+                    <div class="message ai-message slide-up">
+                        <div class="message-avatar">
+                            <i class="fa-solid fa-robot"></i>
+                        </div>
+                        <div class="message-content">
+                            <p>Namaste! 🙏 I'm your AI assistant for SchemeX. I can help you with:</p>
+                            <ul>
+                                <li>Finding government schemes you're eligible for</li>
+                                <li>Understanding application processes</li>
+                                <li>Document requirements and verification</li>
+                                <li>Scheme benefits and eligibility criteria</li>
+                            </ul>
+                            <p>How can I assist you today? You can type or use voice input in your preferred language.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chat-input-area">
+                    <div class="voice-indicator" id="voiceIndicator" style="display: none;">
+                        <div class="voice-wave">
+                            <div class="voice-wave-bar"></div>
+                            <div class="voice-wave-bar"></div>
+                            <div class="voice-wave-bar"></div>
+                            <div class="voice-wave-bar"></div>
+                            <div class="voice-wave-bar"></div>
+                        </div>
+                        <p>Listening...</p>
+                    </div>
+
+                    <div class="input-wrapper">
+                        <input 
+                            type="text" 
+                            id="chatInput" 
+                            class="chat-input" 
+                            placeholder="Type your message or use voice input..."
+                            autocomplete="off"
+                        >
+                        <button class="voice-btn" id="voiceBtn" onclick="toggleVoiceInput()" title="Voice Input">
+                            <i class="fa-solid fa-microphone"></i>
+                        </button>
+                        <button class="send-btn" id="sendBtn" onclick="sendMessage()">
+                            <i class="fa-solid fa-paper-plane"></i>
+                        </button>
+                    </div>
+
+                    <div class="input-footer">
+                        <p class="disclaimer">AI responses may not be 100% accurate. Please verify official scheme details.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/chat.js' %}"></script>
+{% endblock %}

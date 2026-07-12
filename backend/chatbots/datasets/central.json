@@ -1,0 +1,146 @@
+[
+  {
+    "id": "central-001",
+    "name": "PM-KISAN (Pradhan Mantri Kisan Samman Nidhi)",
+    "state": "central",
+    "category": "agriculture",
+    "eligibility": "Small and marginal landholding farmer families. Excludes income-tax payees, institutional landholders, and constitutional post holders.",
+    "benefits": "Rs. 6,000 per year, paid in 3 installments of Rs. 2,000 directly to the farmer's bank account.",
+    "how_to_apply": "Register at pmkisan.gov.in, via a Common Service Centre (CSC), or the local agriculture/revenue officer with land records and Aadhaar."
+  },
+  {
+    "id": "central-002",
+    "name": "PMFBY (Pradhan Mantri Fasal Bima Yojana)",
+    "state": "central",
+    "category": "agriculture",
+    "eligibility": "All farmers (loanee and non-loanee) growing notified crops in notified areas.",
+    "benefits": "Crop insurance against yield loss from natural calamities, pests, or disease, at low premium (about 2% kharif, 1.5% rabi, 5% commercial/horticulture crops).",
+    "how_to_apply": "Loanee farmers are auto-enrolled by their bank unless they opt out. Others can apply via a bank, CSC, or the national crop insurance portal before the season's cutoff date."
+  },
+  {
+    "id": "central-003",
+    "name": "Soil Health Card Scheme",
+    "state": "central",
+    "category": "agriculture",
+    "eligibility": "All farmers and landholders.",
+    "benefits": "Free soil testing and a Soil Health Card every 2 years with nutrient status and fertilizer/crop recommendations.",
+    "how_to_apply": "Contact the local agriculture department office or nearest Krishi Vigyan Kendra to get soil samples tested and a card issued."
+  },
+  {
+    "id": "central-004",
+    "name": "Kisan Credit Card (KCC)",
+    "state": "central",
+    "category": "agriculture",
+    "eligibility": "Farmers, tenant farmers, sharecroppers, and SHGs/JLGs of farmers, including those in animal husbandry and fisheries.",
+    "benefits": "Short-term credit for crop and post-harvest expenses at subsidized interest (effective around 4% with timely repayment).",
+    "how_to_apply": "Apply at any nearby bank branch (public, private, cooperative, or regional rural bank) with land and identity documents, or via the bank's online portal."
+  },
+  {
+    "id": "central-005",
+    "name": "MGNREGA (Mahatma Gandhi National Rural Employment Guarantee Act)",
+    "state": "central",
+    "category": "employment",
+    "eligibility": "Adult members of rural households willing to do unskilled manual work.",
+    "benefits": "Legal guarantee of 100 days of wage employment per financial year per household at the notified minimum wage.",
+    "how_to_apply": "Apply for a Job Card at the Gram Panchayat office with address proof and photos, then submit a written work request."
+  },
+  {
+    "id": "central-006",
+    "name": "PMKVY (Pradhan Mantri Kaushal Vikas Yojana)",
+    "state": "central",
+    "category": "employment",
+    "eligibility": "Indian youth, especially school/college dropouts or unemployed persons seeking industry-relevant skills.",
+    "benefits": "Free short-term skill training with certification, plus a monetary reward on successful assessment.",
+    "how_to_apply": "Enroll at a nearby PMKVY-affiliated training centre or through the Skill India portal (pmkvyofficial.org)."
+  },
+  {
+    "id": "central-007",
+    "name": "Ayushman Bharat / PM-JAY",
+    "state": "central",
+    "category": "health",
+    "eligibility": "Poor and vulnerable families identified via SECC 2011 deprivation/occupation criteria; no cap on family size or age.",
+    "benefits": "Health cover of Rs. 5 lakh per family per year for secondary and tertiary hospitalization at empanelled hospitals, cashless and paperless.",
+    "how_to_apply": "Check eligibility at pmjay.gov.in or with an Ayushman Mitra at an empanelled hospital/CSC; eligible families receive an Ayushman Card."
+  },
+  {
+    "id": "central-008",
+    "name": "PMAY-Urban (Pradhan Mantri Awas Yojana - Urban)",
+    "state": "central",
+    "category": "housing",
+    "eligibility": "Urban poor households (EWS/LIG/MIG categories) without a pucca house anywhere in India.",
+    "benefits": "Interest subsidy on home loans for construction, purchase, or enhancement of a house (up to about Rs. 2.67 lakh depending on income category).",
+    "how_to_apply": "Apply online at pmaymis.gov.in, or through a Common Service Centre or the local Urban Local Body office with Aadhaar and income proof."
+  },
+  {
+    "id": "central-009",
+    "name": "PMAY-Gramin (Pradhan Mantri Awas Yojana - Gramin)",
+    "state": "central",
+    "category": "housing",
+    "eligibility": "Rural houseless families and those living in kutcha/dilapidated houses, identified via the SECC 2011/Awaas+ survey.",
+    "benefits": "Rs. 1.20 lakh (plain areas) or Rs. 1.30 lakh (hilly/difficult areas) to build a pucca house, often combined with MGNREGA labour support and toilet scheme convergence.",
+    "how_to_apply": "Check the PMAY-G beneficiary list, or register via the Awaas+ survey at the Gram Panchayat/Block office."
+  },
+  {
+    "id": "central-010",
+    "name": "NSAP Old Age Pension (Indira Gandhi National Old Age Pension Scheme)",
+    "state": "central",
+    "category": "pensions",
+    "eligibility": "BPL individuals aged 60 years and above.",
+    "benefits": "Monthly pension: Rs. 200-300 (age 60-79) or Rs. 500 (80+) from the centre; many states add a top-up.",
+    "how_to_apply": "Apply at the Gram Panchayat/Urban Local Body or district Social Welfare Office with age and BPL proof."
+  },
+  {
+    "id": "central-011",
+    "name": "NSAP Widow Pension (Indira Gandhi National Widow Pension Scheme)",
+    "state": "central",
+    "category": "pensions",
+    "eligibility": "BPL widows aged 40-79 years.",
+    "benefits": "Monthly pension of Rs. 300 from the centre; many states add a top-up.",
+    "how_to_apply": "Apply at the Gram Panchayat/Urban Local Body or district Social Welfare Office with proof of widowhood and BPL status."
+  },
+  {
+    "id": "central-012",
+    "name": "NSAP Disability Pension (Indira Gandhi National Disability Pension Scheme)",
+    "state": "central",
+    "category": "pensions",
+    "eligibility": "BPL persons aged 18-79 with 80%+ of a single disability or multiple disabilities.",
+    "benefits": "Monthly pension of Rs. 300 (or Rs. 500 for age 80+) from the centre; many states add a top-up.",
+    "how_to_apply": "Apply at the Gram Panchayat/Urban Local Body or district Social Welfare Office with a disability certificate and BPL proof."
+  },
+  {
+    "id": "central-013",
+    "name": "Beti Bachao Beti Padhao",
+    "state": "central",
+    "category": "women_child",
+    "eligibility": "Nationwide awareness and welfare scheme for the girl child, with focus on gender-critical districts.",
+    "benefits": "Awareness campaigns and incentives to improve child sex ratio and girls' education, often linked with the Sukanya Samriddhi Yojana savings scheme.",
+    "how_to_apply": "Implemented via the district Women & Child Development office; for the linked savings account, open a Sukanya Samriddhi account at a bank or post office for a girl child under age 10."
+  },
+  {
+    "id": "central-014",
+    "name": "ICDS / Anganwadi Services (Integrated Child Development Services)",
+    "state": "central",
+    "category": "women_child",
+    "eligibility": "Children under 6 years, pregnant and lactating mothers, and adolescent girls.",
+    "benefits": "Supplementary nutrition, immunization referrals, health check-ups, and pre-school non-formal education.",
+    "how_to_apply": "Register at the nearest Anganwadi Centre in your locality."
+  },
+  {
+    "id": "central-015",
+    "name": "DAY-NRLM / Self-Help Groups (National Rural Livelihood Mission)",
+    "state": "central",
+    "category": "women_child",
+    "eligibility": "Rural poor women willing to organize into Self-Help Groups (SHGs).",
+    "benefits": "Access to bank credit at subsidized interest, revolving fund support, and skill/livelihood training for SHG members.",
+    "how_to_apply": "Join or form an SHG through the local NRLM/DAY-NRLM block office or an existing SHG federation."
+  },
+  {
+    "id": "central-016",
+    "name": "Post-Matric Scholarship (SC/ST/OBC/Minority students)",
+    "state": "central",
+    "category": "social_welfare",
+    "eligibility": "SC/ST/OBC/Minority community students studying post-matriculation (class 11 onwards) with family income below the prescribed limit (varies by category/state).",
+    "benefits": "Reimbursement of tuition fees and a maintenance allowance for the duration of the course.",
+    "how_to_apply": "Apply through the National Scholarship Portal (scholarships.gov.in) with caste certificate, income certificate, and institution verification."
+  }
+]

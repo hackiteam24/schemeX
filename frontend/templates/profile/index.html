@@ -1,0 +1,404 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+My Profile - SchemeX AI
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="profile-page">
+    <div class="container">
+        <!-- Page Header -->
+        <div class="page-header slide-up">
+            <h1>My Profile</h1>
+            <p>Manage your personal information and preferences</p>
+        </div>
+
+        <div class="profile-grid">
+            <!-- Profile Card -->
+            <div class="profile-sidebar slide-up delay-1">
+                <div class="profile-card">
+                    <div class="profile-avatar-section">
+                        <div class="avatar-wrapper">
+                            <div class="avatar">
+                                <i class="fa-solid fa-user"></i>
+                            </div>
+                            <button class="avatar-upload" onclick="document.getElementById('avatarInput').click()">
+                                <i class="fa-solid fa-camera"></i>
+                            </button>
+                            <input type="file" id="avatarInput" accept="image/*" style="display: none;" onchange="handleAvatarUpload(event)">
+                        </div>
+                        <h2>{{ user.first_name|default:user.username }} {{ user.last_name|default:'' }}</h2>
+                        <p class="username">@{{ user.username }}</p>
+                        <span class="badge badge-primary">Verified</span>
+                    </div>
+
+                    <div class="profile-stats">
+                        <div class="stat-item">
+                            <div class="stat-value">12</div>
+                            <div class="stat-label">Eligible Schemes</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">5</div>
+                            <div class="stat-label">Applications</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">75%</div>
+                            <div class="stat-label">Profile Complete</div>
+                        </div>
+                    </div>
+
+                    <div class="profile-menu">
+                        <button class="menu-item active" data-section="personal">
+                            <i class="fa-solid fa-user"></i>
+                            Personal Info
+                        </button>
+                        <button class="menu-item" data-section="contact">
+                            <i class="fa-solid fa-envelope"></i>
+                            Contact Details
+                        </button>
+                        <button class="menu-item" data-section="location">
+                            <i class="fa-solid fa-location-dot"></i>
+                            Location
+                        </button>
+                        <button class="menu-item" data-section="economic">
+                            <i class="fa-solid fa-wallet"></i>
+                            Economic Info
+                        </button>
+                        <button class="menu-item" data-section="bank">
+                            <i class="fa-solid fa-building-columns"></i>
+                            Bank Details
+                        </button>
+                        <button class="menu-item" data-section="preferences">
+                            <i class="fa-solid fa-gear"></i>
+                            Preferences
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profile Content -->
+            <div class="profile-content slide-up delay-2">
+                <!-- Personal Information -->
+                <div class="content-section active" id="personal">
+                    <div class="section-header">
+                        <h2>Personal Information</h2>
+                        <button class="btn btn-outline btn-sm" onclick="editSection('personal')">
+                            <i class="fa-solid fa-pen"></i>
+                            Edit
+                        </button>
+                    </div>
+
+                    <form id="personalForm" class="profile-form">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="firstName" class="form-label">First Name</label>
+                                <input type="text" id="firstName" name="firstName" class="form-input" value="{{ user.first_name|default:'' }}" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastName" class="form-label">Last Name</label>
+                                <input type="text" id="lastName" name="lastName" class="form-input" value="{{ user.last_name|default:'' }}" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label for="dateOfBirth" class="form-label">Date of Birth</label>
+                                <input type="date" id="dateOfBirth" name="dateOfBirth" class="form-input" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label for="gender" class="form-label">Gender</label>
+                                <select id="gender" name="gender" class="form-select" disabled>
+                                    <option value="">Select Gender</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="category" class="form-label">Category</label>
+                                <select id="category" name="category" class="form-select" disabled>
+                                    <option value="">Select Category</option>
+                                    <option value="general">General</option>
+                                    <option value="obc">OBC</option>
+                                    <option value="sc">SC</option>
+                                    <option value="st">ST</option>
+                                    <option value="ews">EWS</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="maritalStatus" class="form-label">Marital Status</label>
+                                <select id="maritalStatus" name="maritalStatus" class="form-select" disabled>
+                                    <option value="">Select Status</option>
+                                    <option value="single">Single</option>
+                                    <option value="married">Married</option>
+                                    <option value="widowed">Widowed</option>
+                                    <option value="divorced">Divorced</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-actions" style="display: none;" id="personalActions">
+                            <button type="button" class="btn btn-outline" onclick="cancelEdit('personal')">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Contact Details -->
+                <div class="content-section" id="contact">
+                    <div class="section-header">
+                        <h2>Contact Details</h2>
+                        <button class="btn btn-outline btn-sm" onclick="editSection('contact')">
+                            <i class="fa-solid fa-pen"></i>
+                            Edit
+                        </button>
+                    </div>
+
+                    <form id="contactForm" class="profile-form">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="mobile" class="form-label">Mobile Number</label>
+                                <input type="tel" id="mobile" name="mobile" class="form-input" value="{{ user.mobile|default:'' }}" disabled>
+                                <span class="verified-badge"><i class="fa-solid fa-check-circle"></i> Verified</span>
+                            </div>
+                            <div class="form-group">
+                                <label for="email" class="form-label">Email Address</label>
+                                <input type="email" id="email" name="email" class="form-input" value="{{ user.email|default:'' }}" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label for="alternateMobile" class="form-label">Alternate Mobile</label>
+                                <input type="tel" id="alternateMobile" name="alternateMobile" class="form-input" placeholder="Optional" disabled>
+                            </div>
+                        </div>
+
+                        <div class="form-actions" style="display: none;" id="contactActions">
+                            <button type="button" class="btn btn-outline" onclick="cancelEdit('contact')">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Location -->
+                <div class="content-section" id="location">
+                    <div class="section-header">
+                        <h2>Location Details</h2>
+                        <button class="btn btn-outline btn-sm" onclick="editSection('location')">
+                            <i class="fa-solid fa-pen"></i>
+                            Edit
+                        </button>
+                    </div>
+
+                    <form id="locationForm" class="profile-form">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="state" class="form-label">State</label>
+                                <select id="state" name="state" class="form-select" disabled>
+                                    <option value="">Select State</option>
+                                    <option value="andaman">Andaman and Nicobar Islands</option>
+                                    <option value="andhra">Andhra Pradesh</option>
+                                    <option value="arunachal">Arunachal Pradesh</option>
+                                    <option value="assam">Assam</option>
+                                    <option value="bihar">Bihar</option>
+                                    <option value="chandigarh">Chandigarh</option>
+                                    <option value="chhattisgarh">Chhattisgarh</option>
+                                    <option value="dadra_nagar_haveli">Dadra & Nagar Haveli and Daman & Diu</option>
+                                    <option value="delhi">Delhi</option>
+                                    <option value="goa">Goa</option>
+                                    <option value="gujarat">Gujarat</option>
+                                    <option value="haryana">Haryana</option>
+                                    <option value="hp">Himachal Pradesh</option>
+                                    <option value="jk">Jammu and Kashmir</option>
+                                    <option value="jharkhand">Jharkhand</option>
+                                    <option value="karnataka">Karnataka</option>
+                                    <option value="kerala">Kerala</option>
+                                    <option value="ladakh">Ladakh</option>
+                                    <option value="lakshadweep">Lakshadweep</option>
+                                    <option value="mp">Madhya Pradesh</option>
+                                    <option value="maharashtra">Maharashtra</option>
+                                    <option value="manipur">Manipur</option>
+                                    <option value="meghalaya">Meghalaya</option>
+                                    <option value="mizoram">Mizoram</option>
+                                    <option value="nagaland">Nagaland</option>
+                                    <option value="odisha">Odisha</option>
+                                    <option value="puducherry">Puducherry</option>
+                                    <option value="punjab">Punjab</option>
+                                    <option value="rajasthan">Rajasthan</option>
+                                    <option value="sikkim">Sikkim</option>
+                                    <option value="tamilnadu">Tamil Nadu</option>
+                                    <option value="telangana">Telangana</option>
+                                    <option value="tripura">Tripura</option>
+                                    <option value="up">Uttar Pradesh</option>
+                                    <option value="uttarakhand">Uttarakhand</option>
+                                    <option value="wb">West Bengal</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="district" class="form-label">District</label>
+                                <input type="text" id="district" name="district" class="form-input" placeholder="Enter district" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label for="tehsil" class="form-label">Tehsil/Block</label>
+                                <input type="text" id="tehsil" name="tehsil" class="form-input" placeholder="Enter tehsil" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label for="village" class="form-label">Village/City</label>
+                                <input type="text" id="village" name="village" class="form-input" placeholder="Enter village" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label for="pincode" class="form-label">Pincode</label>
+                                <input type="text" id="pincode" name="pincode" class="form-input" placeholder="6-digit pincode" maxlength="6" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label for="address" class="form-label">Full Address</label>
+                                <textarea id="address" name="address" class="form-textarea" placeholder="Enter full address" disabled></textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-actions" style="display: none;" id="locationActions">
+                            <button type="button" class="btn btn-outline" onclick="cancelEdit('location')">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Economic Info -->
+                <div class="content-section" id="economic">
+                    <div class="section-header">
+                        <h2>Economic Information</h2>
+                        <button class="btn btn-outline btn-sm" onclick="editSection('economic')">
+                            <i class="fa-solid fa-pen"></i>
+                            Edit
+                        </button>
+                    </div>
+
+                    <form id="economicForm" class="profile-form">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="annualIncome" class="form-label">Annual Family Income (₹)</label>
+                                <input type="number" id="annualIncome" name="annualIncome" class="form-input" placeholder="Enter annual income" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label for="incomeSource" class="form-label">Primary Income Source</label>
+                                <select id="incomeSource" name="incomeSource" class="form-select" disabled>
+                                    <option value="">Select Source</option>
+                                    <option value="agriculture">Agriculture</option>
+                                    <option value="business">Business</option>
+                                    <option value="salary">Salary</option>
+                                    <option value="labor">Daily Wage Labor</option>
+                                    <option value="pension">Pension</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="bplStatus" class="form-label">BPL Status</label>
+                                <select id="bplStatus" name="bplStatus" class="form-select" disabled>
+                                    <option value="">Select Status</option>
+                                    <option value="yes">Yes - BPL Card Holder</option>
+                                    <option value="no">No - Not BPL</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="occupation" class="form-label">Occupation</label>
+                                <input type="text" id="occupation" name="occupation" class="form-input" placeholder="Enter occupation" disabled>
+                            </div>
+                        </div>
+
+                        <div class="form-actions" style="display: none;" id="economicActions">
+                            <button type="button" class="btn btn-outline" onclick="cancelEdit('economic')">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Bank Details -->
+                <div class="content-section" id="bank">
+                    <div class="section-header">
+                        <h2>Bank Details</h2>
+                        <button class="btn btn-outline btn-sm" onclick="editSection('bank')">
+                            <i class="fa-solid fa-pen"></i>
+                            Edit
+                        </button>
+                    </div>
+
+                    <form id="bankForm" class="profile-form">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="bankName" class="form-label">Bank Name</label>
+                                <input type="text" id="bankName" name="bankName" class="form-input" placeholder="Enter bank name" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label for="accountNumber" class="form-label">Account Number</label>
+                                <input type="text" id="accountNumber" name="accountNumber" class="form-input" placeholder="Enter account number" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label for="ifscCode" class="form-label">IFSC Code</label>
+                                <input type="text" id="ifscCode" name="ifscCode" class="form-input" placeholder="Enter IFSC code" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label for="accountType" class="form-label">Account Type</label>
+                                <select id="accountType" name="accountType" class="form-select" disabled>
+                                    <option value="">Select Type</option>
+                                    <option value="savings">Savings</option>
+                                    <option value="current">Current</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-actions" style="display: none;" id="bankActions">
+                            <button type="button" class="btn btn-outline" onclick="cancelEdit('bank')">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Preferences -->
+                <div class="content-section" id="preferences">
+                    <div class="section-header">
+                        <h2>Preferences</h2>
+                        <button class="btn btn-outline btn-sm" onclick="editSection('preferences')">
+                            <i class="fa-solid fa-pen"></i>
+                            Edit
+                        </button>
+                    </div>
+
+                    <form id="preferencesForm" class="profile-form">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="language" class="form-label">Preferred Language</label>
+                                <select id="language" name="language" class="form-select" disabled>
+                                    <option value="en">English</option>
+                                    <option value="hi">हिन्दी (Hindi)</option>
+                                    <option value="ta">தமிழ் (Tamil)</option>
+                                    <option value="te">తెలుగు (Telugu)</option>
+                                    <option value="bn">বাংলা (Bengali)</option>
+                                    <option value="ml">മലയാളം (Malayalam)</option>
+                                    <option value="kn">ಕನ್ನಡ (Kannada)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="notifications" class="form-label">Email Notifications</label>
+                                <select id="notifications" name="notifications" class="form-select" disabled>
+                                    <option value="all">All Notifications</option>
+                                    <option value="important">Important Only</option>
+                                    <option value="none">None</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-actions" style="display: none;" id="preferencesActions">
+                            <button type="button" class="btn btn-outline" onclick="cancelEdit('preferences')">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/profile.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,327 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Home - SchemeX AI
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero">
+    <div class="container">
+        <div class="hero-content">
+            <div class="hero-text slide-up">
+                <h1 data-i18n="hero.title">Find government schemes in your language</h1>
+                <p data-i18n="hero.subtitle" class="hero-subtitle">
+                    Your AI-powered multilingual assistant for discovering and applying to government welfare schemes.
+                </p>
+                <div class="hero-buttons">
+                    <a href="{% url 'register' %}" class="btn btn-primary btn-lg" data-i18n="btn.getStarted">
+                        Get Started
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                    <a href="#how-it-works" class="btn btn-outline btn-lg" data-i18n="btn.learnMore">
+                        Learn More
+                        <i class="fa-solid fa-play-circle"></i>
+                    </a>
+                </div>
+                <div class="hero-features">
+                    <div class="hero-feature">
+                        <i class="fa-solid fa-language"></i>
+                        <span>12+ Languages</span>
+                    </div>
+                    <div class="hero-feature">
+                        <i class="fa-solid fa-microphone"></i>
+                        <span>Voice Search</span>
+                    </div>
+                    <div class="hero-feature">
+                        <i class="fa-solid fa-shield-halved"></i>
+                        <span>Secure</span>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-visual slide-up delay-2">
+                <div class="hero-card card-glass">
+                    <div class="ai-assistant">
+                        <div class="ai-avatar">
+                            <i class="fa-solid fa-robot"></i>
+                        </div>
+                        <div class="ai-bubble">
+                            <p>Namaste! How can I help you find government schemes today?</p>
+                        </div>
+                    </div>
+                    <div class="voice-demo">
+                        <div class="voice-wave-demo">
+                            <div class="voice-wave-bar"></div>
+                            <div class="voice-wave-bar"></div>
+                            <div class="voice-wave-bar"></div>
+                            <div class="voice-wave-bar"></div>
+                            <div class="voice-wave-bar"></div>
+                        </div>
+                        <p>Tap the microphone to speak</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Stats Section -->
+<section class="stats">
+    <div class="container">
+        <div class="stats-grid">
+            <div class="stat-card slide-up delay-1">
+                <div class="stat-icon">
+                    <i class="fa-solid fa-file-contract"></i>
+                </div>
+                <div class="stat-number">Live</div>
+                <div class="stat-label">Scheme discovery</div>
+            </div>
+            <div class="stat-card slide-up delay-2">
+                <div class="stat-icon">
+                    <i class="fa-solid fa-users"></i>
+                </div>
+                <div class="stat-number">Voice</div>
+                <div class="stat-label">Search assistance</div>
+            </div>
+            <div class="stat-card slide-up delay-3">
+                <div class="stat-icon">
+                    <i class="fa-solid fa-language"></i>
+                </div>
+                <div class="stat-number">Profile</div>
+                <div class="stat-label">Eligibility matching</div>
+            </div>
+            <div class="stat-card slide-up delay-4">
+                <div class="stat-icon">
+                    <i class="fa-solid fa-check-circle"></i>
+                </div>
+                <div class="stat-number">Track</div>
+                <div class="stat-label">Applications and documents</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- How It Works -->
+<section id="how-it-works" class="how-it-works">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">How It Works</h2>
+            <p class="section-subtitle">Simple steps to discover and apply for government schemes</p>
+        </div>
+        <div class="steps-grid">
+            <div class="step-card slide-up delay-1">
+                <div class="step-number">1</div>
+                <div class="step-icon">
+                    <i class="fa-solid fa-microphone"></i>
+                </div>
+                <h3>Speak or Search</h3>
+                <p>Use voice search in your language or type to find schemes</p>
+            </div>
+            <div class="step-card slide-up delay-2">
+                <div class="step-number">2</div>
+                <div class="step-icon">
+                    <i class="fa-solid fa-user-check"></i>
+                </div>
+                <h3>Check Eligibility</h3>
+                <p>AI analyzes your profile to find schemes you qualify for</p>
+            </div>
+            <div class="step-card slide-up delay-3">
+                <div class="step-number">3</div>
+                <div class="step-icon">
+                    <i class="fa-solid fa-file-signature"></i>
+                </div>
+                <h3>Apply Online</h3>
+                <p>Fill simple forms with voice assistance in your language</p>
+            </div>
+            <div class="step-card slide-up delay-4">
+                <div class="step-number">4</div>
+                <div class="step-icon">
+                    <i class="fa-solid fa-check-double"></i>
+                </div>
+                <h3>Track Status</h3>
+                <p>Monitor your application status in real-time</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="features">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Why Choose SchemeX?</h2>
+            <p class="section-subtitle">Designed for rural citizens with accessibility at its core</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card slide-up delay-1">
+                <div class="feature-icon">
+                    <i class="fa-solid fa-language"></i>
+                </div>
+                <h3>Multilingual Support</h3>
+                <p>Available in 12+ Indian languages including Hindi, Tamil, Telugu, and more</p>
+            </div>
+            <div class="feature-card slide-up delay-2">
+                <div class="feature-icon">
+                    <i class="fa-solid fa-microphone"></i>
+                </div>
+                <h3>Voice First</h3>
+                <p>Speak naturally in your language - no typing required</p>
+            </div>
+            <div class="feature-card slide-up delay-3">
+                <div class="feature-icon">
+                    <i class="fa-solid fa-brain"></i>
+                </div>
+                <h3>AI-Powered</h3>
+                <p>Smart matching finds the best schemes based on your profile</p>
+            </div>
+            <div class="feature-card slide-up delay-4">
+                <div class="feature-icon">
+                    <i class="fa-solid fa-mobile-screen"></i>
+                </div>
+                <h3>Mobile First</h3>
+                <p>Optimized for smartphones - works on any device</p>
+            </div>
+            <div class="feature-card slide-up delay-5">
+                <div class="feature-icon">
+                    <i class="fa-solid fa-universal-access"></i>
+                </div>
+                <h3>Accessible</h3>
+                <p>Designed for first-time smartphone users and elderly citizens</p>
+            </div>
+            <div class="feature-card slide-up delay-6">
+                <div class="feature-icon">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <h3>Secure</h3>
+                <p>Your data is protected with enterprise-grade security</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Scheme Discovery -->
+<section class="schemes">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Explore With Real Data</h2>
+            <p class="section-subtitle">Use the schemes page and your profile to see current options from the backend.</p>
+        </div>
+        <div class="schemes-grid">
+            <div class="scheme-card slide-up delay-1">
+                <div class="scheme-badge">Discover</div>
+                <h3>Browse Schemes</h3>
+                <p class="scheme-subtitle">Search and filter available schemes</p>
+                <p>Explore schemes loaded , then open details before applying.</p>
+                <div class="scheme-footer">
+                    <span><i class="fa-solid fa-magnifying-glass"></i> Seamlessly Powered</span>
+                    <a href="{% url 'schemes' %}" class="btn btn-primary btn-sm">Open Schemes</a>
+                </div>
+            </div>
+            <div class="scheme-card slide-up delay-2">
+                <div class="scheme-badge">Match</div>
+                <h3>Check Eligibility</h3>
+                <p class="scheme-subtitle">Use your profile answers</p>
+                <p>Answer simple questions and get eligibility results using the active scheme rules.</p>
+                <div class="scheme-footer">
+                    <span><i class="fa-solid fa-user-check"></i> Personalized</span>
+                    <a href="{% url 'eligibility' %}" class="btn btn-primary btn-sm">Check Now</a>
+                </div>
+            </div>
+            <div class="scheme-card slide-up delay-3">
+                <div class="scheme-badge">Apply</div>
+                <h3>Manage Documents</h3>
+                <p class="scheme-subtitle">Upload only what is needed</p>
+                <p>After applying, your document checklist is generated from your real applications.</p>
+                <div class="scheme-footer">
+                    <span><i class="fa-solid fa-folder-open"></i> Checklist based</span>
+                    <a href="{% url 'documents' %}" class="btn btn-primary btn-sm">Documents</a>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-8">
+            <a href="{% url 'schemes' %}" class="btn btn-outline btn-lg">
+                View All Schemes
+                <i class="fa-solid fa-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+</section>
+<!-- Trust Section -->
+<section class="testimonials">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Built For Everyday Access</h2>
+            <p class="section-subtitle">The experience is designed for clarity, trust, and repeat use.</p>
+        </div>
+        <div class="testimonials-grid">
+            <div class="testimonial-card slide-up delay-1">
+                <div class="testimonial-content">
+                    <i class="fa-solid fa-language"></i>
+                    <p>Language and voice tools help citizens search without needing complex forms first.</p>
+                </div>
+                <div class="testimonial-author">
+                    <div class="author-avatar">1</div>
+                    <div class="author-info">
+                        <h4>Simple Discovery</h4>
+                        <p>Search, listen, and compare schemes</p>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card slide-up delay-2">
+                <div class="testimonial-content">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    <p>Account pages are protected, and personal dashboards only show the signed-in user's data.</p>
+                </div>
+                <div class="testimonial-author">
+                    <div class="author-avatar">2</div>
+                    <div class="author-info">
+                        <h4>Private Workflow</h4>
+                        <p>Profile, applications, and documents</p>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card slide-up delay-3">
+                <div class="testimonial-content">
+                    <i class="fa-solid fa-mobile-screen"></i>
+                    <p>Layouts adapt for mobile screens with large tap targets and readable content areas.</p>
+                </div>
+                <div class="testimonial-author">
+                    <div class="author-avatar">3</div>
+                    <div class="author-info">
+                        <h4>Mobile Friendly</h4>
+                        <p>Designed for phones, tablets, and desktop</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- CTA Section -->
+<section class="cta">
+    <div class="container">
+        <div class="cta-content slide-up">
+            <h2>Ready to Access Government Schemes?</h2>
+            <p>Create a profile, check eligibility, and manage your applications from one place.</p>
+            <div class="cta-buttons">
+                <a href="{% url 'register' %}" class="btn btn-primary btn-lg">
+                    Create Free Account
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
+                <a href="{% url 'eligibility' %}" class="btn btn-secondary btn-lg">
+                    Check Eligibility
+                    <i class="fa-solid fa-user-check"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/home.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,272 @@
+[
+    {
+        "id": "tn-001",
+        "name": "World Bank Aided Tamil Nadu Irrigated Agriculture Modernization Project (TN IAMP)",
+        "state": "tamil_nadu",
+        "category": "agriculture",
+        "eligibility": "Farmers in Tamil Nadu who are covered under the project component can apply. The scheme targets eligible beneficiary farmers for irrigation modernization support.",
+        "benefits": "Subsidy support is provided for works such as farm pond construction. The listed subsidy amount is Rs.75,000 with Rs.25,000 farmer contribution.",
+        "how_to_apply": "Apply through the Agriculture Engineering Department or local agricultural office with land records, Aadhaar, and bank account details."
+    },
+    {
+        "id": "tn-002",
+        "name": "Pradhan Mantri Krishi Sinchayee Yojana (PMKSY) - Har Khet Ko Pani (HKKP) - Ground Water Irrigation",
+        "state": "tamil_nadu",
+        "category": "agriculture",
+        "eligibility": "Farmers in Tamil Nadu requiring groundwater irrigation support under the scheme are eligible. Selection depends on the project and technical feasibility norms.",
+        "benefits": "Subsidy assistance is provided for geophysical survey, borewell or open well drilling, pumping systems, and water distribution works. The subsidy follows the Union Government operational guidelines.",
+        "how_to_apply": "Apply through the Agricultural Engineering Department or district agriculture office with land records, Aadhaar, and bank details."
+    },
+    {
+        "id": "tn-003",
+        "name": "Creation of Farm Ponds to catch the rainwater in farm lands",
+        "state": "tamil_nadu",
+        "category": "agriculture",
+        "eligibility": "Individual farmers in Tamil Nadu with suitable land for farm pond creation can apply. The land must meet the field and technical criteria fixed by the department.",
+        "benefits": "Farm pond construction is supported with 100% subsidy. The scheme helps conserve rainwater for irrigation use.",
+        "how_to_apply": "Apply through the local agriculture or agricultural engineering office with Aadhaar, land records, and bank account details."
+    },
+    {
+        "id": "tn-004",
+        "name": "Scheme for providing Electric motor pumpsets to the farmers with subsidy",
+        "state": "tamil_nadu",
+        "category": "agriculture",
+        "eligibility": "Farmers in Tamil Nadu replacing old pumpsets or purchasing new pumpsets for newly created wells can apply. The applicant must satisfy the scheme's technical and land conditions.",
+        "benefits": "A subsidy of Rs.10,000 or 50% of the pump-set cost, whichever is less, is provided. The support is intended to reduce irrigation equipment costs.",
+        "how_to_apply": "Apply through the Agriculture Engineering Department with land records, Aadhaar, pump-set estimate, and bank account details."
+    },
+    {
+        "id": "tn-005",
+        "name": "Land Development Scheme",
+        "state": "tamil_nadu",
+        "category": "agriculture",
+        "eligibility": "Farmers in Tamil Nadu who need land development services can apply under the department rules. The land and work must satisfy the local implementation conditions.",
+        "benefits": "Machinery is hired out at subsidised charges for land shaping, levelling, ploughing, puddling, sowing, weeding, harvesting, threshing, and crop residue management. The scheme reduces cultivation costs for farmers.",
+        "how_to_apply": "Apply through the Agricultural Engineering Department or local agriculture office with Aadhaar, land records, and project details."
+    },
+    {
+        "id": "tn-006",
+        "name": "Minor Irrigation Scheme",
+        "state": "tamil_nadu",
+        "category": "agriculture",
+        "eligibility": "Farmers in Tamil Nadu needing minor irrigation support through eligible works can apply. Technical and site-specific conditions apply.",
+        "benefits": "Machinery is hired out at subsidised charges for tube wells, open wells, bore wells, and related minor irrigation works. The scheme supports local water access for farming.",
+        "how_to_apply": "Apply through the Agricultural Engineering Department with Aadhaar, land records, and details of the proposed irrigation work."
+    },
+    {
+        "id": "tn-007",
+        "name": "Sub Mission on Agricultural Mechanization (SMAM)",
+        "state": "tamil_nadu",
+        "category": "agriculture",
+        "eligibility": "Farmers in Tamil Nadu, including SC, ST, small, marginal, and women farmers, can apply under the scheme rules. Eligibility depends on the notified machinery and subsidy norms.",
+        "benefits": "Subsidy assistance is provided for purchase of agricultural machinery and implements. The department supports mechanization to improve farm productivity.",
+        "how_to_apply": "Apply through the Agriculture Engineering Department or official agriculture portal with Aadhaar, land records, and bank account details."
+    },
+    {
+        "id": "tn-008",
+        "name": "Establishment of Sugarcane based Custom Hiring Centres",
+        "state": "tamil_nadu",
+        "category": "agriculture",
+        "eligibility": "Sugarcane growers or eligible farmer groups in Tamil Nadu can apply under the scheme rules. The project must satisfy the department's eligibility conditions.",
+        "benefits": "Financial support is provided to establish custom hiring centres for sugarcane operations. Subsidy support can go up to 40% of the project cost subject to the notified ceiling.",
+        "how_to_apply": "Apply through the agriculture department or local extension office with Aadhaar, project proposal, land or group documents, and bank details."
+    },
+    {
+        "id": "tn-009",
+        "name": "Distribution of Value Addition Machinery",
+        "state": "tamil_nadu",
+        "category": "agriculture",
+        "eligibility": "Farmers and farmer groups in Tamil Nadu engaged in agricultural value addition can apply. Eligibility depends on the machinery category and scheme norms.",
+        "benefits": "Subsidy support is provided for purchase of value addition machinery for agricultural produce. The subsidy is up to 40% or the government-prescribed eligible amount, whichever is less.",
+        "how_to_apply": "Apply through the Agriculture Engineering Department with Aadhaar, bank account details, and the proposed machinery quotation or project documents."
+    },
+    {
+        "id": "tn-010",
+        "name": "Chief Minister's Scheme of Solar Powered Pumpsets",
+        "state": "tamil_nadu",
+        "category": "agriculture",
+        "eligibility": "Farmers in Tamil Nadu requiring irrigation pump support can apply if they meet the scheme's land and technical conditions. The land must be suitable for solar pumping installation.",
+        "benefits": "Standalone solar-powered pumping systems are provided for irrigation. The scheme offers 70% subsidy and 30% farmer contribution.",
+        "how_to_apply": "Apply through the Agricultural Engineering Department or district agriculture office with land records, Aadhaar, and bank account details."
+    },
+    {
+        "id": "tn-011",
+        "name": "Installation of Solar Fencing Units",
+        "state": "tamil_nadu",
+        "category": "agriculture",
+        "eligibility": "Farmers in Tamil Nadu needing crop protection from animals can apply. The site must satisfy the department's fencing criteria.",
+        "benefits": "Solar fencing units are subsidised to protect crops, including special hanging type fencing for areas with elephant movement. Forty percent of the total cost is paid as back-ended subsidy.",
+        "how_to_apply": "Apply through the Agricultural Engineering Department with land records, Aadhaar, and bank account details."
+    },
+    {
+        "id": "tn-012",
+        "name": "Integrated Horticulture Development Scheme",
+        "state": "tamil_nadu",
+        "category": "agriculture",
+        "eligibility": "Horticulture farmers in Tamil Nadu who meet the crop and area-based requirements can apply. The land and crop proposal must fit the scheme rules.",
+        "benefits": "Financial assistance is provided for horticulture development activities such as planting material, irrigation, and related inputs. The support is released as per department norms.",
+        "how_to_apply": "Apply through the horticulture office or agricultural extension center with Aadhaar, land records, and crop proposal details."
+    },
+    {
+        "id": "tn-013",
+        "name": "State Horticulture Mission",
+        "state": "tamil_nadu",
+        "category": "agriculture",
+        "eligibility": "Eligible horticulture farmers and producer groups in Tamil Nadu can apply under the mission guidelines. Selection depends on crop and component eligibility.",
+        "benefits": "Subsidy support is provided for horticulture activities and farm development components. The scheme promotes productivity and crop diversification.",
+        "how_to_apply": "Apply through the horticulture department or local agriculture office with Aadhaar, land records, and bank details."
+    },
+    {
+        "id": "tn-014",
+        "name": "Pradhan Mantri Fasal Bima Yojana",
+        "state": "tamil_nadu",
+        "category": "agriculture",
+        "eligibility": "Farmers in Tamil Nadu growing notified crops and enrolled within the prescribed time limit are eligible. Both loanee and non-loanee farmers may apply under the scheme rules.",
+        "benefits": "Crop insurance coverage is provided against yield loss due to notified natural risks. Compensation is paid as per the insurance claim assessment.",
+        "how_to_apply": "Apply through banks, agriculture offices, or the official crop insurance enrollment channels with Aadhaar, land records, and crop details."
+    },
+    {
+        "id": "tn-015",
+        "name": "Rainfed Area Development",
+        "state": "tamil_nadu",
+        "category": "agriculture",
+        "eligibility": "Farmers in rainfed areas of Tamil Nadu who meet the project criteria can apply. The land and component selection must follow the scheme guidelines.",
+        "benefits": "Financial assistance is provided for rainfed farming development activities. The scheme supports soil moisture conservation, farm productivity, and livelihood resilience.",
+        "how_to_apply": "Apply through the agriculture department or district office with Aadhaar, land records, and project details."
+    },
+    {
+        "id": "tn-016",
+        "name": "Tamil Pudhalvan",
+        "state": "tamil_nadu",
+        "category": "education",
+        "eligibility": "Boy students who studied from Classes 6 to 12 in government or government-aided schools in Tamil medium in Tamil Nadu are eligible. They must be admitted to recognized higher education courses.",
+        "benefits": "Eligible students receive Rs. 1,000 per month directly into their bank account. The assistance continues during the first higher education course as per scheme rules.",
+        "how_to_apply": "Apply through the UMIS online portal with Aadhaar, bank account details, and school and college records. The department verifies bonafide student status periodically."
+    },
+    {
+        "id": "tn-017",
+        "name": "Pudhumai Penn",
+        "state": "tamil_nadu",
+        "category": "education",
+        "eligibility": "Girl students who studied from Classes 6 to 12 in government schools in Tamil Nadu and are pursuing higher education are eligible. They must be enrolled in recognized higher education institutions.",
+        "benefits": "Eligible students receive Rs. 1,000 per month through direct bank transfer. The support continues while they pursue higher education under the scheme conditions.",
+        "how_to_apply": "Apply through the official higher education or social welfare portal with Aadhaar, bank account details, and school and college records. The student's eligibility is verified by the department."
+    },
+    {
+        "id": "tn-018",
+        "name": "Chief Minister's Breakfast Scheme",
+        "state": "tamil_nadu",
+        "category": "education",
+        "eligibility": "Students studying in Classes 1 to 5 in government primary schools in Tamil Nadu are eligible. The scheme is implemented in selected government schools as notified by the state.",
+        "benefits": "Free breakfast is provided to enrolled primary school children on school days. The scheme supports nutrition and attendance.",
+        "how_to_apply": "No separate application is usually required. Eligible students are covered through their government school and local education authorities."
+    },
+    {
+        "id": "tn-019",
+        "name": "Naan Mudhalvan",
+        "state": "tamil_nadu",
+        "category": "education",
+        "eligibility": "Students of government and government-aided schools, colleges, and universities in Tamil Nadu can participate under the scheme's program rules. Eligibility depends on the specific skill or training component.",
+        "benefits": "The scheme provides skill development, career guidance, and training support. It is designed to improve student abilities and employability.",
+        "how_to_apply": "Apply through the official Naan Mudhalvan or education department portal. Institutions may also enroll eligible students directly."
+    },
+    {
+        "id": "tn-020",
+        "name": "Kalaignar Magalir Urimai Thogai Thittam",
+        "state": "tamil_nadu",
+        "category": "women_child",
+        "eligibility": "Women heads of eligible families in Tamil Nadu who satisfy the household and exclusion rules can apply. The family must meet the state's notified criteria.",
+        "benefits": "Eligible women receive Rs. 1,000 every month. The amount is credited directly to the beneficiary's bank account.",
+        "how_to_apply": "Apply through the designated state enrollment channels and local facilitation centers with Aadhaar, ration card or family details, and bank account information."
+    },
+    {
+        "id": "tn-021",
+        "name": "Chief Minister's Girl Child Protection Scheme",
+        "state": "tamil_nadu",
+        "category": "women_child",
+        "eligibility": "Girl children born into eligible families in Tamil Nadu can be enrolled under the scheme rules. The family must satisfy the birth order and other notified conditions.",
+        "benefits": "Financial assistance is provided for the long-term welfare of the girl child. The support is deposited as per the scheme schedule and rules.",
+        "how_to_apply": "Apply through the Social Welfare and Women Empowerment Department or local facilitation center with birth certificate, Aadhaar, family income proof, and bank details."
+    },
+    {
+        "id": "tn-022",
+        "name": "Moovalur Ramamirtham Ammaiyar Higher Education Assurance Scheme",
+        "state": "tamil_nadu",
+        "category": "education",
+        "eligibility": "Girl students who studied in government or government-aided schools in Tamil Nadu and are pursuing higher education are eligible. They must meet the scheme's education and verification conditions.",
+        "benefits": "The scheme provides monthly financial assistance for higher education. The amount is directly transferred to the student's bank account.",
+        "how_to_apply": "Apply through the UMIS portal with Aadhaar, bank account details, and school and college records. The department verifies eligibility and continuing enrollment."
+    },
+    {
+        "id": "tn-023",
+        "name": "Illam Thedi Kalvi",
+        "state": "tamil_nadu",
+        "category": "education",
+        "eligibility": "Children studying in government schools in Tamil Nadu can receive the support through approved learning centers and volunteers. The program focuses on school students needing academic support.",
+        "benefits": "Learning support is provided to improve foundational skills and school-level learning outcomes. The scheme supplements classroom education through community-based instruction.",
+        "how_to_apply": "No separate application is usually required. Enrollment happens through the school and local education department arrangements."
+    },
+    {
+        "id": "tn-024",
+        "name": "Breakfast Scheme in Government Schools",
+        "state": "tamil_nadu",
+        "category": "education",
+        "eligibility": "Government school students in Tamil Nadu covered under the program rules are eligible. The scheme applies where the state has notified implementation.",
+        "benefits": "Free breakfast is provided to schoolchildren on working days. The support improves nutrition and school attendance.",
+        "how_to_apply": "No separate application is required for eligible students. The school and local authorities manage implementation."
+    },
+    {
+        "id": "tn-025",
+        "name": "Special Fee Concession for Government and Aided Colleges",
+        "state": "tamil_nadu",
+        "category": "education",
+        "eligibility": "Eligible students studying in government and aided higher education institutions in Tamil Nadu can apply. Eligibility depends on the income and academic criteria fixed by the department.",
+        "benefits": "Fee concession and related tuition relief are provided to eligible students. The support reduces the cost of college education.",
+        "how_to_apply": "Apply through the college and higher education department with Aadhaar, income certificate, and academic records."
+    },
+    {
+        "id": "tn-026",
+        "name": "Free Laptop Scheme for Students",
+        "state": "tamil_nadu",
+        "category": "education",
+        "eligibility": "Eligible students in Tamil Nadu studying in government or government-aided institutions can apply when covered by the current state order. Course and institution conditions apply.",
+        "benefits": "A free laptop is provided to selected students. The scheme supports digital learning and higher education access.",
+        "how_to_apply": "Apply through the educational institution and department verification process with Aadhaar, student records, and course details."
+    },
+    {
+        "id": "tn-027",
+        "name": "Rural Students Educational Development Scheme",
+        "state": "tamil_nadu",
+        "category": "education",
+        "eligibility": "Students from rural Tamil Nadu who meet the notified school and income conditions can apply. The scheme focuses on educational upliftment for disadvantaged students.",
+        "benefits": "Support is provided for student education, learning materials, or related assistance as notified. The benefit helps reduce education barriers for rural learners.",
+        "how_to_apply": "Apply through the school, college, or district education office with Aadhaar, income proof, and student records."
+    },
+    {
+        "id": "tn-028",
+        "name": "Tamil Nadu Educational Loan Interest Subsidy Scheme",
+        "state": "tamil_nadu",
+        "category": "education",
+        "eligibility": "Eligible students from Tamil Nadu who have taken education loans for approved courses can apply. The family must meet the income and course conditions set by the department.",
+        "benefits": "Interest subsidy support is provided on eligible education loans. The scheme reduces the loan burden during study or repayment.",
+        "how_to_apply": "Apply through the higher education department or participating bank with loan documents, Aadhaar, income certificate, and course admission proof."
+    },
+    {
+        "id": "tn-029",
+        "name": "First Graduate Concession Scheme",
+        "state": "tamil_nadu",
+        "category": "education",
+        "eligibility": "Students in Tamil Nadu who are the first graduate in their family can apply if they meet the notified institution and course rules.",
+        "benefits": "Fee concession benefits are provided to reduce the cost of higher education. The scheme supports first-generation graduates.",
+        "how_to_apply": "Apply through the college with family details, first graduate certificate, Aadhaar, and educational records."
+    },
+    {
+        "id": "tn-030",
+        "name": "Free Education for Scheduled Caste and Scheduled Tribe Students",
+        "state": "tamil_nadu",
+        "category": "education",
+        "eligibility": "Eligible SC and ST students in Tamil Nadu studying in recognized institutions can receive support under the department rules. Income and course conditions may apply.",
+        "benefits": "Tuition and related educational assistance are provided as per the state rules. The scheme reduces the cost of school and higher education.",
+        "how_to_apply": "Apply through the institution and concerned welfare department with Aadhaar, community certificate, income proof, and academic records."
+    }
+]

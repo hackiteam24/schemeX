@@ -1,0 +1,380 @@
+[
+    {
+        "id": "ka-001",
+        "name": "Gruha Jyothi Scheme",
+        "state": "karnataka",
+        "category": "housing",
+        "eligibility": "Residential households in Karnataka are eligible under the scheme rules. Only one meter per household can receive the benefit.",
+        "benefits": "Eligible households get free electricity up to 200 units per month. The subsidy is adjusted directly in the electricity bill.",
+        "how_to_apply": "Apply through Seva Sindhu or assisted service centers such as Grama One, Karnataka One, or Bangalore One with Aadhaar and electricity account details."
+    },
+    {
+        "id": "ka-002",
+        "name": "Gruha Lakshmi Scheme",
+        "state": "karnataka",
+        "category": "women_child",
+        "eligibility": "Women listed as the head of eligible households in Karnataka can apply. The family must satisfy the ration card and other notified conditions.",
+        "benefits": "Eligible women receive Rs. 2,000 per month through direct benefit transfer. The amount is credited to the Aadhaar-linked bank account.",
+        "how_to_apply": "Apply through Seva Sindhu or the Women and Child Development department portal with Aadhaar, ration card details, and bank account information."
+    },
+    {
+        "id": "ka-003",
+        "name": "Anna Bhagya Scheme",
+        "state": "karnataka",
+        "category": "social_welfare",
+        "eligibility": "Priority and BPL households in Karnataka covered under the food security rules are eligible. The ration card must be valid and active.",
+        "benefits": "The scheme provides subsidized food-grain support to eligible households. Beneficiaries receive the state-notified rice entitlement or cash substitute as applicable.",
+        "how_to_apply": "No separate application is usually required for ration card holders. Eligible families are covered through the public distribution system and ration card records."
+    },
+    {
+        "id": "ka-004",
+        "name": "Shakti Scheme",
+        "state": "karnataka",
+        "category": "women_child",
+        "eligibility": "Women residents of Karnataka are eligible for free intra-state travel under the scheme rules. The benefit applies on state-run bus services as notified.",
+        "benefits": "Eligible women can travel free on specified government bus services within Karnataka. The subsidy is provided at the time of ticket issuance.",
+        "how_to_apply": "No separate enrollment is generally required. Travel using valid identity proof as required by the transport corporation and scheme rules."
+    },
+    {
+        "id": "ka-005",
+        "name": "Yuva Nidhi Scheme",
+        "state": "karnataka",
+        "category": "employment",
+        "eligibility": "Unemployed graduates and diploma holders in Karnataka who meet the notified graduation year and unemployment conditions are eligible. Applicants must be residents of Karnataka and not be employed or studying further.",
+        "benefits": "Unemployed graduates receive Rs. 3,000 per month and diploma holders receive Rs. 1,500 per month. The allowance is paid through DBT for the eligible period under the scheme.",
+        "how_to_apply": "Apply through Seva Sindhu with Aadhaar, educational certificates, bank account details, and self-declaration of unemployment."
+    },
+    {
+        "id": "ka-006",
+        "name": "Rajiv Gandhi Housing Scheme",
+        "state": "karnataka",
+        "category": "housing",
+        "eligibility": "Low-income and eligible homeless families in Karnataka can apply under the housing norms. Selection depends on the notified income and housing status criteria.",
+        "benefits": "Housing assistance is provided to construct or secure a permanent dwelling. Beneficiaries receive support as per the current state housing guidelines.",
+        "how_to_apply": "Apply through the housing department, local body, or Seva Sindhu with Aadhaar, income proof, and family details."
+    },
+    {
+        "id": "ka-007",
+        "name": "Prabuddha Overseas Scholarship Scheme",
+        "state": "karnataka",
+        "category": "education",
+        "eligibility": "Eligible Karnataka students from notified communities who have secured admission to approved overseas institutions can apply. Applicants must satisfy academic, income, and community rules.",
+        "benefits": "Scholarship support is provided for higher education abroad. The assistance covers expenses as per the state scholarship rules.",
+        "how_to_apply": "Apply through the official scholarship portal with admission proof, academic records, income certificate, community certificate if required, and passport details."
+    },
+    {
+        "id": "ka-008",
+        "name": "Swavalambi Sarathi Scheme",
+        "state": "karnataka",
+        "category": "employment",
+        "eligibility": "Eligible unemployed youth and self-employment aspirants in Karnataka from notified communities can apply. Applicants must meet the age, income, and vehicle or trade requirements set by the corporation.",
+        "benefits": "Financial or vehicle-linked subsidy support is provided for self-employment activities, including transport-based income generation. The scheme helps beneficiaries start or expand income-generating work.",
+        "how_to_apply": "Apply through the concerned development corporation or Seva Sindhu with Aadhaar, income certificate, bank account details, and vehicle or trade documents if required."
+    },
+    {
+        "id": "ka-009",
+        "name": "Ganga Kalyana Scheme",
+        "state": "karnataka",
+        "category": "agriculture",
+        "eligibility": "Small and marginal farmers in Karnataka from eligible notified communities can apply if they own suitable agricultural land and meet income conditions. The land must be suitable for irrigation development.",
+        "benefits": "The government provides irrigation support such as borewell, pump set, and related water infrastructure. The benefit improves farm water access for cultivation.",
+        "how_to_apply": "Apply through the district office or concerned development corporation with Aadhaar, land records, caste certificate if applicable, and bank account details."
+    },
+    {
+        "id": "ka-010",
+        "name": "Kisan Credit Card Scheme",
+        "state": "karnataka",
+        "category": "agriculture",
+        "eligibility": "Farmers, tenant farmers, and eligible allied agricultural workers in Karnataka can apply subject to bank and scheme norms.",
+        "benefits": "Credit is provided for crop production, allied activities, and farm needs at approved terms. The card allows short-term agricultural borrowing.",
+        "how_to_apply": "Apply through a bank branch or cooperative institution with Aadhaar, land or tenancy records, crop details, and bank account documents."
+    },
+    {
+        "id": "ka-011",
+        "name": "Pradhan Mantri Awas Yojana",
+        "state": "karnataka",
+        "category": "housing",
+        "eligibility": "Eligible low-income households in Karnataka who meet the central scheme income and housing conditions can apply. Rural and urban eligibility is determined by the respective component rules.",
+        "benefits": "Housing assistance is provided for construction or purchase of a home under the applicable component. The subsidy or grant is released as per the approved rules.",
+        "how_to_apply": "Apply through the local urban body, gram panchayat, housing office, or official PMAY portal with Aadhaar, income proof, and bank details."
+    },
+    {
+        "id": "ka-012",
+        "name": "Mahatma Gandhi National Rural Employment Guarantee Scheme",
+        "state": "karnataka",
+        "category": "employment",
+        "eligibility": "Adult rural households in Karnataka that request unskilled manual work are eligible under the scheme rules. One adult member of a registered household can seek work.",
+        "benefits": "The scheme guarantees wage employment for up to 100 days in a financial year. Wages are paid for notified rural public works.",
+        "how_to_apply": "Apply at the gram panchayat with Aadhaar and household details to obtain an employment demand registration and job card."
+    },
+    {
+        "id": "ka-013",
+        "name": "PM Kisan Samman Nidhi",
+        "state": "karnataka",
+        "category": "agriculture",
+        "eligibility": "Eligible farmer families in Karnataka owning cultivable land and meeting the central scheme rules can apply. Institutional landholders and excluded categories are not eligible.",
+        "benefits": "Eligible farmers receive income support in direct benefit transfer installments. The assistance is provided as per the national PM-KISAN rules.",
+        "how_to_apply": "Apply through the official PM-KISAN portal or local agriculture office with Aadhaar, bank account details, and land records."
+    },
+    {
+        "id": "ka-014",
+        "name": "Pradhan Mantri Matru Vandana Yojana",
+        "state": "karnataka",
+        "category": "women_child",
+        "eligibility": "Pregnant women and lactating mothers in Karnataka who meet the central scheme conditions can apply. The beneficiary must satisfy the age, birth-order, and registration rules.",
+        "benefits": "Cash incentive is provided in installments for maternal nutrition and health support. The amount is transferred directly to the bank account.",
+        "how_to_apply": "Apply through the anganwadi center, health facility, or official PMMVY portal with Aadhaar, bank account details, and maternal health documents."
+    },
+    {
+        "id": "ka-015",
+        "name": "Arogya Karnataka",
+        "state": "karnataka",
+        "category": "health",
+        "eligibility": "Residents of Karnataka from eligible families covered by the state health assurance rules can apply. The benefit follows the notified insurance and enrollment conditions.",
+        "benefits": "Cashless health coverage is provided for approved treatments in empanelled hospitals. The scheme supports hospitalization and major medical care.",
+        "how_to_apply": "Register through the health department or designated enrollment channels with Aadhaar, ration card or family ID, and other required identity documents."
+    },
+    {
+        "id": "ka-016",
+        "name": "Bhagyalakshmi Scheme",
+        "state": "karnataka",
+        "category": "women_child",
+        "eligibility": "Girl children born to eligible BPL families in Karnataka can apply under the scheme rules. The child must satisfy the birth registration and other notified conditions.",
+        "benefits": "Financial assistance is provided to support the girl child's welfare and education. Additional scholarship and insurance-linked support is available as per scheme conditions.",
+        "how_to_apply": "Apply through the Women and Child Development department or local anganwadi with birth certificate, BPL proof, Aadhaar, and bank details."
+    },
+    {
+        "id": "ka-017",
+        "name": "Mathrupoorna Scheme",
+        "state": "karnataka",
+        "category": "women_child",
+        "eligibility": "Pregnant women in Karnataka who are enrolled through the anganwadi system can receive the benefit. Eligibility follows maternal health and registration rules.",
+        "benefits": "Nutritious food and IFA tablets are provided through anganwadi centers during pregnancy. The support is intended to improve maternal nutrition and health.",
+        "how_to_apply": "Register at the local anganwadi center with Aadhaar and maternal health records. Health staff and anganwadi workers complete the enrollment process."
+    },
+    {
+        "id": "ka-018",
+        "name": "Shrama Shakthi Scheme",
+        "state": "karnataka",
+        "category": "women_child",
+        "eligibility": "Landless women agricultural labourers in Karnataka who meet the income and residence rules can apply.",
+        "benefits": "Monthly financial assistance is provided to eligible women workers. The amount is transferred directly to the beneficiary bank account.",
+        "how_to_apply": "Apply through the Women and Child Development department or local service centers with Aadhaar, bank account details, and occupation proof."
+    },
+    {
+        "id": "ka-021",
+        "name": "Ashadeepa Scheme",
+        "state": "karnataka",
+        "category": "employment",
+        "eligibility": "Scheduled Caste and Scheduled Tribe women in Karnataka who are selected under the scheme can apply through the notified process. Applicants must meet the community and project conditions.",
+        "benefits": "Financial support is provided to start small enterprises or service units. The scheme encourages employment generation and economic independence.",
+        "how_to_apply": "Apply through the concerned development corporation with Aadhaar, caste certificate, bank account details, and the proposed business plan."
+    },
+    {
+        "id": "ka-022",
+        "name": "Prerana Scheme",
+        "state": "karnataka",
+        "category": "employment",
+        "eligibility": "Scheduled Caste and Scheduled Tribe women self-help groups in Karnataka can apply if they meet the group and project eligibility rules.",
+        "benefits": "Financial assistance is provided for mass production and service units. The support is intended to strengthen group entrepreneurship.",
+        "how_to_apply": "Apply through the development corporation or district office with SHG records, Aadhaar, bank details, and project proposal documents."
+    },
+    {
+        "id": "ka-023",
+        "name": "Simple Marriage Scheme",
+        "state": "karnataka",
+        "category": "social_welfare",
+        "eligibility": "Eligible Scheduled Caste couples in Karnataka who opt for a simple marriage can apply under the scheme rules.",
+        "benefits": "Marriage incentive assistance is provided to eligible couples. The support is released after verification of marriage and eligibility documents.",
+        "how_to_apply": "Apply through the social welfare department or local office with marriage certificate, Aadhaar, caste certificate, and bank account details."
+    },
+    {
+        "id": "ka-024",
+        "name": "Charmashilpa Scheme",
+        "state": "karnataka",
+        "category": "employment",
+        "eligibility": "Leather artisans and related occupational groups in Karnataka from eligible communities can apply if they meet the corporation's rules.",
+        "benefits": "Financial assistance is provided to modernize leather artisan production units. The scheme supports improved tools, equipment, and business productivity.",
+        "how_to_apply": "Apply through the relevant development corporation with Aadhaar, caste certificate if applicable, income proof, and business details."
+    },
+    {
+        "id": "ka-025",
+        "name": "Paaduke Kutira Scheme",
+        "state": "karnataka",
+        "category": "employment",
+        "eligibility": "Eligible sandal-making or traditional craft workers in Karnataka from notified communities can apply under the scheme rules.",
+        "benefits": "Support is provided to establish work units or livelihood infrastructure for the craft-based occupation. The assistance helps beneficiaries earn through self-employment.",
+        "how_to_apply": "Apply through the concerned corporation office with Aadhaar, community proof, bank details, and occupational documents."
+    },
+    {
+        "id": "ka-026",
+        "name": "Koushallya Vikasana Training",
+        "state": "karnataka",
+        "category": "employment",
+        "eligibility": "Eligible community members in Karnataka who are selected for skill development training can apply. Selection depends on the notified eligibility and training category.",
+        "benefits": "Skill development training is provided to improve employability and self-employment capacity. Training may include certification and placement-oriented support where applicable.",
+        "how_to_apply": "Apply through the social welfare department or the concerned corporation with Aadhaar, qualification details, and caste or community certificate if required."
+    },
+    {
+        "id": "ka-027",
+        "name": "Kaya Spurti Scheme",
+        "state": "karnataka",
+        "category": "education",
+        "eligibility": "Eligible students or trainees from notified communities in Karnataka can apply if they meet the departmental selection criteria.",
+        "benefits": "Educational and motivational support is provided to improve student development and participation. The scheme is implemented through the relevant welfare department.",
+        "how_to_apply": "Apply through the district welfare office or official portal with Aadhaar, educational records, and community certificate if required."
+    },
+    {
+        "id": "ka-028",
+        "name": "Swavalambi and Sanchari Marata Malige Scheme",
+        "state": "karnataka",
+        "category": "employment",
+        "eligibility": "Eligible community members in Karnataka engaged in small retail or mobile vending activities can apply under the scheme rules.",
+        "benefits": "Financial support is provided for setting up self-employment shops or mobile vending units. The assistance helps beneficiaries start sustainable livelihood activities.",
+        "how_to_apply": "Apply through the concerned development corporation with Aadhaar, income proof, bank details, and business plan or vehicle details if required."
+    },
+    {
+        "id": "ka-029",
+        "name": "Pashu Aushadha Scheme",
+        "state": "karnataka",
+        "category": "health",
+        "eligibility": "Livestock owners and farmers in Karnataka who need veterinary support can access the scheme through the prescribed channels.",
+        "benefits": "Veterinary medicines and animal health support are provided to improve livestock care. The scheme helps in timely treatment and disease management.",
+        "how_to_apply": "Approach the local veterinary dispensary or animal husbandry office with livestock details and any required identity documents."
+    },
+    {
+        "id": "ka-030",
+        "name": "Raitha Sanjeevini Scheme",
+        "state": "karnataka",
+        "category": "agriculture",
+        "eligibility": "Farmers and agricultural stakeholders in Karnataka who participate in the notified agriculture market system can apply.",
+        "benefits": "Support is provided for agricultural product-related welfare and market access activities. The scheme aims to strengthen farm marketing support.",
+        "how_to_apply": "Apply through the official agriculture or market department channel with farmer identity, Aadhaar, and other required records."
+    },
+    {
+        "id": "ka-031",
+        "name": "Idea2PoC Fund for Women Entrepreneurs",
+        "state": "karnataka",
+        "category": "women_child",
+        "eligibility": "Women entrepreneurs in Karnataka with an innovative business idea or prototype can apply if they meet the notified selection rules. Applicants must be residents of Karnataka and satisfy the department's eligibility conditions.",
+        "benefits": "Financial assistance is provided to develop prototypes and early-stage ventures. The scheme supports women-led innovation and entrepreneurship.",
+        "how_to_apply": "Apply through the official government or department portal with Aadhaar, proposal details, bank account information, and supporting business documents."
+    },
+    {
+        "id": "ka-032",
+        "name": "Udyogini Scheme",
+        "state": "karnataka",
+        "category": "women_child",
+        "eligibility": "Women in Karnataka from eligible income groups can apply for income-generating activities under the scheme. Selection follows corporation and bank lending norms.",
+        "benefits": "Subsidized loans or financial assistance are provided for small business activities. The support is intended to help women start or expand self-employment.",
+        "how_to_apply": "Apply through the concerned development corporation, bank, or Seva Sindhu with Aadhaar, income proof, project details, and bank account information."
+    },
+    {
+        "id": "ka-033",
+        "name": "Krishi Yantra Dhare Scheme",
+        "state": "karnataka",
+        "category": "agriculture",
+        "eligibility": "Farmers in Karnataka and registered farmer groups can apply for farm machinery access under the scheme rules. Eligibility depends on landholding and local implementation norms.",
+        "benefits": "Farm equipment is made available on rental or subsidized access for agricultural operations. The scheme reduces the cost of mechanized farming for beneficiaries.",
+        "how_to_apply": "Apply through the agriculture department or farmer service center with Aadhaar, land records, and farm activity details."
+    },
+    {
+        "id": "ka-034",
+        "name": "Raitha Vidyanidhi Scheme",
+        "state": "karnataka",
+        "category": "education",
+        "eligibility": "Children of eligible farmers in Karnataka studying in recognized institutions can apply if they meet the academic and family conditions. The family must satisfy the notified farmer criteria.",
+        "benefits": "Scholarship support is provided for the education of farmers' children. The benefit is released directly to the eligible student or family as per rules.",
+        "how_to_apply": "Apply through the agriculture or scholarship portal with Aadhaar, income proof, farmer identity proof, and school or college records."
+    },
+    {
+        "id": "ka-035",
+        "name": "Arivu Education Loan Scheme",
+        "state": "karnataka",
+        "category": "education",
+        "eligibility": "Eligible students from Karnataka pursuing higher studies can apply if they meet the income, course, and institution rules. Priority is given as notified by the implementing agency.",
+        "benefits": "Low-interest education loans are provided for approved higher studies. The support helps students meet tuition and education-related expenses.",
+        "how_to_apply": "Apply through the concerned corporation or financial institution with Aadhaar, admission proof, income certificate, and course details."
+    },
+    {
+        "id": "ka-036",
+        "name": "Vidyasiri Scheme",
+        "state": "karnataka",
+        "category": "education",
+        "eligibility": "Eligible students from economically weaker families in Karnataka studying in post-matric courses can apply. Residence, income, and course conditions must be satisfied.",
+        "benefits": "Hostel and food assistance is provided to eligible students. The aid supports living expenses during studies.",
+        "how_to_apply": "Apply through the official scholarship portal with Aadhaar, income certificate, bank account details, and college admission records."
+    },
+    {
+        "id": "ka-037",
+        "name": "Free Laptop Scheme",
+        "state": "karnataka",
+        "category": "education",
+        "eligibility": "Eligible students in Karnataka from notified categories and institutions can apply if they meet the academic and course conditions.",
+        "benefits": "A laptop is provided free of cost to selected students. The scheme supports digital learning and higher education.",
+        "how_to_apply": "Apply through the department or scholarship portal with Aadhaar, student ID, income proof, and academic records."
+    },
+    {
+        "id": "ka-038",
+        "name": "Chief Minister's Employment Generation Programme",
+        "state": "karnataka",
+        "category": "employment",
+        "eligibility": "Unemployed youth and aspiring entrepreneurs in Karnataka can apply if they meet the age, education, and project eligibility norms. Applicants must satisfy the bank and departmental rules.",
+        "benefits": "Margin money subsidy and project support are provided for new enterprises. The scheme helps beneficiaries start self-employment or small businesses.",
+        "how_to_apply": "Apply through the official portal or district industry center with Aadhaar, project report, bank details, and education proof."
+    },
+    {
+        "id": "ka-039",
+        "name": "CMEGP Subsidy for Women Entrepreneurs",
+        "state": "karnataka",
+        "category": "women_child",
+        "eligibility": "Women applicants in Karnataka who meet the enterprise and bank lending rules can apply under the women-focused component. Residence and project conditions must be satisfied.",
+        "benefits": "Subsidized financial support is provided to help women establish new enterprises. The benefit is released according to approved project norms.",
+        "how_to_apply": "Apply through the district industry center or official portal with Aadhaar, project report, bank account details, and identity documents."
+    },
+    {
+        "id": "ka-040",
+        "name": "Ladli Laxmi",
+        "state": "karnataka",
+        "category": "women_child",
+        "eligibility": "Girl children from eligible families in Karnataka can apply if they satisfy the income and birth registration conditions. The family must meet the scheme's notified criteria.",
+        "benefits": "Financial support is provided for the long-term welfare and education of the girl child. The assistance is credited as per the state scheme rules.",
+        "how_to_apply": "Apply through the Women and Child Development department or local service center with birth certificate, Aadhaar, family income proof, and bank details."
+    },
+    {
+        "id": "ka-041",
+        "name": "Atal Bihari Vajpayee Residential Schools",
+        "state": "karnataka",
+        "category": "education",
+        "eligibility": "Students from eligible rural and disadvantaged families in Karnataka can apply for admission based on the school's selection rules. Admission is subject to seat availability and academic criteria.",
+        "benefits": "Residential schooling, meals, uniforms, and academic support are provided. The schools offer free education in a structured residential environment.",
+        "how_to_apply": "Apply through the school admission process or district education office with student records, Aadhaar, income proof, and residence details."
+    },
+    {
+        "id": "ka-042",
+        "name": "Manaswini Scheme",
+        "state": "karnataka",
+        "category": "women_child",
+        "eligibility": "Women from eligible low-income households in Karnataka can apply if they satisfy the age and family income conditions. Beneficiaries must meet the welfare department's rules.",
+        "benefits": "Financial assistance is provided for the welfare and empowerment of women. The amount is transferred through direct benefit delivery where applicable.",
+        "how_to_apply": "Apply through the concerned department or local service center with Aadhaar, income certificate, bank account details, and family documents."
+    },
+    {
+        "id": "ka-043",
+        "name": "Ashraya Housing Scheme",
+        "state": "karnataka",
+        "category": "housing",
+        "eligibility": "Homeless and low-income families in Karnataka who meet the housing criteria can apply. Selection depends on local body and income norms.",
+        "benefits": "Housing assistance and site or dwelling support are provided to eligible families. The scheme aims to improve access to safe housing.",
+        "how_to_apply": "Apply through the local urban body, gram panchayat, or housing department with Aadhaar, income proof, and family details."
+    },
+    {
+        "id": "ka-044",
+        "name": "Kalika Chetarike",
+        "state": "karnataka",
+        "category": "education",
+        "eligibility": "Students in Karnataka enrolled in eligible government school programs can apply if they satisfy the academic and institutional conditions.",
+        "benefits": "Learning support materials and educational assistance are provided to improve school learning outcomes. The scheme supports foundational education.",
+        "how_to_apply": "Apply through the school administration or education department with student identity, school records, and Aadhaar if required."
+    }
+]

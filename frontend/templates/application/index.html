@@ -1,0 +1,362 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Apply for Scheme - SchemeX AI
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/application.css' %}">
+<style>
+    .search-results-dropdown {
+        border: 1px solid var(--gray-200);
+        border-radius: var(--radius-md);
+        background: var(--white);
+        box-shadow: var(--shadow-lg);
+        position: absolute;
+        width: 100%;
+        max-height: 250px;
+        overflow-y: auto;
+        z-index: 1000;
+    }
+    .search-result-item {
+        padding: var(--spacing-sm) var(--spacing-md);
+        cursor: pointer;
+        transition: background var(--transition-fast);
+        border-bottom: 1px solid var(--gray-100);
+    }
+    .search-result-item:last-child {
+        border-bottom: none;
+    }
+    .search-result-item:hover {
+        background: var(--gray-50);
+    }
+    .search-result-title {
+        font-weight: 600;
+        color: var(--gray-800);
+        font-size: 0.95rem;
+    }
+    .search-result-subtitle {
+        font-size: 0.8rem;
+        color: var(--gray-500);
+        margin-top: 2px;
+    }
+    .doc-upload-list {
+        margin-top: var(--spacing-md);
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-sm);
+    }
+    .doc-upload-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: var(--spacing-sm) var(--spacing-md);
+        background: var(--gray-50);
+        border: 1px solid var(--gray-200);
+        border-radius: var(--radius-md);
+        gap: var(--spacing-sm);
+    }
+    .doc-upload-info {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-xs);
+        font-size: 0.9rem;
+    }
+    .doc-upload-info i {
+        color: var(--primary-green);
+    }
+    .doc-upload-name {
+        color: var(--gray-700);
+        font-weight: 500;
+    }
+    .doc-upload-actions {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-xs);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="application-page">
+    <div class="container">
+        <!-- Page Header -->
+        <div class="page-header slide-up">
+            <h1>Application Form</h1>
+            <p>Fill in the details to apply for the selected government scheme</p>
+        </div>
+
+        <div class="application-container">
+            <!-- Scheme Selection & Info -->
+            <div style="display: flex; flex-direction: column; gap: var(--spacing-md);" class="slide-up delay-1">
+                <!-- Search Select Autocomplete -->
+                <div class="scheme-select-section" style="background: var(--white); border-radius: var(--radius-xl); border: 1px solid var(--gray-200); padding: var(--spacing-md); box-shadow: var(--shadow-md); position: relative;">
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label for="schemeSearchInput" class="form-label" style="font-weight: 700;">
+                            <i class="fa-solid fa-search" style="color: var(--primary-green);"></i> Select Welfare Scheme to Apply
+                        </label>
+                        <input 
+                            type="text" 
+                            id="schemeSearchInput" 
+                            class="form-input" 
+                            placeholder="Type scheme name (e.g. Kisan, Awas, Scholarship...)"
+                            autocomplete="off"
+                        >
+                        <div id="schemeSearchResults" class="search-results-dropdown" style="display: none; position: absolute; top: 100%; left: 0; right: 0; background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius-md); box-shadow: var(--shadow-lg); z-index: 100; max-height: 250px; overflow-y: auto; margin-top: 4px;">
+                            <!-- Results loaded dynamically -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Scheme Info Card -->
+                <div class="scheme-info-card" id="schemeInfoCard" style="display: none;">
+                    <div class="scheme-header">
+                        <div class="scheme-icon">
+                            <i class="fa-solid fa-seedling"></i>
+                        </div>
+                        <div>
+                            <h2 id="cardSchemeName">Loading Scheme...</h2>
+                            <p class="scheme-subtitle" id="cardSchemeSubtitle">-</p>
+                        </div>
+                    </div>
+                    <div class="scheme-description" style="margin-top: var(--spacing-sm);">
+                        <p id="cardSchemeDescription">-</p>
+                    </div>
+
+                    <!-- Required Documents Checklist -->
+                    <div class="scheme-documents-checklist" style="margin-top: var(--spacing-md); border-top: 1px solid var(--gray-200); padding-top: var(--spacing-md);">
+                        <h3 style="font-size: 1rem; color: var(--gray-800); margin-bottom: var(--spacing-sm); display: flex; align-items: center; gap: 6px; font-weight: 700;">
+                            <i class="fa-solid fa-file-shield" style="color: var(--primary-green);"></i> Required Documents
+                        </h3>
+                        <div id="requiredDocsChecklist" class="doc-upload-list">
+                            <!-- Loaded dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hidden File Input for Document Checklist Uploads -->
+            <input type="file" id="schemeDocInput" style="display: none;" accept=".pdf,.jpg,.jpeg,.png">
+            <input type="hidden" id="selectedSchemeId" name="selectedSchemeId" value="">
+
+            <!-- Application Form -->
+            <div class="application-form-card slide-up delay-2">
+                <div class="form-header">
+                    <h2>Application Details</h2>
+                    <div class="progress-indicator">
+                        <span class="step-indicator">Step 1 of 3</span>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 33%;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <form id="applicationForm">
+                    <!-- Step 1: Personal Details -->
+                    <div class="form-step active" data-step="1">
+                        <h3>Personal Details</h3>
+                        
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="fullName" class="form-label">Full Name *</label>
+                                <input type="text" id="fullName" name="fullName" class="form-input" placeholder="Enter full name" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="fatherName" class="form-label">Father's Name *</label>
+                                <input type="text" id="fatherName" name="fatherName" class="form-input" placeholder="Enter father's name" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="aadhaar" class="form-label">Aadhaar Number *</label>
+                                <input type="text" id="aadhaar" name="aadhaar" class="form-input" placeholder="12-digit Aadhaar number" maxlength="12" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="mobile" class="form-label">Mobile Number *</label>
+                                <input type="tel" id="mobile" name="mobile" class="form-input" placeholder="10-digit mobile number" maxlength="10" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="gender" class="form-label">Gender *</label>
+                                <select id="gender" name="gender" class="form-select" required>
+                                    <option value="">Select Gender</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="category" class="form-label">Category</label>
+                                <select id="category" name="category" class="form-select">
+                                    <option value="">Select Category</option>
+                                    <option value="general">General</option>
+                                    <option value="obc">OBC</option>
+                                    <option value="sc">SC</option>
+                                    <option value="st">ST</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-outline" disabled>Previous</button>
+                            <button type="button" class="btn btn-primary" onclick="nextStep(2)">
+                                Next
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Land Details -->
+                    <div class="form-step" data-step="2">
+                        <h3>Land Details</h3>
+                        
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="landArea" class="form-label">Total Land Area (in acres) *</label>
+                                <input type="number" id="landArea" name="landArea" class="form-input" placeholder="Enter land area" step="0.01" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="landType" class="form-label">Land Type *</label>
+                                <select id="landType" name="landType" class="form-select" required>
+                                    <option value="">Select Land Type</option>
+                                    <option value="irrigated">Irrigated</option>
+                                    <option value="rainfed">Rainfed</option>
+                                    <option value="mixed">Mixed</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="state" class="form-label">State *</label>
+                                <select id="state" name="state" class="form-select" required>
+                                    <option value="andhra_pradesh">Andhra Pradesh</option>
+                                    <option value="arunachal_pradesh">Arunachal Pradesh</option>
+                                    <option value="assam">Assam</option>
+                                    <option value="bihar">Bihar</option>
+                                    <option value="chhattisgarh">Chhattisgarh</option>
+                                    <option value="goa">Goa</option>
+                                    <option value="gujarat">Gujarat</option>
+                                    <option value="haryana">Haryana</option>
+                                    <option value="himachal_pradesh">Himachal Pradesh</option>
+                                    <option value="jharkhand">Jharkhand</option>
+                                    <option value="karnataka">Karnataka</option>
+                                    <option value="kerala">Kerala</option>
+                                    <option value="madhya_pradesh">Madhya Pradesh</option>
+                                    <option value="maharashtra">Maharashtra</option>
+                                    <option value="manipur">Manipur</option>
+                                    <option value="meghalaya">Meghalaya</option>
+                                    <option value="mizoram">Mizoram</option>
+                                    <option value="nagaland">Nagaland</option>
+                                    <option value="odisha">Odisha</option>
+                                    <option value="punjab">Punjab</option>
+                                    <option value="rajasthan">Rajasthan</option>
+                                    <option value="sikkim">Sikkim</option>
+                                    <option value="tamil_nadu">Tamil Nadu</option>
+                                    <option value="telangana">Telangana</option>
+                                    <option value="tripura">Tripura</option>
+                                    <option value="uttar_pradesh">Uttar Pradesh</option>
+                                    <option value="uttarakhand">Uttarakhand</option>
+                                    <option value="west_bengal">West Bengal</option>
+
+<!-- Union Territories -->
+<option value="andaman_and_nicobar_islands">Andaman and Nicobar Islands</option>
+<option value="chandigarh">Chandigarh</option>
+<option value="dadra_and_nagar_haveli_and_daman_and_diu">Dadra and Nagar Haveli and Daman and Diu</option>
+<option value="delhi">Delhi (NCT)</option>
+<option value="jammu_and_kashmir">Jammu and Kashmir</option>
+<option value="ladakh">Ladakh</option>
+<option value="lakshadweep">Lakshadweep</option>
+<option value="puducherry">Puducherry</option> 
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="district" class="form-label">District *</label>
+                                <input type="text" id="district" name="district" class="form-input" placeholder="Enter district" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="tehsil" class="form-label">Tehsil/Block *</label>
+                                <input type="text" id="tehsil" name="tehsil" class="form-input" placeholder="Enter tehsil" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="village" class="form-label">Village *</label>
+                                <input type="text" id="village" name="village" class="form-input" placeholder="Enter village" required>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-outline" onclick="previousStep(1)">Previous</button>
+                            <button type="button" class="btn btn-primary" onclick="nextStep(3)">
+                                Next
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Bank Details -->
+                    <div class="form-step" data-step="3">
+                        <h3>Bank Details</h3>
+                        
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="bankName" class="form-label">Bank Name *</label>
+                                <input type="text" id="bankName" name="bankName" class="form-input" placeholder="Enter bank name" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="accountNumber" class="form-label">Account Number *</label>
+                                <input type="text" id="accountNumber" name="accountNumber" class="form-input" placeholder="Enter account number" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="confirmAccountNumber" class="form-label">Confirm Account Number *</label>
+                                <input type="text" id="confirmAccountNumber" name="confirmAccountNumber" class="form-input" placeholder="Confirm account number" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="ifscCode" class="form-label">IFSC Code *</label>
+                                <input type="text" id="ifscCode" name="ifscCode" class="form-input" placeholder="Enter IFSC code" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="accountType" class="form-label">Account Type *</label>
+                                <select id="accountType" name="accountType" class="form-select" required>
+                                    <option value="">Select Account Type</option>
+                                    <option value="savings">Savings Account</option>
+                                    <option value="current">Current Account</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="declaration">
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="declaration" required>
+                                <span>I hereby declare that all the information provided above is true and correct to the best of my knowledge. I understand that any false information may lead to rejection of my application.</span>
+                            </label>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-outline" onclick="previousStep(2)">Previous</button>
+                            <button type="submit" class="btn btn-primary" id="submitBtn">
+                                <span class="btn-text">Submit Application</span>
+                                <span class="btn-loader" style="display: none;">
+                                    <div class="spinner spinner-sm"></div>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/application.js' %}"></script>
+{% endblock %}

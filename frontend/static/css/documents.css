@@ -1,0 +1,411 @@
+/* ==================== */
+/* Documents Page Styles */
+/* ==================== */
+
+.documents-page {
+    padding: var(--spacing-3xl) 0;
+}
+
+.page-header {
+    text-align: center;
+    margin-bottom: var(--spacing-3xl);
+}
+
+.page-header h1 {
+    font-size: 2.75rem;
+    color: var(--primary-green);
+    margin-bottom: var(--spacing-sm);
+    letter-spacing: -0.015em;
+}
+
+.page-header p {
+    color: var(--gray-600);
+    font-size: 1.15rem;
+}
+
+/* Documents Grid Layout Container */
+.documents-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-2xl);
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+/* Upload Section */
+.upload-section {
+    grid-column: 1 / -1;
+}
+
+.upload-card {
+    background: var(--white);
+    border-radius: var(--radius-2xl);
+    padding: var(--spacing-2xl);
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--gray-100);
+}
+
+.upload-header {
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+}
+
+.upload-header h2 {
+    font-size: 1.75rem;
+    color: var(--gray-900);
+    margin-bottom: var(--spacing-xs);
+}
+
+.upload-header p {
+    color: var(--gray-600);
+    font-size: 0.95rem;
+}
+
+.upload-area {
+    border: 2px dashed var(--gray-300);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-3xl) var(--spacing-xl);
+    text-align: center;
+    background: var(--gray-50);
+    transition: all var(--transition-normal);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.upload-area:hover,
+.upload-area.dragover {
+    border-color: var(--primary-green);
+    background: rgba(27, 107, 58, 0.03);
+    transform: scale(0.99);
+}
+
+.upload-icon {
+    font-size: 3.5rem;
+    color: var(--primary-green);
+    margin-bottom: var(--spacing-md);
+    transition: transform var(--transition-normal);
+}
+
+.upload-area:hover .upload-icon {
+    transform: translateY(-4px);
+}
+
+.upload-area h3 {
+    font-size: 1.35rem;
+    color: var(--gray-900);
+    margin-bottom: var(--spacing-xs);
+}
+
+.upload-area p {
+    color: var(--gray-650);
+    font-size: 0.95rem;
+    margin-bottom: var(--spacing-lg);
+}
+
+/* Upload Progress Items */
+.upload-progress {
+    margin-top: var(--spacing-xl);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.progress-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md) var(--spacing-lg);
+    background: var(--gray-50);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-lg);
+}
+
+.progress-info {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-xs);
+}
+
+.file-name {
+    font-weight: 600;
+    color: var(--gray-800);
+    font-size: 0.95rem;
+}
+
+.file-size {
+    color: var(--gray-500);
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.progress-bar {
+    flex: 1;
+    height: 6px;
+    background: var(--gray-200);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+    margin: 0 var(--spacing-lg);
+}
+
+.progress-percentage {
+    color: var(--primary-green);
+    font-weight: 700;
+    font-size: 0.9rem;
+    min-width: 40px;
+    text-align: right;
+}
+
+/* Document Lists Sections */
+.required-docs-section {
+    grid-column: 1 / 2;
+}
+
+.uploaded-docs-section {
+    grid-column: 2 / 3;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-xl);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 1px solid var(--gray-200);
+}
+
+.section-header h2 {
+    font-size: 1.45rem;
+    color: var(--gray-900);
+    margin: 0;
+}
+
+.required-docs-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+/* Document Cards */
+.doc-item {
+    background: var(--white);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-lg);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--gray-100);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    transition: all var(--transition-normal);
+}
+
+.doc-item:hover {
+    box-shadow: var(--shadow-md);
+    border-color: var(--gray-300);
+}
+
+.doc-item.pending {
+    border-left: 4px solid var(--saffron);
+}
+
+.doc-item.uploaded {
+    border-left: 4px solid var(--primary-green);
+}
+
+.doc-icon {
+    width: 48px;
+    height: 48px;
+    background: rgba(27, 107, 58, 0.08);
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary-green);
+    font-size: 1.35rem;
+    flex-shrink: 0;
+}
+
+.doc-item.pending .doc-icon {
+    background: rgba(244, 162, 97, 0.08);
+    color: var(--saffron);
+}
+
+.doc-info {
+    flex: 1;
+}
+
+.doc-info h4 {
+    font-size: 1.05rem;
+    color: var(--gray-900);
+    margin-bottom: 2px;
+}
+
+.doc-info p {
+    color: var(--gray-500);
+    font-size: 0.8rem;
+    margin: 0;
+    font-weight: 500;
+}
+
+.doc-status {
+    flex-shrink: 0;
+}
+
+.doc-actions {
+    display: flex;
+    gap: var(--spacing-sm);
+}
+
+.icon-btn {
+    width: 40px;
+    height: 40px;
+    background: var(--gray-50);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-md);
+    color: var(--gray-700);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.95rem;
+    transition: all var(--transition-normal);
+}
+
+.icon-btn:hover {
+    background: var(--primary-green);
+    border-color: var(--primary-green);
+    color: var(--white);
+    box-shadow: var(--shadow-sm);
+}
+
+.icon-btn-danger:hover {
+    background: #ef4444;
+    border-color: #ef4444;
+    color: var(--white);
+}
+
+/* Uploaded Documents List Grid */
+.uploaded-docs-grid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.uploaded-doc-card {
+    background: var(--white);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-lg);
+    border: 1px solid var(--gray-100);
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    transition: all var(--transition-normal);
+}
+
+.uploaded-doc-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+    border-color: var(--primary-green);
+}
+
+.doc-preview {
+    width: 48px;
+    height: 48px;
+    background: rgba(27, 107, 58, 0.05);
+    border: 1px solid rgba(27, 107, 58, 0.1);
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary-green);
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.doc-details {
+    flex: 1;
+}
+
+.doc-details h4 {
+    font-size: 1rem;
+    color: var(--gray-900);
+    margin-bottom: 2px;
+}
+
+.doc-details p {
+    color: var(--gray-500);
+    font-size: 0.8rem;
+    margin: 0 0 var(--spacing-xs) 0;
+    font-weight: 500;
+}
+
+.doc-details .badge {
+    display: inline-block;
+}
+
+/* Empty State Styles */
+.empty-state {
+    text-align: center;
+    padding: var(--spacing-2xl) var(--spacing-md);
+    background: var(--gray-50);
+    border: 1px dashed var(--gray-300);
+    border-radius: var(--radius-xl);
+}
+
+.empty-state i {
+    font-size: 2.25rem;
+    color: var(--gray-400);
+    margin-bottom: var(--spacing-md);
+}
+
+.empty-state h3 {
+    font-size: 1.15rem;
+    color: var(--gray-700);
+    margin-bottom: var(--spacing-xs);
+}
+
+/* Responsive Styles */
+@media (max-width: 1024px) {
+    .documents-container {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-xl);
+    }
+    
+    .required-docs-section,
+    .uploaded-docs-section {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (max-width: 640px) {
+    .page-header h1 {
+        font-size: 2.25rem;
+    }
+    
+    .upload-card {
+        padding: var(--spacing-xl);
+    }
+    
+    .upload-area {
+        padding: var(--spacing-2xl) var(--spacing-md);
+    }
+    
+    .doc-item,
+    .uploaded-doc-card {
+        flex-direction: column;
+        align-items: stretch;
+        gap: var(--spacing-md);
+    }
+    
+    .doc-actions {
+        border-top: 1px solid var(--gray-100);
+        padding-top: var(--spacing-md);
+        margin-top: 0;
+        justify-content: flex-end;
+    }
+}

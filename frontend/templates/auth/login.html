@@ -1,0 +1,188 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Login - SchemeX AI
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/auth.css' %}">
+<style>
+    .login-mode-toggle {
+        display: flex;
+        background: var(--gray-100);
+        padding: 4px;
+        border-radius: var(--radius-lg);
+        margin: var(--spacing-md) 0 var(--spacing-lg) 0;
+        border: 1px solid var(--gray-200);
+    }
+    .mode-btn {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--spacing-xs);
+        padding: var(--spacing-sm) var(--spacing-md);
+        border: none;
+        background: transparent;
+        color: var(--gray-500);
+        font-weight: 600;
+        font-size: 0.95rem;
+        cursor: pointer;
+        border-radius: var(--radius-md);
+        transition: all var(--transition-fast);
+    }
+    .mode-btn:hover {
+        color: var(--gray-800);
+    }
+    .mode-btn.active {
+        background: var(--white);
+        color: var(--primary-green);
+        box-shadow: var(--shadow-sm);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="auth-page">
+    <div class="auth-container">
+        <div class="auth-card slide-up">
+            <div class="auth-header">
+                <div class="auth-logo">
+                    <i class="fa-solid fa-seedling"></i>
+                    <span>SchemeX AI</span>
+                </div>
+                <h1>Welcome Back!</h1>
+                <p id="loginSubtitle">Sign in to access government schemes and services</p>
+            </div>
+
+            <div class="login-mode-toggle">
+                <button type="button" class="mode-btn active" id="citizenModeBtn" onclick="setLoginMode('citizen')">
+                    <i class="fa-solid fa-user"></i> Citizen Login
+                </button>
+                <button type="button" class="mode-btn" id="adminModeBtn" onclick="setLoginMode('admin')">
+                    <i class="fa-solid fa-user-shield"></i> Admin Login
+                </button>
+            </div>
+
+            <form id="loginForm" class="auth-form">
+                <div id="loginError" class="alert alert-error" style="display: none;"></div>
+
+                <div class="form-group">
+                    <label for="username" class="form-label">
+                        <i class="fa-solid fa-user"></i>
+                        Username or Mobile
+                    </label>
+                    <input 
+                        type="text" 
+                        id="username" 
+                        name="username" 
+                        class="form-input" 
+                        placeholder="Enter username or mobile number"
+                        required
+                        autocomplete="username"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="password" class="form-label">
+                        <i class="fa-solid fa-lock"></i>
+                        Password
+                    </label>
+                    <div class="password-input">
+                        <input 
+                            type="password" 
+                            id="password" 
+                            name="password" 
+                            class="form-input" 
+                            placeholder="Enter your password"
+                            required
+                            autocomplete="current-password"
+                        >
+                        <button type="button" class="toggle-password" onclick="togglePassword('password')">
+                            <i class="fa-solid fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-options">
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="remember">
+                        <span>Remember me</span>
+                    </label>
+                    <a href="#" class="forgot-link">Forgot Password?</a>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block btn-lg" id="loginBtn">
+                    <span class="btn-text">Sign In</span>
+                    <span class="btn-loader" style="display: none;">
+                        <div class="spinner spinner-sm"></div>
+                    </span>
+                </button>
+
+                <div class="auth-divider">
+                    <span>or continue with</span>
+                </div>
+
+                <div class="social-login">
+                    <button type="button" class="social-btn">
+                        <i class="fa-solid fa-mobile-screen"></i>
+                        OTP Login
+                    </button>
+                </div>
+            </form>
+
+            <div class="auth-footer">
+                <p>Don't have an account? <a href="{% url 'register' %}">Create Account</a></p>
+            </div>
+        </div>
+
+        <div class="auth-info slide-up delay-2">
+            <div class="info-content">
+                <h2>New to SchemeX?</h2>
+                <p>Create an account to discover and apply for government schemes in your language.</p>
+                <ul class="info-features">
+                    <li><i class="fa-solid fa-check"></i> Access 4000+ government schemes</li>
+                    <li><i class="fa-solid fa-check"></i> Voice search in 12+ languages</li>
+                    <li><i class="fa-solid fa-check"></i> AI-powered eligibility checker</li>
+                    <li><i class="fa-solid fa-check"></i> Track application status</li>
+                </ul>
+                <a href="{% url 'register' %}" class="btn btn-outline btn-lg">
+                    Create Account
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/auth.js' %}"></script>
+<script>
+    window.setLoginMode = function(mode) {
+        const citizenBtn = document.getElementById('citizenModeBtn');
+        const adminBtn = document.getElementById('adminModeBtn');
+        const subtitle = document.getElementById('loginSubtitle');
+        const headerTitle = document.querySelector('.auth-header h1');
+        
+        if (mode === 'admin') {
+            if (citizenBtn) citizenBtn.classList.remove('active');
+            if (adminBtn) adminBtn.classList.add('active');
+            if (headerTitle) headerTitle.textContent = 'Admin Portal';
+            if (subtitle) subtitle.textContent = 'Sign in to review documents, verify profiles, and manage applications';
+            localStorage.setItem('login_mode', 'admin');
+        } else {
+            if (citizenBtn) citizenBtn.classList.add('active');
+            if (adminBtn) adminBtn.classList.remove('active');
+            if (headerTitle) headerTitle.textContent = 'Welcome Back!';
+            if (subtitle) subtitle.textContent = 'Sign in to access government schemes and services';
+            localStorage.setItem('login_mode', 'citizen');
+        }
+    };
+    
+    // Initialize mode if previously selected
+    const savedMode = localStorage.getItem('login_mode') || 'citizen';
+    setLoginMode(savedMode);
+</script>
+{% endblock %}

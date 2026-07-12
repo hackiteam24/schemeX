@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Document Upload - SchemeX AI
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/documents.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="documents-page">
+    <div class="container">
+        <!-- Page Header -->
+        <div class="page-header slide-up">
+            <h1>Document Upload</h1>
+            <p>Upload required documents for your scheme applications</p>
+        </div>
+
+        <div class="documents-container">
+            <!-- Upload Section -->
+            <div class="upload-section slide-up delay-1">
+                <div class="upload-card">
+                    <div class="upload-header">
+                        <h2>Upload Documents</h2>
+                        <p>Upload your documents in PDF, JPG, or PNG format. Maximum file size: 5MB</p>
+                    </div>
+
+                    <div class="upload-area" id="uploadArea">
+                        <div class="upload-icon">
+                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                        </div>
+                        <h3>Drag & Drop Files Here</h3>
+                        <p>or click to browse</p>
+                        <input type="file" id="fileInput" multiple accept=".pdf,.jpg,.jpeg,.png" style="display: none;">
+                        <button class="btn btn-primary" onclick="document.getElementById('fileInput').click()">
+                            <i class="fa-solid fa-folder-open"></i>
+                            Browse Files
+                        </button>
+                    </div>
+
+                    <div class="upload-progress" id="uploadProgress" style="display: none;"></div>
+                </div>
+            </div>
+
+            <!-- Required Documents -->
+            <div class="required-docs-section slide-up delay-2">
+                <div class="section-header">
+                    <h2>Required Documents</h2>
+                    <span class="badge badge-warning">3 Pending</span>
+                </div>
+
+                <div class="required-docs-list">
+                    <div class="empty-state">
+                        <i class="fa-solid fa-spinner fa-spin"></i>
+                        <h3>Loading document checklist</h3>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Uploaded Documents -->
+            <div class="uploaded-docs-section slide-up delay-3">
+                <div class="section-header">
+                    <h2>Uploaded Documents</h2>
+                    <button class="btn btn-outline btn-sm">
+                        <i class="fa-solid fa-download"></i>
+                        Download All
+                    </button>
+                </div>
+
+                <div class="uploaded-docs-grid">
+                    <div class="empty-state">
+                        <i class="fa-solid fa-spinner fa-spin"></i>
+                        <h3>Loading uploaded documents</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/documents.js' %}"></script>
+{% endblock %}
