@@ -80,7 +80,6 @@ SchemeX/
 │
 ├── backend/
 ├── frontend/
-├── screenshots/
 └── README.md
 ```
 
