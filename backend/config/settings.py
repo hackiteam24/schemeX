@@ -28,11 +28,17 @@ load_dotenv(BASE_DIR / ".env")
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "")
 if not SECRET_KEY and not os.environ.get("DJANGO_DEBUG") == "True":
-    raise ValueError("DJANGO_SECRET_KEY environment variable is required in production!")
+    raise ValueError(
+        "DJANGO_SECRET_KEY environment variable is required in production!"
+    )
 
 DEBUG = os.environ.get("DJANGO_DEBUG", "False") == "True"
 
-ALLOWED_HOSTS = [h.strip() for h in os.environ.get("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split(",") if h.strip()]
+ALLOWED_HOSTS = [
+    h.strip()
+    for h in os.environ.get("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
+    if h.strip()
+]
 
 
 # Application definition
@@ -64,11 +70,13 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
+    
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
@@ -115,7 +123,9 @@ else:
             "ENGINE": "django.db.backends.mysql",
             "NAME": os.environ.get("DB_NAME", "gramconnect"),
             "USER": os.environ.get("DB_USER", "root"),
-            "PASSWORD": os.environ.get("DB_PASSWORD", ""),  # No insecure default fallback
+            "PASSWORD": os.environ.get(
+                "DB_PASSWORD", ""
+            ),  # No insecure default fallback
             "HOST": os.environ.get("DB_HOST", "127.0.0.1"),
             "PORT": os.environ.get("DB_PORT", "3306"),
             "OPTIONS": {
@@ -162,9 +172,10 @@ USE_TZ = True
 STATIC_URL = "static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_DIRS = [BASE_DIR.parent / "frontend" / "static"]
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 MEDIA_URL = "media/"
-MEDIA_ROOT = BASE_DIR / "media"
+MEDIA_ROOT = os.environ.get("MEDIA_ROOT_OVERRIDE", str(BASE_DIR / "media"))
 # Sub-folders used by profiles.Profile.profile_photo and documents.Document.file:
 #   media/profile_photos/<user_id>/...
 #   media/documents/<user_id>/...
@@ -183,13 +194,17 @@ REST_FRAMEWORK = {
 }
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),  # Reduced from 8 hours to 30 minutes for better security
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),     # Reduced from 7 days to 1 day
-    "ROTATE_REFRESH_TOKENS": True,                   # Enable refresh rotation
-    "BLACKLIST_AFTER_ROTATION": True,               # Blacklist token after rotation
+    "ACCESS_TOKEN_LIFETIME": timedelta(
+        minutes=30
+    ),  # Reduced from 8 hours to 30 minutes for better security
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),  # Reduced from 7 days to 1 day
+    "ROTATE_REFRESH_TOKENS": True,  # Enable refresh rotation
+    "BLACKLIST_AFTER_ROTATION": True,  # Blacklist token after rotation
 }
 
-CORS_ALLOW_ALL_ORIGINS = DEBUG  # Only allow all origins in debug/dev mode. In production, restrict it.
+CORS_ALLOW_ALL_ORIGINS = (
+    DEBUG  # Only allow all origins in debug/dev mode. In production, restrict it.
+)
 
 # NVIDIA NIM API (chatbot)
 NVIDIA_API_KEY = os.environ.get("NVIDIA_API_KEY", "")
