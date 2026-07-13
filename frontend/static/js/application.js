@@ -425,24 +425,41 @@ document.addEventListener('DOMContentLoaded', () => {
                 schemeCard.querySelector('.scheme-subtitle').textContent = response.name_hi || 'Selected welfare scheme';
                 schemeCard.querySelector('.scheme-description p').textContent = response.description || 'Continue with the application form for this scheme.';
                 
+                // Fetch the user's uploaded documents list from the API for this scheme
+                let userDocs = [];
+                try {
+                    const docsResponse = await API.get(`/api/documents/?scheme=${schemeId}`);
+                    userDocs = docsResponse.required_documents || [];
+                } catch (err) {
+                    console.error('Failed to load user document states:', err);
+                }
+
                 // Update required documents checklist
                 const checklistContainer = document.getElementById('requiredDocsChecklist');
                 if (checklistContainer) {
                     checklistContainer.innerHTML = '';
-                    const docs = response.required_documents_list || [];
-                    if (docs.length === 0) {
+                    
+                    if (userDocs.length === 0) {
                         checklistContainer.innerHTML = '<p style="color: var(--gray-500); font-size: 0.9rem;">No specific documents required.</p>';
                     } else {
-                        docs.forEach(docName => {
+                        userDocs.forEach(reqDoc => {
                             const docItem = document.createElement('div');
                             docItem.className = 'doc-upload-item';
+                            
+                            const iconClass = reqDoc.uploaded ? 'fa-solid fa-file-circle-check' : 'fa-solid fa-file-circle-exclamation';
+                            const iconColor = reqDoc.uploaded ? 'var(--success)' : 'var(--warning)';
+                            const statusText = reqDoc.uploaded ? 'Uploaded' : 'Provide on next page';
+                            const statusColor = reqDoc.uploaded ? 'var(--success)' : 'var(--gray-400)';
+                            const statusWeight = reqDoc.uploaded ? '500' : 'normal';
+                            const statusStyle = reqDoc.uploaded ? 'normal' : 'italic';
+
                             docItem.innerHTML = `
                                 <div class="doc-upload-info" style="display: flex; align-items: center; gap: var(--spacing-xs); font-size: 0.9rem;">
-                                    <i class="fa-solid fa-file-circle-exclamation" style="color: var(--warning);"></i>
-                                    <span class="doc-upload-name" style="color: var(--gray-700); font-weight: 500;">${docName}</span>
+                                    <i class="${iconClass}" style="color: ${iconColor};"></i>
+                                    <span class="doc-upload-name" style="color: var(--gray-700); font-weight: 500;">${reqDoc.name}</span>
                                 </div>
                                 <div class="doc-upload-actions" style="display: flex; align-items: center;">
-                                    <span style="font-size: 0.85rem; color: var(--gray-400); font-style: italic;">Provide on next page</span>
+                                    <span style="font-size: 0.85rem; color: ${statusColor}; font-weight: ${statusWeight}; font-style: ${statusStyle};">${statusText}</span>
                                 </div>
                             `;
                             checklistContainer.appendChild(docItem);
