@@ -40,47 +40,32 @@ document.addEventListener('DOMContentLoaded', () => {
         return wave;
     }
     
-    // Build the recognition instance via the shared service
-    let recognition = SpeechService.createRecognition({
-        onResult: (transcript, isFinal) => {
-            if (isFinal) {
-                processVoiceCommand(transcript);
-                stopListening();
-            }
-        },
-        onError: (message) => {
-            showToast(message, 'error');
-            stopListening();
-        },
-        onEnd: () => {
-            if (isListening) {
-                stopListening();
-            }
-        }
-    });
+    // Build the recognition instance via the shared service (mocked for compatibility)
+    let recognition = SpeechService.isSupported() ? SpeechService : null;
     
     // Start listening
-    function startListening() {
+    async function startListening() {
         if (!recognition) return;
         
-        isListening = true;
-        voiceBtn.classList.add('listening');
-        voiceBtn.innerHTML = '<i class="fa-solid fa-stop"></i>';
-        
-        // Create and show voice wave
-        voiceWave = createVoiceWave();
-        document.body.appendChild(voiceWave);
-        
         try {
-            recognition.start();
+            await SpeechService.startRecording();
+            isListening = true;
+            voiceBtn.classList.add('listening');
+            voiceBtn.innerHTML = '<i class="fa-solid fa-stop"></i>';
+            
+            // Create and show voice wave
+            voiceWave = createVoiceWave();
+            document.body.appendChild(voiceWave);
         } catch (error) {
-            console.error('Speech recognition error:', error);
+            console.error('Speech recording error:', error);
+            showToast('Could not access microphone.', 'error');
             stopListening();
         }
     }
     
     // Stop listening
-    function stopListening() {
+    async function stopListening() {
+        if (!isListening) return;
         isListening = false;
         voiceBtn.classList.remove('listening');
         voiceBtn.innerHTML = '<i class="fa-solid fa-microphone"></i>';
@@ -91,10 +76,25 @@ document.addEventListener('DOMContentLoaded', () => {
             voiceWave = null;
         }
         
+        showToast('Transcribing audio...', 'info');
+        
         try {
-            recognition.stop();
+            const audioBlob = await SpeechService.stopRecording();
+            
+            const formData = new FormData();
+            formData.append('file', audioBlob, 'audio.webm');
+            formData.append('language', AppState.language);
+            
+            const response = await API.postForm('/api/chat/speech-to-text/', formData);
+            
+            if (response && response.transcript) {
+                processVoiceCommand(response.transcript);
+            } else {
+                showToast('No speech detected or empty transcription.', 'warning');
+            }
         } catch (error) {
             console.error('Error stopping recognition:', error);
+            showToast('Failed to transcribe audio. Please try again.', 'error');
         }
     }
     
