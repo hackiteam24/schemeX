@@ -132,7 +132,8 @@ class ChatView(APIView):
             content=message,
         )
 
-        history = session.messages.order_by("created_at")[:10]
+        # Fetch the 10 most recent messages and order them chronologically (oldest first)
+        history = list(reversed(session.messages.order_by("-created_at")[:10]))
 
         # Dataset Retrieval Layer -> Relevant Scheme Search
         # Returns [] until real dataset files exist (see retrieval.py) — no
