@@ -136,8 +136,8 @@ class ChatView(APIView):
             m.content for m in history if m.sender == "user"
         )[-300:]
         search_query = f"{prior_user_messages} {message}".strip()
-        if not state:
-            state = detect_state(search_query)
+       if not state:
+            state = detect_state(message) or detect_state(search_query)
         retrieved_schemes = SchemeRetriever().search(search_query, state=state, limit=15 if state else 5)
 
         # Prompt Builder -> System Prompt
