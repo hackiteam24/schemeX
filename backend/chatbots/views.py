@@ -3,6 +3,7 @@ import logging
 import requests
 from django.conf import settings
 from rest_framework import status
+from sarvamai import SarvamAI
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -22,9 +23,7 @@ def call_nvidia_nim(messages):
     api_key = settings.NVIDIA_API_KEY
 
     if not api_key:
-        raise RuntimeError(
-            "NVIDIA_API_KEY is not set. Add it to your .env file."
-        )
+        raise RuntimeError("NVIDIA_API_KEY is not set. Add it to your .env file.")
 
     url = "https://integrate.api.nvidia.com/v1/chat/completions"
 
@@ -55,13 +54,33 @@ def call_nvidia_nim(messages):
     print("=" * 70 + "\n")
 
     if not resp.ok:
-        raise RuntimeError(
-            f"NVIDIA API Error ({resp.status_code}): {resp.text}"
-        )
+        raise RuntimeError(f"NVIDIA API Error ({resp.status_code}): {resp.text}")
 
     data = resp.json()
 
     return data["choices"][0]["message"]["content"]
+
+
+def call_sarvam(messages):
+    """
+    Calls Sarvam AI's Chat Completions API via the official sarvamai SDK.
+    """
+
+    api_key = settings.SARVAM_API_KEY
+
+    if not api_key:
+        raise RuntimeError("SARVAM_API_KEY is not set. Add it to your .env file.")
+
+    client = SarvamAI(api_subscription_key=api_key)
+
+    response = client.chat.completions(
+        model=settings.SARVAM_MODEL,
+        messages=messages,
+    )
+
+    return response.choices[0].message.content
+
+
 class ChatView(APIView):
     permission_classes = [IsAuthenticated]
 
@@ -115,7 +134,7 @@ class ChatView(APIView):
         # behavior change today, just the seam for tomorrow's integration.
         prior_user_messages = " ".join(
             m.content for m in history if m.sender == "user"
-            )[-300:]
+        )[-300:]
         search_query = f"{prior_user_messages} {message}".strip()
         retrieved_schemes = SchemeRetriever().search(search_query, state=state, limit=5)
 
@@ -123,12 +142,14 @@ class ChatView(APIView):
         api_messages = build_messages(language, history, retrieved_schemes)
 
         try:
-            ai_reply = call_nvidia_nim(api_messages)
+            if settings.AI_PROVIDER == "sarvam":
+                ai_reply = call_sarvam(api_messages)
+            else:
+                ai_reply = call_nvidia_nim(api_messages)
 
         except Exception as e:
 
-            logger.exception("NVIDIA NIM call failed")
-
+            logger.exception("AI provider call failed (%s)", settings.AI_PROVIDER)
             return Response(
                 {
                     "success": False,
@@ -157,9 +178,7 @@ class ChatHistoryView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        sessions = ChatSession.objects.filter(user=request.user).order_by(
-            "-updated_at"
-        )
+        sessions = ChatSession.objects.filter(user=request.user).order_by("-updated_at")
 
         chats = [
             {
@@ -187,7 +206,9 @@ class ChatDetailView(APIView):
                 status=status.HTTP_404_NOT_FOUND,
             )
 
-        is_admin = request.user.is_staff or getattr(request.user, "role", None) == "admin"
+        is_admin = (
+            request.user.is_staff or getattr(request.user, "role", None) == "admin"
+        )
         if session.user != request.user and not is_admin:
             return Response(
                 {"message": "Not authorized"},
