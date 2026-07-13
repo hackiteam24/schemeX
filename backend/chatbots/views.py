@@ -1,4 +1,6 @@
+import os
 import logging
+import tempfile
 
 import requests
 from django.conf import settings
@@ -236,3 +238,67 @@ class ChatDetailView(APIView):
         ]
 
         return Response({"messages": messages})
+
+
+class SpeechToTextView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        if 'file' not in request.FILES:
+            return Response(
+                {"error": "No audio file provided."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        audio_file = request.FILES['file']
+
+        api_key = settings.SARVAM_API_KEY
+        if not api_key:
+            return Response(
+                {"error": "SARVAM_API_KEY is not configured on the server."},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+
+        # Reject oversized uploads (>10MB) to avoid cost/timeout issues
+        if audio_file.size > 10 * 1024 * 1024:
+            return Response(
+                {"error": "Audio file too large (max 10MB)."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        # Pick correct file suffix based on actual recorded mimetype
+        content_type = audio_file.content_type or 'audio/webm'
+        ext = content_type.split('/')[-1].split(';')[0]
+        if ext not in ('webm', 'mp4', 'ogg', 'wav'):
+            ext = 'webm'
+
+        temp_file_path = None
+        try:
+            client = SarvamAI(api_subscription_key=api_key)
+
+            with tempfile.NamedTemporaryFile(suffix=f'.{ext}', delete=False) as temp_file:
+                for chunk in audio_file.chunks():
+                    temp_file.write(chunk)
+                temp_file_path = temp_file.name
+
+            with open(temp_file_path, 'rb') as f:
+                response = client.speech_to_text.transcribe(
+                    file=f,
+                    model="saaras:v3",
+                    mode="transcribe"
+                )
+
+            transcript = getattr(response, 'transcript', '') or (
+                response.get('transcript', '') if isinstance(response, dict) else ''
+            )
+            return Response({"transcript": transcript}, status=status.HTTP_200_OK)
+
+        except Exception as e:
+            logger.error(f"Sarvam Speech-to-Text Error: {str(e)}", exc_info=True)
+            return Response(
+                {"error": f"Failed to transcribe audio: {str(e)}"},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+        finally:
+            if temp_file_path and os.path.exists(temp_file_path):
+                os.unlink(temp_file_path)
