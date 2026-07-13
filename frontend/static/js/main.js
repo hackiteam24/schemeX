@@ -100,7 +100,7 @@ const translations = {
     },
     kn: {
         'nav.home': 'ಮುಖಪುಟ',
-        'nav.schemes': 'योजनाएं',
+        'nav.schemes': 'ಯೋಜನೆಗಳು',
         'nav.eligibility': 'ಅರ್ಹತೆ',
         'nav.apply': 'ಅರ್ಜಿ ಸಲ್ಲಿಸಿ',
         'nav.documents': 'ದಾಖಲೆಗಳು',
@@ -177,13 +177,53 @@ const SpeechService = {
         return LANGUAGE_MAP[lang || AppState.language] || 'en-US';
     },
     isSupported() {
+        return !!(window.SpeechRecognition || window.webkitSpeechRecognition);
+    },
+    isRecordingSupported() {
         return !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia && window.MediaRecorder);
+    },
+    createRecognition(callbacks = {}, options = {}) {
+        const SpeechRecognitionAPI = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (!SpeechRecognitionAPI) return null;
+
+        const recognition = new SpeechRecognitionAPI();
+        recognition.continuous = options.continuous ?? false;
+        recognition.interimResults = options.interimResults ?? true;
+        recognition.lang = this.getLangCode();
+
+        recognition.onresult = (event) => {
+            const transcript = Array.from(event.results)
+                .map(result => result[0].transcript)
+                .join('');
+            const isFinal = event.results[0].isFinal;
+            if (callbacks.onResult) callbacks.onResult(transcript, isFinal);
+        };
+
+        recognition.onerror = (event) => {
+            const errorMessages = {
+                'no-speech': 'No speech detected. Please speak clearly.',
+                'audio-capture': 'Microphone not accessible. Please check permissions.',
+                'not-allowed': 'Microphone permission denied. Please allow microphone access.',
+                'network': 'Network error. Please check your connection.'
+            };
+            const message = errorMessages[event.error] || 'Voice recognition failed. Please try again.';
+            if (callbacks.onError) callbacks.onError(message, event.error);
+        };
+
+        recognition.onend = () => {
+            if (callbacks.onEnd) callbacks.onEnd();
+        };
+
+        return recognition;
+    },
+    syncLang(recognition) {
+        if (recognition) recognition.lang = this.getLangCode();
     },
     mediaRecorder: null,
     audioChunks: [],
     audioStream: null,
     async startRecording() {
-        if (!this.isSupported()) {
+        if (!this.isRecordingSupported()) {
             throw new Error('Audio recording is not supported in this browser.');
         }
         this.audioChunks = [];
@@ -252,10 +292,10 @@ const NAV_COMMANDS = [
     { route: '/eligibility/', keywords: ['eligibility', 'पात्रता', 'தகுதி', 'అర్హత', 'ಅರ್ಹತೆ', 'യോഗ്യത'] },
     { route: '/application/', keywords: ['apply', 'application', 'आवेदन', 'விண்ணப்ப', 'దరఖాస్తు', 'ಅರ್ಜಿ', 'അപേക്ഷ'] },
     { route: '/documents/', keywords: ['document', 'दस्तावेज', 'ஆவணங்கள்', 'పత్రాలు', 'ದಾಖಲೆ', 'രേഖ'] },
-    { route: '/dashboard/', keywords: ['dashboard', 'डैशबोर्ड', 'டாஷ்போர்டு', 'డాష్‌బోర్డ్', 'ಡ್ಯಾಶ್\u200cಬೋರ್ഡ്', 'ഡാഷ്ബോർഡ്'] },
+    { route: '/dashboard/', keywords: ['dashboard', 'डैशबोर्ड', 'டாஷ்போர்டு', 'డాష్‌బోర్డ్', 'ಡ್ಯಾಶ್\u200cಬೋರ್ಡ್', 'ഡാഷ്ബോർഡ്'] },
     { route: '/profile/', keywords: ['profile', 'प्रोफाइल', 'சுயவிவரம்', 'ప్రొఫైల్', 'ಪ್ರೊಫೈಲ್', 'പ്രൊഫൈൽ'] },
     { route: '/chat/', keywords: ['chat', 'assistant', 'सहायक', 'உதவியாளர்', 'సహాయకుడు', 'ಸಹಾಯಕ', 'സഹായി'] },
-    { route: '/about/', keywords: ['about', 'हमारे बारे में', 'எங்களை', 'మా గురించి', 'ನಮ್ಮ గురించి', 'ഞങ്ങളെക്കുറിച്ച്'] },
+    { route: '/about/', keywords: ['about', 'हमारे बारे में', 'எங்களை', 'మా గురించి', 'ನಮ್ಮ ಬಗ್ಗೆ', 'ഞങ്ങളെക്കുറിച്ച്'] },
     { route: '/contact/', keywords: ['contact', 'संपर्क', 'தொடர்பு', 'సంప్రదించండి', 'ಸಂಪರ್ಕ', 'ബന്ധപ്പെടുക'] },
     { route: '/login/', keywords: ['login', 'लॉगिन', 'உள்நுழை', 'లాగిన్', 'ಲಾಗಿನ್', 'ലോഗിൻ'] }
 ];
