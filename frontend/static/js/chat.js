@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentChatId = null;
     
     // Build recognition instance via the shared service (mocked for compatibility)
-    const recognition = window.SpeechService && SpeechService.isSupported() ? SpeechService : null;
+    const recognition = window.SpeechService && SpeechService.isRecordingSupported() ? SpeechService : null;
     
     // Send message
     // Send message
