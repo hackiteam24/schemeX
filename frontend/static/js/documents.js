@@ -299,8 +299,45 @@ document.addEventListener('DOMContentLoaded', () => {
     // Load existing documents
     async function loadDocuments() {
         try {
-            const response = await API.get('/api/documents/');
-             currentDocuments = response.documents || [];
+            const urlParams = new URLSearchParams(window.location.search);
+            const schemeId = urlParams.get('scheme');
+            const apiPath = schemeId ? `/api/documents/?scheme=${schemeId}` : '/api/documents/';
+            
+            const response = await API.get(apiPath);
+            currentDocuments = response.documents || [];
+            
+            // Render proceed to form button if scheme parameter is present
+            if (schemeId) {
+                let proceedBtn = document.getElementById('proceedToFormBtn');
+                if (!proceedBtn) {
+                    const pageHeader = document.querySelector('.page-header');
+                    if (pageHeader) {
+                        proceedBtn = document.createElement('a');
+                        proceedBtn.id = 'proceedToFormBtn';
+                        proceedBtn.href = `/application/?scheme=${schemeId}`;
+                        proceedBtn.className = 'btn btn-primary';
+                        proceedBtn.style.marginTop = '15px';
+                        proceedBtn.style.display = 'inline-flex';
+                        proceedBtn.style.alignItems = 'center';
+                        proceedBtn.style.gap = '8px';
+                        proceedBtn.style.float = 'right';
+                        proceedBtn.innerHTML = 'Proceed to Application Form <i class="fa-solid fa-arrow-right"></i>';
+                        
+                        // Clear floats if needed or styled cleanly
+                        const headerParagraph = pageHeader.querySelector('p');
+                        if (headerParagraph) {
+                            headerParagraph.after(proceedBtn);
+                            
+                            // Insert a clear element
+                            const clearDiv = document.createElement('div');
+                            clearDiv.style.clear = 'both';
+                            proceedBtn.after(clearDiv);
+                        } else {
+                            pageHeader.appendChild(proceedBtn);
+                        }
+                    }
+                }
+            }
             
             // Clear lists first to remove spinners
             const uploadedDocsGrid = document.querySelector('.uploaded-docs-grid');
