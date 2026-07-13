@@ -38,6 +38,49 @@ from typing import Dict, List, Optional
 
 DATASET_DIR = Path(__file__).resolve().parent / "datasets"
 
+# Shared by SchemeDataset.load() (DB filter) and detect_state() (free-text
+# detection) so both stay in sync from one place.
+STATE_KEY_TO_DB_VALUE = {
+    "central": "all",
+    "andhra_pradesh": "andhra",
+    "telangana": "telangana",
+    "tamil_nadu": "tamilnadu",
+    "karnataka": "karnataka",
+    "kerala": "kerala",
+    "uttar_pradesh": "up",
+    "madhya_pradesh": "mp",
+    "bihar": "bihar",
+    "rajasthan": "rajasthan",
+    "maharashtra": "maharashtra",
+}
+
+# Free-text aliases -> state key, for when the frontend doesn't send a
+# state param and we need to infer it from the user's own message.
+STATE_NAME_ALIASES = {
+    "telangana": ["telangana"],
+    "andhra_pradesh": ["andhra pradesh", "andhra"],
+    "tamil_nadu": ["tamil nadu", "tamilnadu"],
+    "karnataka": ["karnataka"],
+    "kerala": ["kerala"],
+    "uttar_pradesh": ["uttar pradesh"],
+    "madhya_pradesh": ["madhya pradesh"],
+    "bihar": ["bihar"],
+    "rajasthan": ["rajasthan"],
+    "maharashtra": ["maharashtra"],
+}
+
+
+def detect_state(query: str) -> Optional[str]:
+    """
+    Lightweight free-text state detection so "schemes in telangana" gets
+    correctly filtered even before the frontend sends a real state param.
+    """
+    q = query.lower()
+    for state_key, aliases in STATE_NAME_ALIASES.items():
+        if any(alias in q for alias in aliases):
+            return state_key
+    return None
+
 # Add one entry here per state dataset file as they arrive.
 STATE_DATASET_FILES = {
     "central": "central.json",
@@ -65,20 +108,7 @@ class SchemeDataset:
 
         queryset = Scheme.objects.filter(is_active=True)
         if state:
-            state_mapping = {
-                "central": "all",
-                "andhra_pradesh": "andhra",
-                "telangana": "telangana",
-                "tamil_nadu": "tamilnadu",
-                "karnataka": "karnataka",
-                "kerala": "kerala",
-                "uttar_pradesh": "up",
-                "madhya_pradesh": "mp",
-                "bihar": "bihar",
-                "rajasthan": "rajasthan",
-                "maharashtra": "maharashtra",
-            }
-            mapped_state = state_mapping.get(state.lower(), state.lower())
+            mapped_state = STATE_KEY_TO_DB_VALUE.get(state.lower(), state.lower())
             queryset = queryset.filter(Q(state__iexact=mapped_state) | Q(state__iexact="all"))
 
         records = []
