@@ -354,8 +354,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     
-    // Load documents on page load
-   // Download all documents
+    
     window.downloadAllDocuments = function () {
         if (!currentDocuments || currentDocuments.length === 0) {
             showToast('No documents to download', 'info');
