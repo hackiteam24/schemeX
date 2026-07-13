@@ -100,7 +100,7 @@ const translations = {
     },
     kn: {
         'nav.home': 'ಮುಖಪುಟ',
-        'nav.schemes': 'ಯೋಜನೆಗಳು',
+        'nav.schemes': 'योजनाएं',
         'nav.eligibility': 'ಅರ್ಹತೆ',
         'nav.apply': 'ಅರ್ಜಿ ಸಲ್ಲಿಸಿ',
         'nav.documents': 'ದಾಖಲೆಗಳು',
@@ -176,58 +176,63 @@ const SpeechService = {
     getLangCode(lang) {
         return LANGUAGE_MAP[lang || AppState.language] || 'en-US';
     },
-
     isSupported() {
-        return !!(window.SpeechRecognition || window.webkitSpeechRecognition);
+        return !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia && window.MediaRecorder);
     },
+    mediaRecorder: null,
+    audioChunks: [],
+    audioStream: null,
+    async startRecording() {
+        if (!this.isSupported()) {
+            throw new Error('Audio recording is not supported in this browser.');
+        }
+        this.audioChunks = [];
+        this.audioStream = await navigator.mediaDevices.getUserMedia({ audio: true });
 
-    /**
-     * Creates a configured SpeechRecognition instance.
-     * @param {Object} callbacks - { onResult(transcript, isFinal), onError(message, code), onEnd() }
-     * @param {Object} options - { continuous, interimResults }
-     * @returns {SpeechRecognition|null}
-     */
-    createRecognition(callbacks = {}, options = {}) {
-        const SpeechRecognitionAPI = window.SpeechRecognition || window.webkitSpeechRecognition;
-        if (!SpeechRecognitionAPI) return null;
+        let options = {};
+        if (MediaRecorder.isTypeSupported('audio/webm')) {
+            options.mimeType = 'audio/webm';
+        } else if (MediaRecorder.isTypeSupported('audio/mp4')) {
+            options.mimeType = 'audio/mp4';
+        } else if (MediaRecorder.isTypeSupported('audio/ogg')) {
+            options.mimeType = 'audio/ogg';
+        } else if (MediaRecorder.isTypeSupported('audio/wav')) {
+            options.mimeType = 'audio/wav';
+        }
 
-        const recognition = new SpeechRecognitionAPI();
-        recognition.continuous = options.continuous ?? false;
-        recognition.interimResults = options.interimResults ?? true;
-        recognition.lang = this.getLangCode();
-
-        recognition.onresult = (event) => {
-            const transcript = Array.from(event.results)
-                .map(result => result[0].transcript)
-                .join('');
-            const isFinal = event.results[0].isFinal;
-            if (callbacks.onResult) callbacks.onResult(transcript, isFinal);
+        this.mediaRecorder = new MediaRecorder(this.audioStream, options);
+        this.mediaRecorder.ondataavailable = (event) => {
+            if (event.data && event.data.size > 0) {
+                this.audioChunks.push(event.data);
+            }
         };
+        this.mediaRecorder.start(200);
+    },
+    stopRecording() {
+        return new Promise((resolve, reject) => {
+            if (!this.mediaRecorder) {
+                reject(new Error('No active recording session.'));
+                return;
+            }
+            this.mediaRecorder.onstop = async () => {
+                try {
+                    const mimeType = this.mediaRecorder.mimeType || 'audio/webm';
+                    const audioBlob = new Blob(this.audioChunks, { type: mimeType });
 
-        recognition.onerror = (event) => {
-            const errorMessages = {
-                'no-speech': 'No speech detected. Please speak clearly.',
-                'audio-capture': 'Microphone not accessible. Please check permissions.',
-                'not-allowed': 'Microphone permission denied. Please allow microphone access.',
-                'network': 'Network error. Please check your connection.'
+                    if (this.audioStream) {
+                        this.audioStream.getTracks().forEach(track => track.stop());
+                        this.audioStream = null;
+                    }
+                    this.mediaRecorder = null;
+                    this.audioChunks = [];
+                    resolve(audioBlob);
+                } catch (error) {
+                    reject(error);
+                }
             };
-            const message = errorMessages[event.error] || 'Voice recognition failed. Please try again.';
-            if (callbacks.onError) callbacks.onError(message, event.error);
-        };
-
-        recognition.onend = () => {
-            if (callbacks.onEnd) callbacks.onEnd();
-        };
-
-        return recognition;
+            this.mediaRecorder.stop();
+        });
     },
-
-    // Keeps an existing recognition instance in sync with the current app language.
-    syncLang(recognition) {
-        if (recognition) recognition.lang = this.getLangCode();
-    },
-
-    // Convenience wrapper for text-to-speech using the current app language.
     speak(text) {
         if (!('speechSynthesis' in window)) return false;
         const utterance = new SpeechSynthesisUtterance(text);
@@ -247,10 +252,10 @@ const NAV_COMMANDS = [
     { route: '/eligibility/', keywords: ['eligibility', 'पात्रता', 'தகுதி', 'అర్హత', 'ಅರ್ಹತೆ', 'യോഗ്യത'] },
     { route: '/application/', keywords: ['apply', 'application', 'आवेदन', 'விண்ணப்ப', 'దరఖాస్తు', 'ಅರ್ಜಿ', 'അപേക്ഷ'] },
     { route: '/documents/', keywords: ['document', 'दस्तावेज', 'ஆவணங்கள்', 'పత్రాలు', 'ದಾಖಲೆ', 'രേഖ'] },
-    { route: '/dashboard/', keywords: ['dashboard', 'डैशबोर्ड', 'டாஷ்போர்டு', 'డాష్‌బోర్డ్', 'ಡ್ಯಾಶ್\u200cಬೋರ್ಡ್', 'ഡാഷ്ബോർഡ്'] },
+    { route: '/dashboard/', keywords: ['dashboard', 'डैशबोर्ड', 'டாஷ்போர்டு', 'డాష్‌బోర్డ్', 'ಡ್ಯಾಶ್\u200cಬೋರ್ഡ്', 'ഡാഷ്ബോർഡ്'] },
     { route: '/profile/', keywords: ['profile', 'प्रोफाइल', 'சுயவிவரம்', 'ప్రొఫైల్', 'ಪ್ರೊಫೈಲ್', 'പ്രൊഫൈൽ'] },
     { route: '/chat/', keywords: ['chat', 'assistant', 'सहायक', 'உதவியாளர்', 'సహాయకుడు', 'ಸಹಾಯಕ', 'സഹായി'] },
-    { route: '/about/', keywords: ['about', 'हमारे बारे में', 'எங்களை', 'మా గురించి', 'ನಮ್ಮ ಬಗ್ಗೆ', 'ഞങ്ങളെക്കുറിച്ച്'] },
+    { route: '/about/', keywords: ['about', 'हमारे बारे में', 'எங்களை', 'మా గురించి', 'ನಮ್ಮ గురించి', 'ഞങ്ങളെക്കുറിച്ച്'] },
     { route: '/contact/', keywords: ['contact', 'संपर्क', 'தொடர்பு', 'సంప్రదించండి', 'ಸಂಪರ್ಕ', 'ബന്ധപ്പെടുക'] },
     { route: '/login/', keywords: ['login', 'लॉगिन', 'உள்நுழை', 'లాగిన్', 'ಲಾಗಿನ್', 'ലോഗിൻ'] }
 ];
