@@ -20,11 +20,12 @@ class DocumentSerializer(serializers.ModelSerializer):
             "file",
             "file_url",
             "verification_status",
+            "rejection_reason",
             "upload_date",
             "created_at",
             "updated_at",
         )
-        read_only_fields = ("id", "uploaded_by", "verification_status", "upload_date", "created_at", "updated_at")
+        read_only_fields = ("id", "uploaded_by", "verification_status", "rejection_reason", "upload_date", "created_at", "updated_at")
 
     def get_file_url(self, obj):
         request = self.context.get("request")
@@ -62,4 +63,4 @@ class DocumentVerificationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Document
-        fields = ("verification_status",)
+        fields = ("verification_status", "rejection_reason")
