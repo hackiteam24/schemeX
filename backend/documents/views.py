@@ -48,8 +48,7 @@ def verify_document_background(document_id):
         )
         
         # Upload the file from media storage
-        with document.file.open('rb') as f:
-            job.upload_file(f)
+        job.upload_file(document.file.path)
         job.start()
         
         # 3. Wait for digitization to complete (max 60 seconds)
