@@ -20,6 +20,7 @@ class ProfileSerializer(serializers.ModelSerializer):
             "date_of_birth",
             "category",
             "marital_status",
+            "aadhaar_number",
             "alternate_mobile",
             "address",
             "district",
