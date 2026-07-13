@@ -138,7 +138,7 @@ class ChatView(APIView):
         search_query = f"{prior_user_messages} {message}".strip()
         if not state:
             state = detect_state(search_query)
-        retrieved_schemes = SchemeRetriever().search(search_query, state=state, limit=10 if state else 5)
+        retrieved_schemes = SchemeRetriever().search(search_query, state=state, limit=15 if state else 5)
 
         # Prompt Builder -> System Prompt
         api_messages = build_messages(language, history, retrieved_schemes)
