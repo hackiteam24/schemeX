@@ -87,6 +87,6 @@ SchemeX/
 
 ## 👨‍💻 Developed By
 
-**HackiTeam24**
+**Risk Rangers**
 
 ---
