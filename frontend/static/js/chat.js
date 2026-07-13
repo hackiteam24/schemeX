@@ -13,25 +13,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let isListening = false;
     let currentChatId = null;
     
-    // Build recognition instance via the shared service
-    const recognition = window.SpeechService ? SpeechService.createRecognition({
-        onResult: (transcript, isFinal) => {
-            if (isFinal) {
-                chatInput.value = transcript;
-                stopListening();
-                sendMessage();
-            }
-        },
-        onError: (message) => {
-            stopListening();
-            showToast(message, 'error');
-        },
-        onEnd: () => {
-            if (isListening) {
-                stopListening();
-            }
-        }
-    }) : null;
+    // Build recognition instance via the shared service (mocked for compatibility)
+    const recognition = window.SpeechService && SpeechService.isSupported() ? SpeechService : null;
     
     // Send message
     // Send message
@@ -155,29 +138,46 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     
     // Start listening
-    function startListening() {
-        isListening = true;
-        voiceBtn.classList.add('listening');
-        voiceIndicator.style.display = 'flex';
-        
+    async function startListening() {
         try {
-            recognition.start();
+            await SpeechService.startRecording();
+            isListening = true;
+            voiceBtn.classList.add('listening');
+            voiceIndicator.style.display = 'flex';
         } catch (error) {
-            console.error('Speech recognition error:', error);
+            console.error('Error starting audio recording:', error);
+            showToast('Could not access microphone.', 'error');
             stopListening();
         }
     }
     
     // Stop listening
-    function stopListening() {
+    async function stopListening() {
+        if (!isListening) return;
         isListening = false;
         voiceBtn.classList.remove('listening');
         voiceIndicator.style.display = 'none';
-        
+
+        showToast('Transcribing audio...', 'info');
+
         try {
-            recognition.stop();
+            const audioBlob = await SpeechService.stopRecording();
+
+            const formData = new FormData();
+            formData.append('file', audioBlob, 'audio.webm');
+            formData.append('language', AppState.language);
+
+            const response = await API.postForm('/api/chat/speech-to-text/', formData);
+
+            if (response && response.transcript) {
+                chatInput.value = response.transcript;
+                sendMessage();
+            } else {
+                showToast('No speech detected or empty transcription.', 'warning');
+            }
         } catch (error) {
-            console.error('Error stopping recognition:', error);
+            console.error('Transcription error:', error);
+            showToast('Failed to transcribe audio. Please try again.', 'error');
         }
     }
     
