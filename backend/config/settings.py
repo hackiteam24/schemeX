@@ -206,6 +206,11 @@ CORS_ALLOW_ALL_ORIGINS = (
     DEBUG  # Only allow all origins in debug/dev mode. In production, restrict it.
 )
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
-# NVIDIA NIM API (chatbot)
+# NVIDIA NIM API (chatbot) — kept as fallback during Sarvam migration
 NVIDIA_API_KEY = os.environ.get("NVIDIA_API_KEY", "")
 NVIDIA_MODEL = os.environ.get("NVIDIA_MODEL", "meta/llama-3.1-8b-instruct")
+
+# Sarvam AI (chatbot)
+AI_PROVIDER = os.environ.get("AI_PROVIDER", "nvidia")  # "nvidia" or "sarvam"
+SARVAM_API_KEY = os.environ.get("SARVAM_API_KEY", "")
+SARVAM_MODEL = os.environ.get("SARVAM_MODEL", "sarvam-30b")
