@@ -46,6 +46,11 @@ class Document(TimeStampedUUIDModel):
     verification_status = models.CharField(
         max_length=20, choices=VerificationStatus.choices, default=VerificationStatus.PENDING
     )
+    rejection_reason = models.TextField(
+        blank=True,
+        null=True,
+        help_text="AI or admin rejection reason if verification fails."
+    )
     upload_date = models.DateTimeField(auto_now_add=True)
 
     class Meta:
