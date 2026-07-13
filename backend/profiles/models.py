@@ -26,6 +26,7 @@ class Profile(TimeStampedUUIDModel):
     date_of_birth = models.DateField(null=True, blank=True)
     category = models.CharField(max_length=20, blank=True)
     marital_status = models.CharField(max_length=20, blank=True)
+    aadhaar_number = models.CharField(max_length=12, blank=True)
     
     # Contact Details
     alternate_mobile = models.CharField(max_length=15, blank=True)
