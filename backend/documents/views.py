@@ -51,24 +51,8 @@ def verify_document_background(document_id):
         job.upload_file(document.file.path)
         job.start()
         
-        # 3. Wait for digitization to complete (max 60 seconds)
-        start_time = time.time()
-        completed = False
-        while time.time() - start_time < 60:
-            status_resp = client.document_intelligence.get_job_status(job_id=job.job_id)
-            status_str = getattr(status_resp, 'status', '') or (status_resp.get('status', '') if isinstance(status_resp, dict) else '')
-            if status_str == 'Completed':
-                completed = True
-                break
-            elif status_str in ('Failed', 'Cancelled'):
-                break
-            time.sleep(3)
-            
-        if not completed:
-            document.rejection_reason = "Document processing timed out or failed on Sarvam AI."
-            document.verification_status = Document.VerificationStatus.REJECTED
-            document.save()
-            return
+        # 3. Wait for digitization to complete (uses SDK's built-in polling)
+        job.wait_until_complete()
             
         # 4. Download and unpack digitized Markdown text
         with tempfile.NamedTemporaryFile(suffix=".zip", delete=False) as temp_zip:
