@@ -149,12 +149,16 @@ document.addEventListener('DOMContentLoaded', () => {
         // Verification badge style
         let badgeClass = 'badge-warning';
         let statusDisplay = 'Pending Verification';
+        let reasonHtml = '';
         if (doc.verification_status === 'verified') {
             badgeClass = 'badge-success';
             statusDisplay = 'Verified';
         } else if (doc.verification_status === 'rejected') {
             badgeClass = 'badge-danger';
             statusDisplay = 'Rejected';
+            if (doc.rejection_reason) {
+                reasonHtml = `<p class="rejection-reason" style="color: #dc3545; font-size: 0.85rem; margin-top: 6px; line-height: 1.2;"><strong>Reason:</strong> ${doc.rejection_reason}</p>`;
+            }
         }
         
         docCard.innerHTML = `
@@ -165,6 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <h4>${doc.document_type_display || doc.document_type || 'Document'}</h4>
                 <p>Uploaded on ${uploadDate}</p>
                 <span class="badge ${badgeClass}">${statusDisplay}</span>
+                ${reasonHtml}
             </div>
             <div class="doc-actions">
                 <a href="${fileUrl}" target="_blank" class="icon-btn" title="View">
