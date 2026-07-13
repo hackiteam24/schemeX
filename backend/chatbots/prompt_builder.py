@@ -61,10 +61,9 @@ def build_system_prompt(
     optional user-profile context + optional retrieved-scheme grounding.
     """
     lang_name = LANGUAGE_NAMES.get(language, "English")
-
     prompt = (
         SYSTEM_PROMPT
-        + f"\n\nRespond ONLY in {lang_name}, regardless of what language the user's question is written in."
+        + f"\n\nRespond in {lang_name} by default. However, if the user explicitly asks to communicate or receive information in a different language, respect their request and respond in that language."
     )
 
     if user_context:
