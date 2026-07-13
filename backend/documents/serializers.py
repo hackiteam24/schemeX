@@ -5,7 +5,7 @@ from .models import Document
 
 class DocumentSerializer(serializers.ModelSerializer):
     uploaded_by_username = serializers.CharField(source="uploaded_by.username", read_only=True)
-    document_type_display = serializers.CharField(source="get_document_type_display", read_only=True)
+    document_type_display = serializers.SerializerMethodField()
     file_url = serializers.SerializerMethodField()
 
     class Meta:
@@ -32,6 +32,15 @@ class DocumentSerializer(serializers.ModelSerializer):
         if obj.file and request:
             return request.build_absolute_uri(obj.file.url)
         return None
+
+    def get_document_type_display(self, obj):
+        if obj.document_type == "other" and obj.file:
+            name = obj.file.name.rsplit("/", 1)[-1].rsplit("\\", 1)[-1]
+            clean_name = name.replace("_", " ").replace("-", " ").split(".")[0].title()
+            if clean_name.lower().startswith("niffa "):
+                clean_name = clean_name[6:]
+            return clean_name
+        return obj.get_document_type_display()
 
     def validate_file(self, value):
         import os
