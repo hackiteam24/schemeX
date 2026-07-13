@@ -23,6 +23,100 @@ from .serializers import DocumentSerializer, DocumentVerificationSerializer
 logger = logging.getLogger(__name__)
 
 
+def update_profile_from_document(user, extracted_data):
+    if not extracted_data:
+        return
+        
+    from profiles.models import Profile
+    profile, _ = Profile.objects.get_or_create(
+        user=user, defaults={"full_name": user.get_full_name() or user.username}
+    )
+    
+    changed = False
+    
+    # 1. Personal Details
+    full_name = extracted_data.get("fullName")
+    if full_name and not profile.full_name:
+        profile.full_name = full_name
+        changed = True
+        
+    gender = extracted_data.get("gender")
+    if gender and not profile.gender:
+        normalized_gender = gender.strip().lower()
+        if normalized_gender in ["male", "female", "other"]:
+            profile.gender = normalized_gender
+            changed = True
+            
+    category = extracted_data.get("category")
+    if category and not profile.category:
+        profile.category = category.strip().lower()
+        changed = True
+        
+    aadhaar_number = extracted_data.get("aadhaarNumber") or extracted_data.get("aadhaar")
+    if aadhaar_number and not profile.aadhaar_number:
+        # Clean non-digits
+        clean_aadhaar = "".join(filter(str.isdigit, str(aadhaar_number)))
+        if len(clean_aadhaar) == 12:
+            profile.aadhaar_number = clean_aadhaar
+            changed = True
+            
+    # 2. Location Details
+    state = extracted_data.get("state")
+    if state and not profile.state:
+        profile.state = state
+        changed = True
+        
+    district = extracted_data.get("district")
+    if district and not profile.district:
+        profile.district = district
+        changed = True
+        
+    tehsil = extracted_data.get("tehsil")
+    if tehsil and not profile.tehsil:
+        profile.tehsil = tehsil
+        changed = True
+        
+    village = extracted_data.get("village")
+    if village and not profile.village:
+        profile.village = village
+        changed = True
+        
+    pincode = extracted_data.get("pincode")
+    if pincode and not profile.pincode:
+        profile.pincode = pincode
+        changed = True
+
+    # 3. Economic/Land details
+    annual_income_str = extracted_data.get("annualIncome")
+    if annual_income_str:
+        try:
+            val = int(float(str(annual_income_str).replace(",", "").strip()))
+            if val > 0 and profile.annual_income == 0:
+                profile.annual_income = val
+                changed = True
+        except:
+            pass
+
+    # 4. Bank Details
+    bank_name = extracted_data.get("bankName")
+    if bank_name and not profile.bank_name:
+        profile.bank_name = bank_name
+        changed = True
+        
+    account_number = extracted_data.get("accountNumber")
+    if account_number and not profile.account_number:
+        profile.account_number = account_number
+        changed = True
+        
+    ifsc_code = extracted_data.get("ifscCode")
+    if ifsc_code and not profile.ifsc_code:
+        profile.ifsc_code = ifsc_code.strip().upper()
+        changed = True
+        
+    if changed:
+        profile.save()
+
+
 def verify_document_background(document_id):
     """
     Background worker that runs Sarvam Document Intelligence and performs LLM validation.
@@ -97,9 +191,23 @@ def verify_document_background(document_id):
             "Return ONLY a valid JSON object in this exact format (no codeblocks, no extra words):\n"
             "{\n"
             '  "is_verified": true,\n'
-            '  "rejection_reason": ""\n'
+            '  "rejection_reason": "",\n'
+            '  "extracted_data": {\n'
+            '    "fullName": "...",\n'
+            '    "gender": "male/female/other",\n'
+            '    "category": "OBC/SC/ST/General",\n'
+            '    "state": "...",\n'
+            '    "district": "...",\n'
+            '    "tehsil": "...",\n'
+            '    "village": "...",\n'
+            '    "pincode": "...",\n'
+            '    "annualIncome": "...",\n'
+            '    "bankName": "...",\n'
+            '    "accountNumber": "...",\n'
+            '    "ifscCode": "..."\n'
+            '  }\n'
             "}\n"
-            "If verified is false, provide a clear reason for rejection in 'rejection_reason'."
+            "If verified is false, set is_verified to false and provide a clear reason for rejection in 'rejection_reason'."
         )
         
         messages = [
@@ -129,6 +237,12 @@ def verify_document_background(document_id):
         if result.get("is_verified") is True:
             document.verification_status = Document.VerificationStatus.VERIFIED
             document.rejection_reason = ""
+            
+            # Automatically update citizen's Profile in the background!
+            try:
+                update_profile_from_document(document.uploaded_by, result.get("extracted_data"))
+            except Exception as pe:
+                logger.error(f"Failed to update profile from document: {str(pe)}")
         else:
             document.verification_status = Document.VerificationStatus.REJECTED
             document.rejection_reason = result.get("rejection_reason", "AI verification failed.")
@@ -146,28 +260,90 @@ def verify_document_background(document_id):
             pass
 
 
-def build_required_documents(user):
-    uploaded_documents = Document.objects.filter(uploaded_by=user)
-    uploaded_labels = {
-        doc.get_document_type_display().lower()
-        for doc in uploaded_documents
-    }
-    uploaded_file_names = {
-        doc.file.name.rsplit("/", 1)[-1].lower()
-        for doc in uploaded_documents
-    }
+def is_document_matching(uploaded_doc, required_name):
+    req_clean = required_name.lower()
+    doc_type = uploaded_doc.document_type.lower()
+    doc_display = uploaded_doc.get_document_type_display().lower()
+    file_name = uploaded_doc.file.name.lower() if uploaded_doc.file else ""
+    
+    # 1. Aadhaar Card keyword mapping
+    if "aadhaar" in doc_type or "aadhaar" in doc_display:
+        if "aadhaar" in req_clean or "identity" in req_clean or "age" in req_clean:
+            return True
+            
+    # 2. PAN Card keyword mapping
+    if "pan" in doc_type or "pan" in doc_display:
+        if "pan" in req_clean or "identity" in req_clean or "age" in req_clean:
+            return True
+            
+    # 3. Residence/Domicile Proof keyword mapping
+    if "residence" in doc_type or "residence" in doc_display or "domicile" in doc_type or "domicile" in doc_display:
+        if "residence" in req_clean or "address" in req_clean or "domicile" in req_clean:
+            return True
+            
+    # 4. Caste Certificate keyword mapping
+    if "caste" in doc_type or "caste" in doc_display:
+        if "caste" in req_clean:
+            return True
+            
+    # 5. Income Certificate keyword mapping
+    if "income" in doc_type or "income" in doc_display:
+        if "income" in req_clean:
+            return True
+            
+    # 6. Bank Passbook keyword mapping
+    if "bank" in doc_type or "bank" in doc_display or "passbook" in doc_type or "passbook" in doc_display:
+        if "bank" in req_clean or "passbook" in req_clean or "account" in req_clean:
+            return True
+            
+    # 7. Mobile/Telecom statement keyword mapping
+    if "mobile" in doc_type or "mobile" in doc_display or "mobile" in file_name or "bill" in file_name or "statement" in file_name:
+        if "mobile" in req_clean or "contact" in req_clean or "email" in req_clean or "e-mail" in req_clean:
+            return True
+            
+    # 8. Passport Photograph keyword mapping
+    if "photo" in doc_type or "photo" in doc_display:
+        if "photo" in req_clean or "photograph" in req_clean:
+            return True
 
+    # Fallback to simple substring checks
+    for term in [doc_type, doc_display, file_name]:
+        if term and (term in req_clean or req_clean in term):
+            return True
+            
+    return False
+
+
+def build_required_documents(user, scheme_id=None):
+    uploaded_documents = Document.objects.filter(uploaded_by=user)
     required = {}
+    
+    # Get active applications
     applications = Application.objects.filter(applicant=user).select_related("scheme")
-    for application in applications:
-        for document_name in application.scheme.required_documents_list:
+    schemes = [app.scheme for app in applications]
+    
+    # If a specific scheme parameter is passed (e.g. from the apply flow redirection), include it
+    if scheme_id:
+        from schemes.models import Scheme
+        try:
+            scheme = Scheme.objects.get(id=scheme_id)
+            if scheme not in schemes:
+                schemes.append(scheme)
+        except Scheme.DoesNotExist:
+            pass
+            
+    for scheme in schemes:
+        for document_name in scheme.required_documents_list:
             key = document_name.strip().lower()
             if not key:
                 continue
-            uploaded = any(key in label for label in uploaded_labels | uploaded_file_names)
+            
+            # Check if any uploaded document matches the required name using our smart matcher
+            uploaded = any(is_document_matching(doc, document_name) for doc in uploaded_documents)
+            
             required[key] = {
                 "name": document_name,
-                "scheme": application.scheme.name,
+                "scheme": scheme.name,
                 "uploaded": uploaded,
             }
 
@@ -188,7 +364,8 @@ class DocumentListView(APIView):
         serializer = DocumentSerializer(qs, many=True, context={"request": request})
         payload = {"documents": serializer.data}
         if not is_admin:
-            payload["required_documents"] = build_required_documents(user)
+            scheme_id = request.query_params.get("scheme")
+            payload["required_documents"] = build_required_documents(user, scheme_id=scheme_id)
         return Response(payload)
 
 
