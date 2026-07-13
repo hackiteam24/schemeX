@@ -8,9 +8,9 @@ document.addEventListener('DOMContentLoaded', () => {
     
     if (!voiceBtn) return;
     
-    if (!window.SpeechService || !SpeechService.isSupported()) {
+    if (!window.SpeechService || !SpeechService.isRecordingSupported()) {
         voiceBtn.style.display = 'none';
-        console.log('Speech Recognition not supported in this browser');
+        console.log('Speech Recognition/Recording not supported in this browser');
         return;
     }
     
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     // Build the recognition instance via the shared service (mocked for compatibility)
-    let recognition = SpeechService.isSupported() ? SpeechService : null;
+    let recognition = SpeechService.isRecordingSupported() ? SpeechService : null;
     
     // Start listening
     async function startListening() {
