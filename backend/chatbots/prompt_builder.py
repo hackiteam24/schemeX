@@ -62,11 +62,19 @@ def build_system_prompt(
     if user_context:
         prompt += "\n\n" + user_context
 
-    if retrieved_schemes:
+   if retrieved_schemes:
         lines = SchemeRetriever.to_context_lines(retrieved_schemes)
+        listing_instruction = (
+            "\n\nIf there are more than 3 schemes below, list ALL of them as a short bulleted list "
+            "(just the scheme name + one-line benefit each) rather than deep-diving into only one. "
+            "Only give full eligibility/benefit/application detail for a specific scheme if the user "
+            "names it or asks about just one."
+            if len(retrieved_schemes) > 3 else ""
+        )
         prompt += (
             "\n\nUse the following verified scheme data as your primary source of truth for this "
-            "reply. Prefer it over your own general knowledge, and don't invent details it doesn't contain:\n"
+            "reply. Prefer it over your own general knowledge, and don't invent details it doesn't contain:"
+            + listing_instruction + "\n"
             + "\n".join(f"- {line}" for line in lines)
         )
     else:
