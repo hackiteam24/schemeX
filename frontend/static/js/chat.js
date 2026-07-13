@@ -34,10 +34,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }) : null;
     
     // Send message
+    // Send message
+    let isSending = false;
+
     window.sendMessage = async function() {
+        if (isSending) return;
+
         const message = chatInput.value.trim();
         
         if (!message) return;
+
+        isSending = true;
+        sendBtn.disabled = true;
+        chatInput.disabled = true;
         
         // Add user message
         addMessage(message, 'user');
@@ -68,6 +77,11 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (error) {
             removeTypingIndicator();
             addMessage('I apologize, but I encountered an error. Please try again.', 'ai');
+        } finally {
+            isSending = false;
+            sendBtn.disabled = false;
+            chatInput.disabled = false;
+            chatInput.focus();
         }
     };
     
