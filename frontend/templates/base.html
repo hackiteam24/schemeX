@@ -69,15 +69,15 @@
             </div>
 
             <ul class="nav-links">
-                <li><a href="{% url 'home' %}">Home</a></li>
-                <li><a href="{% url 'schemes' %}">Schemes</a></li>
-                <li class="nav-auth-only"><a href="{% url 'eligibility' %}">Eligibility</a></li>
-                <li class="nav-auth-only"><a href="{% url 'application_form' %}">Apply</a></li>
-                <li class="nav-auth-only"><a href="{% url 'documents' %}">Documents</a></li>
-                <li class="nav-auth-only"><a href="{% url 'dashboard' %}">Dashboard</a></li>
-                <li class="nav-auth-only"><a href="{% url 'profile' %}">My Profile</a></li>
-                <li class="nav-auth-only"><a href="{% url 'chatbot' %}"><i class="fa-solid fa-robot"></i> AI
-                        Assistant</a></li>
+                <li><a href="{% url 'home' %}" data-i18n="nav.home">Home</a></li>
+                <li><a href="{% url 'schemes' %}" data-i18n="nav.schemes">Schemes</a></li>
+                <li class="nav-auth-only"><a href="{% url 'eligibility' %}" data-i18n="nav.eligibility">Eligibility</a></li>
+                <li class="nav-auth-only"><a href="{% url 'application_form' %}" data-i18n="nav.apply">Apply</a></li>
+                <li class="nav-auth-only"><a href="{% url 'documents' %}" data-i18n="nav.documents">Documents</a></li>
+                <li class="nav-auth-only"><a href="{% url 'dashboard' %}" data-i18n="nav.dashboard">Dashboard</a></li>
+                <li class="nav-auth-only"><a href="{% url 'profile' %}" data-i18n="nav.profile">My Profile</a></li>
+                <li class="nav-auth-only"><a href="{% url 'chatbot' %}"><i class="fa-solid fa-robot"></i> <span data-i18n="nav.chat">AI
+                        Assistant</span></a></li>
             </ul>
 
             <div class="nav-right">
@@ -98,7 +98,7 @@
 
                 </select>
 
-                <a href="{% url 'login' %}" id="navLoginBtn" class="login-btn guest-only">Login</a>
+                <a href="{% url 'login' %}" id="navLoginBtn" class="login-btn guest-only" data-i18n="nav.login">Login</a>
                 <a href="{% url 'register' %}" id="navRegisterBtn" class="register-btn guest-only">Register</a>
 
                 <div class="user-dropdown auth-only" id="userDropdown">
@@ -129,18 +129,18 @@
     <!-- Mobile Navigation -->
 
     <div id="mobileMenu" class="mobile-menu">
-        <a href="{% url 'home' %}">Home</a>
-        <a href="{% url 'schemes' %}">Schemes</a>
-        <a href="{% url 'eligibility' %}" class="nav-auth-only">Eligibility</a>
-        <a href="{% url 'application_form' %}" class="nav-auth-only">Apply</a>
-        <a href="{% url 'documents' %}" class="nav-auth-only">Documents</a>
-        <a href="{% url 'dashboard' %}" class="nav-auth-only">Dashboard</a>
-        <a href="{% url 'profile' %}" class="nav-auth-only">My Profile</a>
-        <a href="{% url 'chatbot' %}" class="nav-auth-only">AI Assistant</a>
-        <a href="{% url 'login' %}" id="navLoginBtnMobile" class="login-btn guest-only">Login</a>
+        <a href="{% url 'home' %}" data-i18n="nav.home">Home</a>
+        <a href="{% url 'schemes' %}" data-i18n="nav.schemes">Schemes</a>
+        <a href="{% url 'eligibility' %}" class="nav-auth-only" data-i18n="nav.eligibility">Eligibility</a>
+        <a href="{% url 'application_form' %}" class="nav-auth-only" data-i18n="nav.apply">Apply</a>
+        <a href="{% url 'documents' %}" class="nav-auth-only" data-i18n="nav.documents">Documents</a>
+        <a href="{% url 'dashboard' %}" class="nav-auth-only" data-i18n="nav.dashboard">Dashboard</a>
+        <a href="{% url 'profile' %}" class="nav-auth-only" data-i18n="nav.profile">My Profile</a>
+        <a href="{% url 'chatbot' %}" class="nav-auth-only" data-i18n="nav.chat">AI Assistant</a>
+        <a href="{% url 'login' %}" id="navLoginBtnMobile" class="login-btn guest-only" data-i18n="nav.login">Login</a>
         <a href="{% url 'register' %}" id="navRegisterBtnMobile"
             class="login-btn guest-only mobile-register-btn">Register</a>
-        <a href="#" id="navLogoutBtnMobile" class="login-btn auth-only mobile-logout-btn">Logout</a>
+        <a href="#" id="navLogoutBtnMobile" class="login-btn auth-only mobile-logout-btn" data-i18n="nav.logout">Logout</a>
     </div>
 
     <!-- ===================== -->
