@@ -78,18 +78,18 @@ document.addEventListener('DOMContentLoaded', () => {
         
         const avatarIcon = type === 'ai' ? 'fa-robot' : 'fa-user';
         
+        const renderedContent = type === 'ai' && window.marked
+            ? marked.parse(content)
+            : `<p>${content}</p>`;
+
         messageDiv.innerHTML = `
             <div class="message-avatar">
                 <i class="fa-solid ${avatarIcon}"></i>
             </div>
             <div class="message-content">
-                <p>${content}</p>
+                ${renderedContent}
             </div>
         `;
-        
-        chatMessages.appendChild(messageDiv);
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-    }
     
     // Show typing indicator
     function showTypingIndicator() {
