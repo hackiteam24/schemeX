@@ -86,6 +86,22 @@ def call_sarvam(messages):
     return response.choices[0].message.content
 
 
+def detect_script_language(text):
+    for char in text:
+        code = ord(char)
+        if 0x0C00 <= code <= 0x0C7F:
+            return "te"  # Telugu
+        if 0x0900 <= code <= 0x097F:
+            return "hi"  # Hindi
+        if 0x0B80 <= code <= 0x0BFF:
+            return "ta"  # Tamil
+        if 0x0C80 <= code <= 0x0CFF:
+            return "kn"  # Kannada
+        if 0x0D00 <= code <= 0x0D7F:
+            return "ml"  # Malayalam
+    return None
+
+
 class ChatView(APIView):
     permission_classes = [IsAuthenticated]
 
@@ -151,6 +167,26 @@ class ChatView(APIView):
             state=state,
             limit=15 if state else 5,
         )
+
+        # 1. Detect language from script characters (e.g. typing in Telugu/Hindi script)
+        script_lang = detect_script_language(message)
+        if script_lang:
+            language = script_lang
+        else:
+            # 2. Detect language from explicit English instructions/keywords
+            msg_lower = message.lower()
+            if "english" in msg_lower or "in english" in msg_lower or "speak english" in msg_lower or "talk english" in msg_lower:
+                language = "en"
+            elif "telugu" in msg_lower or "in telugu" in msg_lower or "speak telugu" in msg_lower:
+                language = "te"
+            elif "hindi" in msg_lower or "in hindi" in msg_lower or "speak hindi" in msg_lower:
+                language = "hi"
+            elif "tamil" in msg_lower or "in tamil" in msg_lower or "speak tamil" in msg_lower:
+                language = "ta"
+            elif "kannada" in msg_lower or "in kannada" in msg_lower or "speak kannada" in msg_lower:
+                language = "kn"
+            elif "malayalam" in msg_lower or "in malayalam" in msg_lower or "speak malayalam" in msg_lower:
+                language = "ml"
 
         # Prompt Builder -> System Prompt
         api_messages = build_messages(language, history, retrieved_schemes)
