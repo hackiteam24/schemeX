@@ -56,14 +56,7 @@ Login - SchemeX AI
                 <p id="loginSubtitle">Sign in to access government schemes and services</p>
             </div>
 
-            <div class="login-mode-toggle">
-                <button type="button" class="mode-btn active" id="citizenModeBtn" onclick="setLoginMode('citizen')">
-                    <i class="fa-solid fa-user"></i> Citizen Login
-                </button>
-                <button type="button" class="mode-btn" id="adminModeBtn" onclick="setLoginMode('admin')">
-                    <i class="fa-solid fa-user-shield"></i> Admin Login
-                </button>
-            </div>
+
 
             <form id="loginForm" class="auth-form">
                 <div id="loginError" class="alert alert-error" style="display: none;"></div>
@@ -150,29 +143,6 @@ Login - SchemeX AI
 {% block extra_js %}
 <script src="{% static 'js/auth.js' %}"></script>
 <script>
-    window.setLoginMode = function(mode) {
-        const citizenBtn = document.getElementById('citizenModeBtn');
-        const adminBtn = document.getElementById('adminModeBtn');
-        const subtitle = document.getElementById('loginSubtitle');
-        const headerTitle = document.querySelector('.auth-header h1');
-        
-        if (mode === 'admin') {
-            if (citizenBtn) citizenBtn.classList.remove('active');
-            if (adminBtn) adminBtn.classList.add('active');
-            if (headerTitle) headerTitle.textContent = 'Admin Portal';
-            if (subtitle) subtitle.textContent = 'Sign in to review documents, verify profiles, and manage applications';
-            localStorage.setItem('login_mode', 'admin');
-        } else {
-            if (citizenBtn) citizenBtn.classList.add('active');
-            if (adminBtn) adminBtn.classList.remove('active');
-            if (headerTitle) headerTitle.textContent = 'Welcome Back!';
-            if (subtitle) subtitle.textContent = 'Sign in to access government schemes and services';
-            localStorage.setItem('login_mode', 'citizen');
-        }
-    };
-    
-    // Initialize mode if previously selected
-    const savedMode = localStorage.getItem('login_mode') || 'citizen';
-    setLoginMode(savedMode);
+
 </script>
 {% endblock %}
