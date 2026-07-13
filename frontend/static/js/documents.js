@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const uploadArea = document.getElementById('uploadArea');
     const fileInput = document.getElementById('fileInput');
     const uploadProgress = document.getElementById('uploadProgress');
-    
+    let currentDocuments = [];
     // Drag and drop handlers
     uploadArea.addEventListener('dragover', (e) => {
         e.preventDefault();
@@ -261,7 +261,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const link = document.createElement('a');
             link.href = response.download_url;
             link.download = '';
-            link.target = '_blank';
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
@@ -296,6 +295,7 @@ document.addEventListener('DOMContentLoaded', () => {
     async function loadDocuments() {
         try {
             const response = await API.get('/api/documents/');
+             currentDocuments = response.documents || [];
             
             // Clear lists first to remove spinners
             const uploadedDocsGrid = document.querySelector('.uploaded-docs-grid');
@@ -354,6 +354,25 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     
+    // Load documents on page load
+   // Download all documents
+    window.downloadAllDocuments = function () {
+        if (!currentDocuments || currentDocuments.length === 0) {
+            showToast('No documents to download', 'info');
+            return;
+        }
+        currentDocuments.forEach((doc, index) => {
+            setTimeout(() => {
+                downloadDocument(doc.id);
+            }, index * 600);
+        });
+    };
+
+    const downloadAllBtn = document.getElementById('downloadAllBtn');
+    if (downloadAllBtn) {
+        downloadAllBtn.addEventListener('click', downloadAllDocuments);
+    }
+
     // Load documents on page load
     loadDocuments();
 });
