@@ -328,7 +328,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Prefill profile details from verified documents stored in user profile
     async function prefillProfileData() {
         try {
-            const profile = await API.get('/api/profiles/');
+            const profile = await API.get('/api/profile/');
+          
             if (!profile) return;
             
             // Step 1: Personal Details
