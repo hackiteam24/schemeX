@@ -390,6 +390,18 @@ document.addEventListener('DOMContentLoaded', () => {
                     badge.className = 'badge badge-success';
                 }
             }
+
+            // Auto-polling: If any document is still verifying, poll again in 5 seconds
+            const hasPending = currentDocuments.some(doc => doc.verification_status === 'pending');
+            if (hasPending) {
+                if (window.pendingPollTimer) clearTimeout(window.pendingPollTimer);
+                window.pendingPollTimer = setTimeout(loadDocuments, 5000);
+            } else {
+                if (window.pendingPollTimer) {
+                    clearTimeout(window.pendingPollTimer);
+                    window.pendingPollTimer = null;
+                }
+            }
             
         } catch (error) {
             console.error('Failed to load documents:', error);
