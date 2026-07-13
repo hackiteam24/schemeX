@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Validate current step
     function validateStep(step) {
         const currentFormStep = document.querySelector(`.form-step[data-step="${step}"]`);
-        const requiredFields = currentFormStep.querySelectorAll('[required]');
+        const requiredFields = currentFormStep ? currentFormStep.querySelectorAll('[required]') : [];
         let isValid = true;
         
         requiredFields.forEach(field => {
@@ -64,19 +64,74 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
         
-        // Special validation for account number confirmation
-        if (step === 3) {
-            const accountNumber = document.getElementById('accountNumber').value;
-            const confirmAccountNumber = document.getElementById('confirmAccountNumber').value;
+        // 1. Aadhaar and Mobile validation (Step 1)
+        if (step === 1) {
+            const aadhaarInput = document.getElementById('aadhaar');
+            if (aadhaarInput && aadhaarInput.value.trim()) {
+                const val = aadhaarInput.value.trim();
+                if (!/^\d{12}$/.test(val)) {
+                    aadhaarInput.style.borderColor = 'var(--error)';
+                    showToast('Aadhaar number must be exactly 12 digits', 'error');
+                    isValid = false;
+                }
+            }
             
-            if (accountNumber !== confirmAccountNumber) {
-                document.getElementById('confirmAccountNumber').style.borderColor = 'var(--error)';
-                showToast('Account numbers do not match', 'error');
-                isValid = false;
+            const mobileInput = document.getElementById('mobile');
+            if (mobileInput && mobileInput.value.trim()) {
+                const val = mobileInput.value.trim();
+                if (!/^[5-9]\d{9}$/.test(val)) {
+                    mobileInput.style.borderColor = 'var(--error)';
+                    showToast('Mobile number must be exactly 10 digits starting with 5-9', 'error');
+                    isValid = false;
+                }
             }
         }
         
-        if (!isValid) {
+        // 2. Location & Pincode validation (Step 2)
+        if (step === 2) {
+            const pincodeInput = document.getElementById('pincode');
+            if (pincodeInput && pincodeInput.value.trim()) {
+                const val = pincodeInput.value.trim();
+                if (!/^\d{6}$/.test(val)) {
+                    pincodeInput.style.borderColor = 'var(--error)';
+                    showToast('Pincode must be exactly 6 digits', 'error');
+                    isValid = false;
+                }
+            }
+        }
+        
+        // 3. Bank validation (Step 3)
+        if (step === 3) {
+            const accountInput = document.getElementById('accountNumber');
+            const confirmInput = document.getElementById('confirmAccountNumber');
+            const ifscInput = document.getElementById('ifscCode');
+            
+            if (accountInput && accountInput.value.trim()) {
+                const val = accountInput.value.trim();
+                if (!/^\d{9,18}$/.test(val)) {
+                    accountInput.style.borderColor = 'var(--error)';
+                    showToast('Bank Account number must be between 9 and 18 digits', 'error');
+                    isValid = false;
+                }
+            }
+            
+            if (accountInput && confirmInput && accountInput.value.trim() !== confirmInput.value.trim()) {
+                confirmInput.style.borderColor = 'var(--error)';
+                showToast('Account numbers do not match', 'error');
+                isValid = false;
+            }
+            
+            if (ifscInput && ifscInput.value.trim()) {
+                const val = ifscInput.value.trim().toUpperCase();
+                if (!/^[A-Z]{4}0[A-Z0-9]{6}$/.test(val)) {
+                    ifscInput.style.borderColor = 'var(--error)';
+                    showToast('IFSC code must be exactly 11 characters (e.g. SBIN0000301)', 'error');
+                    isValid = false;
+                }
+            }
+        }
+        
+        if (!isValid && requiredFields.length > 0 && Array.from(requiredFields).some(f => !f.value.trim())) {
             showToast('Please fill in all required fields', 'error');
         }
         
@@ -270,6 +325,77 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
+    // Prefill profile details from verified documents stored in user profile
+    async function prefillProfileData() {
+        try {
+            const profile = await API.get('/api/profiles/');
+            if (!profile) return;
+            
+            // Step 1: Personal Details
+            const firstName = profile.personal?.firstName || '';
+            const lastName = profile.personal?.lastName || '';
+            const fullName = `${firstName} ${lastName}`.trim();
+            
+            const fullNameInput = document.getElementById('fullName') || document.getElementById('fullNameInput') || document.querySelector('[name="full_name"]');
+            if (fullNameInput) fullNameInput.value = fullName;
+            
+            const fatherNameInput = document.getElementById('fatherName') || document.getElementById('father_name') || document.querySelector('[name="father_name"]');
+            // Since fatherName isn't explicitly in the django profile model, we can try alternate fields
+            
+            const aadhaarInput = document.getElementById('aadhaar') || document.getElementById('aadhaarNumber') || document.querySelector('[name="aadhaar_number"]');
+            if (aadhaarInput) aadhaarInput.value = profile.personal?.aadhaarNumber || '';
+            
+            const mobileInput = document.getElementById('mobile') || document.getElementById('mobileNumber') || document.querySelector('[name="mobile_number"]');
+            if (mobileInput) mobileInput.value = profile.contact?.mobile || '';
+            
+            const genderSelect = document.getElementById('gender') || document.querySelector('[name="gender"]') || document.querySelector('select[name="gender"]');
+            if (genderSelect && profile.personal?.gender) genderSelect.value = profile.personal.gender;
+            
+            const categorySelect = document.getElementById('category') || document.querySelector('[name="category"]') || document.querySelector('select[name="category"]');
+            if (categorySelect && profile.personal?.category) categorySelect.value = profile.personal.category;
+            
+            // Step 2: Location/Land details
+            const stateInput = document.getElementById('state') || document.querySelector('[name="state"]');
+            if (stateInput) stateInput.value = profile.location?.state || '';
+            
+            const districtInput = document.getElementById('district') || document.querySelector('[name="district"]');
+            if (districtInput) districtInput.value = profile.location?.district || '';
+            
+            const tehsilInput = document.getElementById('tehsil') || document.getElementById('block') || document.querySelector('[name="tehsil"]') || document.querySelector('[name="block"]');
+            if (tehsilInput) tehsilInput.value = profile.location?.tehsil || '';
+            
+            const villageInput = document.getElementById('village') || document.querySelector('[name="village"]');
+            if (villageInput) villageInput.value = profile.location?.village || '';
+            
+            const landAreaInput = document.getElementById('landArea') || document.querySelector('[name="land_area"]');
+            if (landAreaInput) landAreaInput.value = profile.economic?.landArea || '';
+            
+            const landTypeSelect = document.getElementById('landType') || document.querySelector('[name="land_type"]') || document.querySelector('select[name="land_type"]');
+            if (landTypeSelect && profile.economic?.landType) landTypeSelect.value = profile.economic.landType;
+            
+            // Step 3: Bank Details
+            const bankNameInput = document.getElementById('bankName') || document.querySelector('[name="bank_name"]');
+            if (bankNameInput) bankNameInput.value = profile.bank?.bankName || '';
+            
+            const accountNumberInput = document.getElementById('accountNumber') || document.querySelector('[name="account_number"]');
+            if (accountNumberInput) {
+                accountNumberInput.value = profile.bank?.accountNumber || '';
+                const confirmInput = document.getElementById('confirmAccountNumber') || document.querySelector('[name="confirm_account_number"]');
+                if (confirmInput) confirmInput.value = profile.bank?.accountNumber || '';
+            }
+            
+            const ifscInput = document.getElementById('ifscCode') || document.querySelector('[name="ifsc_code"]');
+            if (ifscInput) ifscInput.value = profile.bank?.ifscCode || '';
+            
+            const accountTypeSelect = document.getElementById('accountType') || document.querySelector('[name="account_type"]') || document.querySelector('select[name="account_type"]');
+            if (accountTypeSelect && profile.bank?.accountType) accountTypeSelect.value = profile.bank.accountType;
+            
+            showToast('Form pre-filled using your verified documents!', 'success');
+        } catch (err) {
+            console.error('Failed to pre-fill profile data:', err);
+        }
+    }
+
     // Read scheme ID from the URL once (falls back to null if not provided)
     const urlParams = new URLSearchParams(window.location.search);
     const schemeId = urlParams.get('scheme');
@@ -277,6 +403,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (selectedSchemeInput) {
         selectedSchemeInput.value = schemeId || '';
     }
+    
+    // Trigger pre-fill automatically on page load
+    prefillProfileData();
     
     if (schemeId) {
         loadSchemeDetails(schemeId);
