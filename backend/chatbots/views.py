@@ -76,6 +76,7 @@ def call_sarvam(messages):
     response = client.chat.completions(
         model=settings.SARVAM_MODEL,
         messages=messages,
+         reasoning_effort=None,
     )
 
     return response.choices[0].message.content
