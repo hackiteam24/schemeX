@@ -10,7 +10,7 @@ from rest_framework.views import APIView
 
 from .models import ChatMessage, ChatSession
 from .prompt_builder import build_messages
-from .retrieval import SchemeRetriever
+from .retrieval import SchemeRetriever, detect_state
 
 logger = logging.getLogger(__name__)
 
@@ -136,7 +136,9 @@ class ChatView(APIView):
             m.content for m in history if m.sender == "user"
         )[-300:]
         search_query = f"{prior_user_messages} {message}".strip()
-        retrieved_schemes = SchemeRetriever().search(search_query, state=state, limit=5)
+        if not state:
+            state = detect_state(search_query)
+        retrieved_schemes = SchemeRetriever().search(search_query, state=state, limit=10 if state else 5)
 
         # Prompt Builder -> System Prompt
         api_messages = build_messages(language, history, retrieved_schemes)
