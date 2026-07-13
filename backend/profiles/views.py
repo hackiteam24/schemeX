@@ -14,6 +14,7 @@ PROFILE_FIELDS = {
     "date_of_birth",
     "category",
     "marital_status",
+    "aadhaar_number",
     "alternate_mobile",
     "address",
     "district",
@@ -40,6 +41,7 @@ FIELD_MAP = {
     "lastName": "last_name",
     "dateOfBirth": "date_of_birth",
     "maritalStatus": "marital_status",
+    "aadhaarNumber": "aadhaar_number",
     "alternateMobile": "alternate_mobile",
     "annualIncome": "annual_income",
     "incomeSource": "income_source",
@@ -88,6 +90,7 @@ class ProfileView(APIView):
                     "gender": profile.gender,
                     "category": profile.category,
                     "maritalStatus": profile.marital_status,
+                    "aadhaarNumber": profile.aadhaar_number,
                 },
                 "contact": {
                     "email": request.user.email,
