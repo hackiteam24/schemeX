@@ -73,10 +73,12 @@ def call_sarvam(messages):
 
     client = SarvamAI(api_subscription_key=api_key)
 
-    response = client.chat.completions(
+  response = client.chat.completions(
         model=settings.SARVAM_MODEL,
         messages=messages,
-         reasoning_effort=None,
+        reasoning_effort=None,
+        frequency_penalty=0.4,
+        presence_penalty=0.2,
     )
 
     return response.choices[0].message.content
