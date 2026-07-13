@@ -6,6 +6,16 @@ Apply for Scheme - SchemeX AI
 {% endblock %}
 
 {% block extra_css %}
+<script>
+(function () {
+    var savedUser = null;
+    try { savedUser = JSON.parse(localStorage.getItem('user')); } catch (e) {}
+    if (!savedUser || !savedUser.token) {
+        var next = encodeURIComponent(window.location.pathname + window.location.search);
+        window.location.replace('/login/?next=' + next);
+    }
+})();
+</script>
 <link rel="stylesheet" href="{% static 'css/application.css' %}">
 <style>
     .search-results-dropdown {
