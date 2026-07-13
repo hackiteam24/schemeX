@@ -205,7 +205,7 @@ SIMPLE_JWT = {
 CORS_ALLOW_ALL_ORIGINS = (
     DEBUG  # Only allow all origins in debug/dev mode. In production, restrict it.
 )
-
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 # NVIDIA NIM API (chatbot)
 NVIDIA_API_KEY = os.environ.get("NVIDIA_API_KEY", "")
 NVIDIA_MODEL = os.environ.get("NVIDIA_MODEL", "meta/llama-3.1-8b-instruct")
