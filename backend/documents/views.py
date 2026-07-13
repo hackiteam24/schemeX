@@ -315,7 +315,12 @@ def is_document_matching(uploaded_doc, required_name):
 
 
 def build_required_documents(user, scheme_id=None):
-    uploaded_documents = Document.objects.filter(uploaded_by=user)
+    # Exclude rejected documents so they don't count as uploaded anymore
+    uploaded_documents = Document.objects.filter(
+        uploaded_by=user
+    ).exclude(verification_status=Document.VerificationStatus.REJECTED)
+    
+    available_docs = list(uploaded_documents)
     required = {}
     
     # Get active applications
@@ -338,8 +343,18 @@ def build_required_documents(user, scheme_id=None):
             if not key:
                 continue
             
-            # Check if any uploaded document matches the required name using our smart matcher
-            uploaded = any(is_document_matching(doc, document_name) for doc in uploaded_documents)
+            # Find a matching document that hasn't been consumed yet for this checklist
+            matched_doc = None
+            for doc in available_docs:
+                if is_document_matching(doc, document_name):
+                    matched_doc = doc
+                    break
+            
+            if matched_doc:
+                uploaded = True
+                available_docs.remove(matched_doc)  # Consume the document
+            else:
+                uploaded = False
             
             required[key] = {
                 "name": document_name,
