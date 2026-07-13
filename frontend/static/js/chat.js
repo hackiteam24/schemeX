@@ -90,6 +90,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 ${renderedContent}
             </div>
         `;
+
+        chatMessages.appendChild(messageDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
     
     // Show typing indicator
     function showTypingIndicator() {
