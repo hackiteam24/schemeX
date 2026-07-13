@@ -1,35 +1,8 @@
 """
 Dataset Retrieval Layer
 ========================
-Where your state welfare-scheme datasets (Andhra Pradesh, Telangana, Tamil
-Nadu, Karnataka, ...) plug in. Today this returns [] — no data files exist
-yet — so nothing downstream changes behavior. Drop JSON files into
-DATASET_DIR (see STATE_DATASET_FILES below) and it starts grounding answers
-immediately, no other code changes needed.
-
-Pipeline:
-    User -> Frontend -> Django API -> [this module] -> Prompt Builder -> LLM Client -> AI Response
-
-Expected on-disk layout (create this folder when you add real data):
-    backend/chatbots/datasets/
-        andhra_pradesh.json
-        telangana.json
-        tamil_nadu.json
-        karnataka.json
-
-Each file: a list of scheme records. Keep records lean — every extra field
-is extra tokens sent to the model on every relevant query:
-    [
-      {
-        "id": "ap-001",
-        "name": "...",
-        "state": "andhra_pradesh",
-        "category": "agriculture",
-        "eligibility": "...",
-        "benefits": "...",
-        "how_to_apply": "..."
-      }
-    ]
+Where your state welfare-scheme datasets get searched from the DB.
+Pipeline: User -> Frontend -> Django API -> [this module] -> Prompt Builder -> LLM Client
 """
 
 import json
@@ -38,8 +11,7 @@ from typing import Dict, List, Optional
 
 DATASET_DIR = Path(__file__).resolve().parent / "datasets"
 
-# Shared by SchemeDataset.load() (DB filter) and detect_state() (free-text
-# detection) so both stay in sync from one place.
+# Confirmed against actual DB values (SELECT DISTINCT state FROM schemes_scheme).
 STATE_KEY_TO_DB_VALUE = {
     "central": "all",
     "andhra_pradesh": "andhra",
@@ -52,10 +24,12 @@ STATE_KEY_TO_DB_VALUE = {
     "bihar": "bihar",
     "rajasthan": "rajasthan",
     "maharashtra": "maharashtra",
+    "uttarakhand": "uttarakhand",
+    "haryana": "haryana",
+    "chandigarh": "chandigarh",
+    "puducherry": "puducherry",
 }
 
-# Free-text aliases -> state key, for when the frontend doesn't send a
-# state param and we need to infer it from the user's own message.
 STATE_NAME_ALIASES = {
     "telangana": ["telangana"],
     "andhra_pradesh": ["andhra pradesh", "andhra"],
@@ -67,40 +41,25 @@ STATE_NAME_ALIASES = {
     "bihar": ["bihar"],
     "rajasthan": ["rajasthan"],
     "maharashtra": ["maharashtra"],
+    "uttarakhand": ["uttarakhand"],
+    "haryana": ["haryana"],
+    "chandigarh": ["chandigarh"],
+    "puducherry": ["puducherry", "pondicherry"],
 }
 
 
 def detect_state(query: str) -> Optional[str]:
-    """
-    Lightweight free-text state detection so "schemes in telangana" gets
-    correctly filtered even before the frontend sends a real state param.
-    """
     q = query.lower()
     for state_key, aliases in STATE_NAME_ALIASES.items():
         if any(alias in q for alias in aliases):
             return state_key
     return None
 
-# Add one entry here per state dataset file as they arrive.
-STATE_DATASET_FILES = {
-    "central": "central.json",
-    "andhra_pradesh": "andhra_pradesh.json",
-    "telangana": "telangana.json",
-    "tamil_nadu": "tamil_nadu.json",
-    "karnataka": "karnataka.json",
-}
 
-# Only these fields ever get sent to the model. Datasets can carry extra
-# metadata (source URLs, last-verified dates, internal IDs) without that
-# bloating every prompt — trim what actually reaches the LLM here, in one place.
 PROMPT_FIELDS = ("name", "eligibility", "benefits", "how_to_apply", "state")
 
 
 class SchemeDataset:
-    """
-    Loads active scheme records from the database.
-    """
-
     @classmethod
     def load(cls, state: Optional[str] = None) -> List[Dict]:
         from schemes.models import Scheme
@@ -126,24 +85,10 @@ class SchemeDataset:
 
     @classmethod
     def clear_cache(cls):
-        """No-op since we load from database now."""
         pass
 
 
 class SchemeRetriever:
-    """
-    Relevant Scheme Search layer. Given a user's query (+ optional state),
-    returns the most relevant scheme records to ground the AI's answer in
-    real data instead of relying only on the model's pretrained knowledge.
-
-    Today: naive keyword-overlap scoring (fine for launch — swap for
-    embeddings/vector search later without touching any caller of this class,
-    since the public interface — search() returning a list of dicts — stays
-    the same either way).
-    """
-
-    # Common words that would otherwise false-match almost every record and
-    # waste both retrieval precision and prompt tokens on irrelevant schemes.
     _STOPWORDS = {
         "a", "an", "the", "is", "are", "am", "i", "my", "me", "for", "of", "to",
         "in", "on", "and", "or", "any", "there", "this", "that", "do", "does",
@@ -157,17 +102,13 @@ class SchemeRetriever:
             return []
 
         raw_terms = query.lower().strip(".,?!;:()\"'").split()
-        query_terms = [
-            t.strip(".,?!;:()\"'")
-            for t in raw_terms
-        ]
+        query_terms = [t.strip(".,?!;:()\"'") for t in raw_terms]
         query_terms = [t for t in query_terms if t and t not in self._STOPWORDS and len(t) > 2]
 
         if not query_terms:
             return []
 
         scored = []
-
         for record in records:
             haystack = " ".join(str(record.get(f, "")) for f in PROMPT_FIELDS).lower()
             score = sum(haystack.count(term) for term in query_terms)
@@ -175,19 +116,10 @@ class SchemeRetriever:
                 scored.append((score, record))
 
         scored.sort(key=lambda pair: pair[0], reverse=True)
-        # Small limit (default 3) is deliberate: each matched scheme costs
-        # prompt tokens on every request. Raise it only if answer quality
-        # actually needs more context, not "just in case."
         return [record for _, record in scored[:limit]]
 
     @staticmethod
     def to_context_lines(schemes: List[Dict]) -> List[str]:
-        """
-        Token-frugal formatting: one compact line per scheme with only the
-        fields the model needs to answer (name/eligibility/benefits/how to
-        apply) — never a raw dict dump, which wastes tokens on punctuation,
-        internal IDs, and keys the model doesn't need repeated back to it.
-        """
         lines = []
         for s in schemes:
             parts = [s.get("name", "Unknown scheme")]
