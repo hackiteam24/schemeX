@@ -73,7 +73,7 @@ def call_sarvam(messages):
 
     client = SarvamAI(api_subscription_key=api_key)
 
-  response = client.chat.completions(
+    response = client.chat.completions(
         model=settings.SARVAM_MODEL,
         messages=messages,
         reasoning_effort=None,
@@ -139,9 +139,15 @@ class ChatView(APIView):
             m.content for m in history if m.sender == "user"
         )[-300:]
         search_query = f"{prior_user_messages} {message}".strip()
+
         if not state:
             state = detect_state(message) or detect_state(search_query)
-        retrieved_schemes = SchemeRetriever().search(search_query, state=state, limit=15 if state else 5)
+
+        retrieved_schemes = SchemeRetriever().search(
+            search_query,
+            state=state,
+            limit=15 if state else 5,
+        )
 
         # Prompt Builder -> System Prompt
         api_messages = build_messages(language, history, retrieved_schemes)
@@ -214,6 +220,7 @@ class ChatDetailView(APIView):
         is_admin = (
             request.user.is_staff or getattr(request.user, "role", None) == "admin"
         )
+
         if session.user != request.user and not is_admin:
             return Response(
                 {"message": "Not authorized"},
