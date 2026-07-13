@@ -62,7 +62,7 @@ def build_system_prompt(
     if user_context:
         prompt += "\n\n" + user_context
 
-   if retrieved_schemes:
+    if retrieved_schemes:
         lines = SchemeRetriever.to_context_lines(retrieved_schemes)
         listing_instruction = (
             "\n\nIf there are more than 3 schemes below, list ALL of them as a short bulleted list "
@@ -83,7 +83,8 @@ def build_system_prompt(
             "amounts from memory — ask a clarifying question (e.g. which state, which category) "
             "or suggest the official scheme portal instead."
         )
-    return prompt 
+    return prompt
+
 
 def build_messages(
     language: str,
